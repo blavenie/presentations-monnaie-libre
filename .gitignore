@@ -1,3 +1,4 @@
 
 images/.directory
-.idea/workspace.xml
+.idea
+node_modules

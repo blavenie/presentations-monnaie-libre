@@ -4,3 +4,11 @@
 	border: 0 !important;
 	box-shadow: none !important;
 }
+
+.slides menu-title {
+	visibility: hidden;
+}
+
+.slide-menu-button.hidden {
+	visibility: hidden;
+}
