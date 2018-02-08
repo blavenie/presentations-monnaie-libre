@@ -6878,15 +6878,23 @@ d'information
     <script src="js/reveal.js"></script>
 
     <script>
+
+        var isLivePresentation = false;
+
         // More info https://github.com/hakimel/reveal.js#configuration
         Reveal.initialize({
-        controls: false,
+
+            controls: !isLivePresentation,
+            controlsTutorial: !isLivePresentation,
+            fragments: isLivePresentation,
+
+            controlsLayout: 'bottom-right',
+            keyboard: true,
             history: true,
             center: false,
-            // Enable slide navigation via mouse wheel
             mouseWheel: true,
-            // Transition style
             transition: 'fade',
+            touch: true,
 
             // More info https://github.com/hakimel/reveal.js#dependencies
             dependencies: [
