@@ -1,7 +1,12 @@
 {
   "name": "presentations-monnaie-libre",
   "description": "Présentation de la monnaie libre G1",
-  "author": "blavenie - Le Sou",
+  "author": "benoit.lavenier@e-is.pro",
   "dependencies": {
+    "chart.js": "3.7.0",
+    "jquery": "^3.6.0",
+    "katex": "^0.15.2",
+    "reveal.js": "^4.2.1",
+    "reveal.js-plugins": "^4.1.5"
   }
 }
