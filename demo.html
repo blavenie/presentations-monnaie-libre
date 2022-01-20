@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>Demo Reveal.js</title>
+	<title>Démo Reveal.js</title>
 
 	<meta name="description" content="A demo for Reveal.js">
 	<meta name="author" content="Benoit Lavenier <benoit.lavenier@e-is.pro>">
@@ -36,8 +36,9 @@
     <script src="node_modules/reveal.js-plugins/chart/plugin.js"></script>
     <script src="node_modules/reveal.js-plugins/chalkboard/plugin.js"></script>
     <script src="node_modules/reveal.js-plugins/customcontrols/plugin.js"></script>
+		<script src="js/jquery.comments.js"></script>
 		<script src="js/app-colors.js"></script>
-		<script src="js/app-charts.js"></script>
+		<script src="js/app-trm-charts.js"></script>
     <script src="js/app.js"></script>
 
 	<!-- Font awesome -->
@@ -47,160 +48,463 @@
 
 <body style="width: 100%; height: 100%;">
 
+	<!-- header / footer (all slides) -->
+	<div id="hidden" style="display:none;">
+		<div id="header">
+			<div id="header-left"></div>
+			<div id="header-right"></div>
+			<div id="footer-left"></div>
+			<div id="footer-right"></div>
+		</div>
+	</div>
+
 	<div class="reveal">
 		<!-- Any section element inside of this container is displayed as a slide -->
 		<div class="slides">
 
-		<section data-src="src/producers.html">
+			<section data-markdown>
+				<textarea data-template>
+					# Demo [Reveal.js](https://revealjs.com/)
 
-		</section>
+					Plugins utilisés :<br/>
+					`Markdown`, `Math`, `HighLight`, `Chart`
 
-
-		<section data-markdown="src/home.md" data-separator-notes="^Note:" data-charset="utf-8">
-		</section>
-		<section data-markdown="src/demo.md"
-						 data-separator="==="
-						 data-separator-vertical="---"
-						 data-separator-notes="^Note:">
-		</section>
-		<section>
-
-			<section data-markdown data-separator-vertical="---">
-				<script type="text/template">
-					# Title
-					## Tiel 2
-
-					cool stuff
-					---
-					# Test
-					<div style="height:480px">
-					<canvas data-chart="line" >
-						<!--
-            {
-             "data": {
-              "labels": ["January"," February"," March"," April"," May"," June"," July"],
-              "datasets":[
-               {
-                "data":[65,59,80,81,56,55,40],
-                "label":"My first dataset","backgroundColor":"rgba(20,220,220,.8)"
-               },
-               {
-                "data":[28,48,40,19,86,27,90],
-                "label":"My second dataset","backgroundColor":"rgba(220,120,120,.8)"
-               }
-              ]
-             }
-            }
-            -->
-					</canvas>
-					</div>
-
-					---
-					# Cool ?
-					- test
-
-					* ok
-
-					A paragraph with some text and a [link](http://hakim.se).
-
-					```js
-					function test() {
-					Reveal.initialize(config);
-					}
-					```
-
-					Note: This will only appear in the speaker notes window.
-				</script>
+					Avec un plugin maison `AppTrmCharts`,<br/>
+					permettant de génération des graphiques TRM
+				</textarea>
 			</section>
-			<section>
-				<h3>Line chart from JSON string</h3>
-				<div style="height:480px">
-				<canvas data-chart="line" >
-<!--
-{
- "data": {
-  "labels": ["January"," February"," March"," April"," May"," June"," July"],
-  "datasets":[
-   {
-    "data":[65,59,80,81,56,55,40],
-    "label":"My first dataset","backgroundColor":"rgba(20,220,220,.8)"
-   },
-   {
-    "data":[28,48,40,19,86,27,90],
-    "label":"My second dataset","backgroundColor":"rgba(220,120,120,.8)"
-   }
-  ]
- }
-}
--->
-				</canvas>
-				</div>
-			</section>
-			<section>
-				<h3>Line chart with CSV data and JSON configuration</h3>
-				<div style="height:480px">
-				<canvas data-chart="line" >
-My first dataset,  65, 59, 80, 81, 56, 55, 40
-<!-- This is a comment -->
-My second dataset, 28, 48, 40, 19, 86, 27, 90
-<!-- 
-{ 
-"data" : {
-	"labels" : ["Enero", "Febrero", "Marzo", "Avril", "Mayo", "Junio", "Julio"],
-	"datasets" : [{ "borderColor": "#0f0", "borderDash": ["5","10"] }, { "borderColor": "#0ff" } ]
-	}
-}
--->
-				</canvas>
-				</div>
-			</section>
-			<section>
-				<h3>Bar chart with CSV data</h3>
-				<div style="height:480px">
-				<canvas data-chart="bar" >
-,January, February, March, April, May, June, July
-My first dataset, 65, 59, 80, 81, 56, 55, 40
-My second dataset, 28, 48, 40, 19, 86, 27, 90
-				</canvas>
-				</div>
-			</section>
-			<section>
-				<h3>Stacked bar chart from CSV file with JSON configuration</h3>
-				<div style="height:480px">
-				<canvas data-chart="bar" data-chart-src="chart/data.csv">
-<!-- 
-{
-"data" : {
-"datasets" : [{ "backgroundColor": "#0f0" }, { "backgroundColor": "#0ff" } ]
-},
-"options": { "scales": { "x": { "stacked": true }, "y": { "stacked": true } } }
-}
--->
-				</canvas>
-				</div>
-			</section>
-			<section>
-				<h3>Pie chart !</h3>
-				<div style="height:480px">
-				<canvas data-chart="pie">
-,Black, Red, Green, Yellow
-My first dataset, 40, 40, 20, 6
-My second dataset, 45, 40, 25, 4
-				</canvas>
-				</div>
-			</section>
-			<section>
-				<h2>Credits</h2>
-				<p> 
-					The charts are generated using <a href="http://www.chartjs.org/">Chart.js</a>.
-				<p>
-			</section>
-			<section>
-			<h2>The end</h2>
 
-<p>Check out other plugins by clicking on &nbsp;<a href="#" onclick="RevealMenu.toggle(); return false;"><i class="fa fa-bars"></i></a>&nbsp; and then on "Plugins <i class="fa fa-external-link-alt"></i>".</p>
-<p>Have a look at the source code & documentation on <a href="https://github.com/rajgoel/reveal.js-plugins">Github</a>.</p>
-					
+
+			<!-- Markdown -->
+			<section>
+				<section data-markdown data-separator-notes="^FAKE:">
+					<textarea data-template>
+						# Markdown
+
+						Ecrivez vos diapos directement au format [Markdown](https://www.markdownguide.org/basic-syntax).
+
+						Exemple :
+
+						```html
+						&lt;section data-markdown&gt;
+							&lt;textarea data-template&gt;
+								## Diapo 1
+								Un paragraphe avec un [lien](https://www.monnaie-libre.fr).
+								Note: Une note vue présentateur (touche `S`)
+								---
+								## Diapo 2
+								![image](images/logo_G1.png)
+							&lt;/textarea&gt;
+						&lt;/section&gt;
+						```
+
+						Résultat : cf diapo suivante
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## Diapo 1
+						Un paragraphe avec un [lien](https://www.monnaie-libre.fr).
+						Note: Une note vue présentateur (touche `S`)
+						---
+						## Diapo 2
+						![image](images/logo_G1.png)
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						# Documentation
+
+						- [Guide de la syntaxe Markdown](https://www.markdownguide.org/basic-syntax)
+						- [Configuration du plugin Reveal.js Markdown](https://revealjs.com/markdown/)
+					</textarea>
+				</section>
+			</section>
+
+			<!-- Math -->
+			<section>
+				<section data-markdown>
+					<textarea data-template>
+						# Math
+
+						Insérez facilement vos formules mathématiques.
+
+						Exemple :
+
+						```html
+						&lt;section data-markdown&gt;
+						  `$$ J(\theta_0,\theta_1) = \sum_{i=0} $$`
+						&lt;/section&gt;
+						```
+
+						Résultat :
+
+						`$$ J(\theta_0,\theta_1) = \sum_{i=0} $$`
+
+						---
+						# Documentation
+
+						- [Guide la syntaxe katex](https://katex.org/)
+						- [Configuration du plugin Reveal.js Math](https://revealjs.com/math/)
+
+					</textarea>
+				</section>
+			</section>
+
+			<section>
+				<section data-markdown>
+					<textarea data-template>
+						# Highlights
+						La coloration syntaxique peut être utilisé, par exemple pour afficher du code.
+
+						Exemple :
+
+						```
+							&lt;section data-markdown&gt;
+							```js
+							if (array.length) {
+								console.debug("Hello World");
+							}
+							```
+							&lt;/section&gt;
+						```
+
+						Résultat :
+
+						```js
+							if (array.length) {
+								console.debug("Hello World");
+							}
+						```
+
+						---
+						# Language
+
+						La syntaxe est mise en surbrillance,<br/>
+						en fonction du language indiqué (`js`, `html`, etc.)
+
+						Si aucun language n'est précisé, il sera détecter automatiquement.
+
+					</textarea>
+				</section>
+			</section>
+
+			<!-- Chart -->
+			<section>
+				<section data-markdown>
+					<script type="text/template">
+						# Chart
+
+						Insérez des graphiques [Chart.js](https://www.chartjs.org/) dans vos diapos.
+
+						<div style="height:480px">
+							<canvas data-chart="line" >
+								<!--
+								{
+								 "data": {
+									"labels": ["January"," February"," March"," April"," May"," June"," July"],
+									"datasets":[
+									 {
+										"data":[65,59,80,81,56,55,40],
+										"label":"My first dataset","backgroundColor":"rgba(20,220,220,.8)"
+									 },
+									 {
+										"data":[28,48,40,19,86,27,90],
+										"label":"My second dataset","backgroundColor":"rgba(220,120,120,.8)"
+									 }
+									]
+								 }
+								}
+								-->
+							</canvas>
+						</div>
+
+						---
+
+						## Exemple de données et configuration JSON
+
+						Voici le code utilisé pour générer le graphique de la diapo précédente :
+
+						```html
+						<div style="height:480px">
+							<canvas data-chart="line" >
+								<!--
+								{
+								 "data": {
+									"labels": ["January"," February"," March"," April"," May"," June"," July"],
+									"datasets":[
+									 {
+										"data":[65,59,80,81,56,55,40],
+										"label":"My first dataset","backgroundColor":"rgba(20,220,220,.8)"
+									 },
+									 {
+										"data":[28,48,40,19,86,27,90],
+										"label":"My second dataset","backgroundColor":"rgba(220,120,120,.8)"
+									 }
+									]
+								 }
+								}
+								-->
+							</canvas>
+						</div>
+						```
+
+						---
+
+						## Exemple avec un fichier de données CSV et une configuration JSON
+
+						<div style="height:480px">
+							<canvas data-chart="bar" data-chart-src="chart/data.csv">
+								<!--
+								{
+								"data" : {
+								"datasets" : [{ "backgroundColor": "#0f0" }, { "backgroundColor": "#0ff" } ]
+								},
+								"options": { "scales": { "x": { "stacked": true }, "y": { "stacked": true } } }
+								}
+								-->
+							</canvas>
+						</div>
+						---
+
+						Voici le code utilisé pour générer l'histogramme précédent :
+
+						```html
+						<div style="height:480px">
+							<canvas data-chart="bar" data-chart-src="chart/data.csv">
+								<!--
+								{
+								"data" : {
+								"datasets" : [{ "backgroundColor": "#0f0" }, { "backgroundColor": "#0ff" } ]
+								},
+								"options": { "scales": { "x": { "stacked": true }, "y": { "stacked": true } } }
+								}
+								-->
+							</canvas>
+						</div>
+						```
+
+						---
+						# Documentation
+
+						- [Documentation de Chart.js](https://www.chartjs.org/)
+						- [Documentation du plugin Reveal.js Chart](https://github.com/rajgoel/reveal.js-plugins/tree/master/chart) ([démo](https://rajgoel.github.io/reveal.js-demos/chart-demo.html#/))
+
+					</script>
+				</section>
+			</section>
+
+			<!-- TRM Chart -->
+			<section>
+				<section data-markdown>
+					<script type="text/template">
+						# TRM Chart
+
+						Insérez des graphiques sur la [TRM](https://trm.creationmonetaire.info) dans vos diapos.
+
+						<div style="height:480px">
+							<canvas data-trm-chart>
+								<!--
+								{
+									"N": 3,
+									"relative": true
+								}
+								-->
+							</canvas>
+						</div>
+
+					</script>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						# Graphique en relatif
+						Configuration pour avoir N = 3 membre, en relatif :
+
+						```html
+						<div style="height:480px">
+							<canvas data-trm-chart>
+							<!-- Options below -->
+							<!--
+								{
+									"N": 3,
+									"relative": true
+								}
+							-->
+							</canvas>
+						</div>
+						```
+
+					</textarea>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						# Exemple en quantitatif
+						Avec un zoom sur 10 ans
+						<div style="height:480px">
+							<canvas data-trm-chart>
+								<!--
+								{
+									"N": 3,
+									"relative": false,
+									"duration": 10
+								}
+								-->
+							</canvas>
+						</div>
+
+					</script>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						# Exemple en quantitatif
+						Configuration pour avoir un zoom sur 10 ans, via `duration` :
+
+						```html
+						<div style="height:480px">
+							<canvas data-trm-chart>
+							<!--
+								{
+									"N": 3,
+									"relative": false,
+									"duration": 10
+								}
+							-->
+							</canvas>
+						</div>
+						```
+
+					</textarea>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						# Affichage en camembert
+
+						<div style="height:480px">
+							<canvas data-trm-chart>
+								<!--
+								{
+									"type": "pie",
+									"N": 10,
+									"relative": true
+								}
+								-->
+							</canvas>
+						</div>
+
+					</script>
+				</section>
+
+				<section data-markdown>
+					<textarea data-template>
+						# Affichage en camembert
+
+						Configuration pour avoir N = 10 membres :
+
+						A noter que `data-trm-chart` permet de choisir le type de graphique :
+						```html
+							<canvas data-trm-chart="pie">
+								<!--
+								{
+									"N": 10,
+									"relative": true
+								}
+								-->
+							</canvas>
+						```
+
+					</textarea>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						# Renouvellement des générations
+
+						<div style="height:480px">
+							<canvas data-trm-chart>
+								<!--
+								{
+									"N": 20,
+									"deaths": true
+								}
+								-->
+							</canvas>
+						</div>
+
+					</script>
+				</section>
+
+				<section data-markdown>
+					<textarea data-template>
+						# Renouvellement des générations
+						Configuration pour avoir des décès et des naissances, avec N = 20 membres :
+
+						```html
+							<canvas data-trm-chart>
+								<!--
+								{
+									"N": 20,
+									"deaths": true
+								}
+								-->
+							</canvas>
+						```
+					</textarea>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						# Histogram
+
+						Les soldes (en relatif au DU) sont cumulés,<br/>
+						grâce à l'option `stacked=true` :
+
+						<div style="height:480px">
+							<canvas data-trm-chart="bar">
+								<!--
+								{
+									"N": 20,
+									"relative": true,
+									"stacked": true
+								}
+								-->
+							</canvas>
+						</div>
+
+					</script>
+				</section>
+
+				<section data-markdown>
+					<textarea data-template>
+
+						# Options de configuration
+
+						Voici toutes les options possibles, avec leur valeur par défaut :
+
+						```html
+						<div style="height:480px">
+							<canvas data-trm-chart>
+								<!--
+								{
+									"type": "line",  // line, pie, bar (défaut: 'line)
+									"ev": 80,        // Espérance de vie (défaut: 80)
+									"duration": 80,  // Nombre d'années (défaut: =ev)
+									"N": 4, 	     // Nombre de membres (défaut: 4)
+									"relative": true,// Soldes relatif au DU (défaut: true)
+									"deaths": true,  // Simuler des morts ? (défaut: false)
+									"deathsPeriod": 20, // Période entre 2 morts (défaut: auto)
+									"fill": false,   // Remplir sous chaque courbe (défaut: auto)
+									"stacked": false,// Cumuler les soldes des comptes (défaut: false)
+									"debug": true    // Activer les logs dans la console Javascript (défaut: false)
+								}
+								-->
+							</canvas>
+						</div>
+						```
+
+					</textarea>
+				</section>
 			</section>
 		</div>
 	</div>

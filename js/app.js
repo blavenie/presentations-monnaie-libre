@@ -48,6 +48,11 @@
   function loadExternalFiles(callback) {
     console.debug('[app] Loading external sources files');
     var sections = $("section[data-src$='.html']");
+    if (sections.length === 0) {
+      callback();
+      return;
+    }
+
     var loadedSections = 0;
     var checkIfLoaded = () => {
       loadedSections++;
@@ -62,40 +67,15 @@
   }
 
   function insertChartData(callback) {
-    console.debug('[app] Inserting graph data...');
-
-    var charts = $("canvas[data-chart-name]");
-    charts.each((i, chart) => {
-      const name = chart.getAttribute('data-chart-name');
-      let opts = chart.getAttribute('data-chart-opts');
-      if (!name) {
-        console.error('[app] Invalid data-chart-name attribute (cannot be empty)');
-      }
-      else {
-        opts = opts && JSON.parse(opts) || {};
-        opts.name = name;
-        let data = AppCharts[name];
-        if (typeof data == "function") {
-          data = data(opts, name);
-        }
-        else {
-          console.debug('[app] Getting chart data \'' + name + '\'', opts);
-        }
-        if (data) {
-          console.debug(data);
-          $(chart).attr('data-chart', data.type || 'line');
-          $(chart).append("<!--\n" + JSON.stringify(data) + "\n-->");
-        }
-        else {
-          console.error('[app] No chart with name \'' + name + '\' found, in AppCharts');
-        }
-      }
-    })
-
+    console.debug('[app] Inserting TRM graph data...');
+    AppTrmCharts.initialize();
     callback();
   }
 
   function initReveal(callback) {
+
+    console.debug('[app] Initialize Reveal...');
+
     // Full list of configuration options available here:
     // https://github.com/hakimel/reveal.js#configuration
     Reveal.initialize({

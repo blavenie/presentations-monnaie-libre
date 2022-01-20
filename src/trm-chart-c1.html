@@ -10,17 +10,48 @@
 <section>
   <h3>Quantitatif</h3>
   <div style="height:480px;">
-    <canvas data-chart-name="trmC1_1">
-
+    <canvas data-trm-chart>
+      <!--
+         {
+         "N": 20,
+         "relative": false,
+         "deaths": true,
+         "deathsPeriod": 4
+         }
+       -->
     </canvas>
   </div>
 </section>
 
-<section data-markdown data-separator-vertical="---">
-  <script type="text/template">
-    ### Relatif
+<section>
+  <h3>Quantitatif (zoom)</h3>
+  <div style="height:480px;">
+    <canvas data-trm-chart>
+      <!--
+         {
+         "N": 5,
+         "duration": 10,
+         "relative": false,
+         "deaths": true,
+         "deathsPeriod": 4
+         }
+       -->
+    </canvas>
+  </div>
+</section>
 
-    ![](images/trm_c1_relatif.png)
-
-  </script>
+<section>
+  <h3>Relatif</h3>
+  <div style="height:480px;">
+    <canvas data-trm-chart>
+      <!--
+         {
+         "N": 20,
+         "relative": true,
+         "deaths": true,
+         "deathsPeriod": 4
+         }
+       -->
+    </canvas>
+  </div>
 </section>

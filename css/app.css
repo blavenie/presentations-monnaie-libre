@@ -10,7 +10,7 @@
 }
 
 
-.slide-menu-button.hidden, #customcontrols.hidden {
+.hidden {
 	visibility: hidden;
 	display: none;
 }
