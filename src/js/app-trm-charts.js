@@ -177,7 +177,7 @@
     const actors = [];
     for (let i=0; i < N; i++) {
       actors.push({
-        label: ACTOR_NAMES[i],
+        label: i < ACTOR_NAMES.length ? ACTOR_NAMES[i] : null /*generated later*/,
         age: 0,
         birthday: 0,
         balance: 0
@@ -233,12 +233,13 @@
           }
         }
       }
-
-      // Generate missing labels
-      actors.forEach((actor, i) => {
-        actor.label = actor.label || ('I'+(i+1));
-      });
     }
+
+    // Generate missing labels
+    actors.forEach((actor, i) => {
+      actor.label = actor.label || ('I'+(i+1));
+    });
+
     return actors;
   }
 
