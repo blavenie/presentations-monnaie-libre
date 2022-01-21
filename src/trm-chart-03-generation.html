@@ -1,0 +1,103 @@
+<section data-markdown>
+  # Exemples pratiques (3)
+
+  Ajoutons un **remplacement générationnel**
+
+  ```
+  Les morts sont remplacés par des nouveaux nés.
+
+  Un décès et une naissance, tous les 4 ans.
+
+  Le nombre de membres N(t) reste constant.
+  ```
+
+</section>
+
+<section>
+  <h3>Quantitatif</h3>
+  <p>Evolution des comptes, avec N(t) = 20 membres</p>
+  <div style="height:480px;">
+    <canvas data-trm-chart>
+      <!--
+         {
+         "N": 20,
+         "relative": false,
+         "deaths": true,
+         "deathsPeriod": 4
+         }
+       -->
+    </canvas>
+  </div>
+</section>
+
+<section>
+  <h3>Quantitatif (zoom)</h3>
+  <p>Evolution des comptes <strong>sur 10 ans</strong></p>
+  <div style="height:480px;">
+    <canvas data-trm-chart>
+      <!--
+         {
+         "N": 5,
+         "duration": 10,
+         "relative": false,
+         "deaths": true,
+         "deathsPeriod": 4
+         }
+       -->
+    </canvas>
+  </div>
+</section>
+
+<section>
+  <h3>Relatif</h3>
+  <div style="height:480px;">
+    <p>Evolution des comptes <strong>en DU(t)</strong></p>
+    <canvas data-trm-chart>
+      <!--
+         {
+         "N": 20,
+         "relative": true,
+         "deaths": true,
+         "deathsPeriod": 4
+         }
+       -->
+    </canvas>
+  </div>
+</section>
+
+
+<section>
+  <h3>Relatif</h3>
+  <p>Répartition de la masse monétaire en DU(t)</p>
+  <div style="height:480px;">
+    <canvas data-trm-chart="pie">
+      <!--
+         {
+         "N": 20,
+         "relative": true,
+         "deaths": true,
+         "deathsPeriod": 4
+         }
+       -->
+    </canvas>
+  </div>
+</section>
+
+
+<section>
+  <h3>Relatif</h3>
+  <p>Répartition de la masse monétaire en DU(t)</p>
+  <div style="height:480px;">
+    <canvas data-trm-chart="bar">
+      <!--
+         {
+         "N": 20,
+         "relative": true,
+         "deaths": true,
+         "deathsPeriod": 4,
+         "stacked": true
+         }
+       -->
+    </canvas>
+  </div>
+</section>

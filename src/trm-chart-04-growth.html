@@ -1,0 +1,127 @@
+<section data-markdown>
+  <script type="text/template">
+    # Exemples pratiques (4)
+
+    Déterminons le **taux de croissance** `c`
+
+    ```
+    Variation de c de 5% et 20%
+    ```
+
+  </script>
+</section>
+
+<!-- 5% -->
+<section data-markdown>
+  <script type="text/template">
+    # Croissance à 5%
+    Evolution des comptes en DU(t), avec **c = 5%**
+    <div style="height:480px;">
+      <canvas data-trm-chart>
+        <!--
+         {
+           "N": 3,
+           "c": 0.05,
+           "relative": true
+         }
+         -->
+      </canvas>
+    </div>
+
+    Note: Seuls les plus âgés atteignent la moyenne, en 80 ans.
+    Ils sont favorisés, au détriment de ceux qui décèdent plus tôt.
+    La monnaie devient d'avantage une réserve de valeur.
+
+    ---
+
+    # Croissance à 5%
+    Evolution des comptes en DU(t), avec **c = 5%**<br/>
+    sur **160 ans**, avec remplacement générationnel
+
+    <div style="height:480px;">
+      <canvas data-trm-chart>
+        <!--
+         {
+           "N": 4,
+           "duration": 160,
+           "c": 0.05,
+           "relative": true,
+           "deaths": true
+         }
+         -->
+      </canvas>
+    </div>
+
+    Note: Ceux qui meurent jeune sont loin d'atteindre la moyenne.
+  </script>
+</section>
+
+
+<!-- 20% -->
+<section data-markdown>
+  <script type="text/template">
+    # Croissance à 20%
+    Evolution des comptes en DU(t), avec **c = 20%**
+
+    <div style="height:480px;">
+      <canvas data-trm-chart>
+      <!--
+       {
+         "N": 3,
+         "c": 0.2,
+         "relative": true
+       }
+       -->
+      </canvas>
+    </div>
+
+    Note: La moyenne est atteinte en 20 ans.
+    Les jeunes sont nettement favorisés.
+    Capitaliser devient difficile.
+
+    ---
+    # Croissance à 20%
+    Evolution des comptes en DU(t), avec **c = 20%**<br/>
+    sur **160 ans**, avec remplacement générationnel
+
+    <div style="height:480px;">
+      <canvas data-trm-chart>
+        <!--
+         {
+           "N": 4,
+           "duration": 160,
+           "c": 0.2,
+           "relative": true,
+           "deaths": true
+         }
+         -->
+      </canvas>
+    </div>
+  </script>
+</section>
+
+
+<!-- 20% -->
+<section data-markdown>
+  <script type="text/template">
+    # Croissance à 10%
+    Evolution des comptes en DU(t), avec **c = 10%**
+
+    <div style="height:480px;">
+      <canvas data-trm-chart>
+        <!--
+         {
+           "N": 4,
+           "duration": 160,
+           "relative": true,
+           "deaths": true
+         }
+         -->
+      </canvas>
+    </div>
+
+    Note: 10% est un bon compromis.
+    La moyenne est atteinte en une demi-vie.
+    Ceux qui meurent jeune ont tout même un capital proche de la moyenne : ~85% à 20 ans.
+  </script>
+</section>

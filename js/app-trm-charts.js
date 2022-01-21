@@ -22,8 +22,6 @@
   const CHART_SELECTOR = "[data-trm-chart]";
   const DEFAULT_EV = 80;
   const ACTOR_NAMES = Object.freeze(['Marcel', 'Sophie', 'Fanny']);
-  const scaleFillColors = AppColors.scale.custom(20, 0.35);
-  const scaleLineColors = AppColors.scale.custom(20, 1);
 
   const defaultChartOptions = {
     responsive: true,
@@ -62,11 +60,10 @@
   }
 
   function initChartCanvas(canvas) {
-    const attrValue = $(canvas).attr(DATA_TRM_CHART_ATTR);
-    const chartName = attrValue && attrValue.startsWith('trm') ? attrValue : 'trm';
+    const type = $(canvas).attr(DATA_TRM_CHART_ATTR);
 
     // Read options, from HTML comments
-    let opts = {};
+    let opts = { type };
     $(canvas).comments().each((i,c) => {
       const comment = $(c).html().trim();
       if (comment.startsWith('{')) {
@@ -83,19 +80,9 @@
       }
     })
 
-    opts.name = opts.name || chartName;
-    if (!opts.type && !attrValue.startsWith('trm')) {
-      opts.type = attrValue;
-    }
-    let data = AppTrmCharts[chartName];
-    if (typeof data == "function") {
-      data = data(opts);
-    }
-    else {
-      console.debug('[app-trm-charts] Getting TRM chart data \'' + chartName + '\'', opts);
-    }
+    let data = AppTrmCharts.createData(opts);
     if (data) {
-      $(canvas).attr('data-chart', data.type || 'line');
+      $(canvas).attr('data-chart', type || data.type || 'line');
       $(canvas).html("\n<!--\n" + JSON.stringify(data) + "\n-->\n");
     }
     else {
@@ -103,7 +90,7 @@
     }
   }
 
-  function trm(opts) {
+  function createData(opts) {
     const name = opts && opts.name || 'trm';
     const type = opts && opts.type || 'line';
     const N = opts && opts.N || ACTOR_NAMES.length;
@@ -115,7 +102,7 @@
     const yearLabels = !(opts && opts.yearLabels === false || type === 'pie');
     const exchanges = opts && opts.exchanges || [];
     const deaths = !!(opts && opts.deaths);
-    const deathsPeriod = deaths ? (opts && opts.deathsPeriod > 0 ? opts.deathsPeriod : Math.round(duration / N)) : 0;
+    const deathsPeriod = deaths ? (opts && opts.deathsPeriod > 0 ? opts.deathsPeriod : Math.min(20, Math.round(duration / N))) : 0;
     const stacked = (opts && opts.stacked === true) && type !== 'pie';
     const chartOptions = {
       ...(stacked ? { "scales": { "x": { "stacked": true }, "y": { "stacked": true } } } : {}),
@@ -130,12 +117,15 @@
       yearLabels,
       exchanges,
       deaths,
-      deathsPeriod,
+      ev,
+      duration,
       ...opts
     }
+    opts.deathsPeriod = getDeathsPeriod(opts);
     opts.actors = getActors(opts);
+    opts.scaleColors = getScaleColors(opts);
 
-    if (name) console.debug('[app-chart] Generating chart data \'' + name + '\'...', opts);
+    if (name) console.debug('[app-trm-chart] Generating chart data \'' + name + '\'...', opts);
 
     const labels = yearLabels ? getYearLabels(opts) : getActorLabels(opts);
     const datasets =  getDataSets(opts);
@@ -151,9 +141,28 @@
         ...chartOptions
       }
     };
-    if (name) console.debug('[app-chart] Generating chart data \'' + name + '\' [OK]', result);
+    if (name) console.debug('[app-trm-chart] Generating chart data \'' + name + '\' [OK]', result);
 
     return result;
+  }
+
+  function getDeathsPeriod(opts) {
+    if (!opts.deaths) return undefined;
+    if (opts.deathsPeriod > 0) return opts.deathsPeriod;
+
+    const ev = opts.ev;
+    const N = opts.N;
+
+    // Auto compute deaths period
+    // Make sure death period is a multiple of ev / N
+    let deathsPeriod = Math.round(ev / N );
+    while (deathsPeriod > 2 && ev % deathsPeriod % N > 0) {
+      deathsPeriod--;
+    }
+
+    console.debug('[app-trm-chart] Best deathsPeriod=' + deathsPeriod);
+    return deathsPeriod;
+
   }
 
   function getActors(opts) {
@@ -166,9 +175,10 @@
     const actors = [];
     for (let i=0; i < N; i++) {
       actors.push({
-        label: ACTOR_NAMES[i] || ('I'+i),
+        label: ACTOR_NAMES[i],
         age: 0,
-        birthday: 0
+        birthday: 0,
+        balance: 0
       });
     }
 
@@ -179,28 +189,67 @@
         const hasDeath = yearIndex > 0 && yearIndex % deathsPeriod === 0;
         if (hasDeath) {
           const deadYear = yearIndex;
-          const deadActor = actors[deathIndex];
-          if (deadActor.age === 0) {
+          let deadActor = actors[deathIndex];
+
+          if (opts.debug) {
+            console.debug('[app-trm-chart] Death at year=' + yearIndex + ' - wallet #' + deathIndex);
+          }
+          // Dead actor not exists yet: create it
+          if (deadActor.age < 0) {
+            const addDeadActor = (yearIndex + deadActor.age) >= 80
+            if (addDeadActor) {
+              /*deadActor = {
+                balance: 0,
+                //age: -1 * (yearIndex - ev)
+              };
+              if (opts.debug) console.debug('[app-trm-chart] Inserting missing actor, for death at year=' + yearIndex);
+              actors.splice(deathIndex, 0, deadActor);*/
+              //deathIndex++;
+              // Add a new actor
+              const bornActor = {
+                age: -1 * (deadYear),
+                birthday: deadYear,
+                balance: 0
+              };
+              actors.push(bornActor);
+            }
+            else {
+              console.debug('[app-trm-chart] Skipping death at year=' + deathIndex);
+            }
+          }
+          else {
             deadActor.age = ev - deadYear;
             deadActor.birthday = -1 * (ev - deadYear);
+            deathIndex++;
             // Add a new actor
-            const newActor = {
-              label: 'I' + actors.length,
+            const bornActor = {
               age: -1 * (deadYear),
               birthday: deadYear,
               balance: 0
             };
-            actors.push(newActor);
-            deathIndex++;
-          }
-          else {
-            // Force stop
-            yearIndex = duration;
+            actors.push(bornActor);
           }
         }
       }
+
+      // Generate missing labels
+      actors.forEach((actor, i) => {
+        actor.label = actor.label || ('I'+(i+1));
+      });
     }
     return actors;
+  }
+
+  function getScaleColors(opts) {
+    const yearLabels = opts.yearLabels;
+    const duration = opts.duration;
+    const actorsCount = opts.actors.length;
+
+    const colorsCount = yearLabels ? actorsCount : duration;
+    return {
+      fillColors: AppColors.scale.custom(colorsCount, 0.35), // Fill colors have opacity < 1
+      lineColors: AppColors.scale.custom(colorsCount, 1) // Fill colors have opacity=1
+    }
   }
 
   function getYearLabels(opts) {
@@ -224,8 +273,7 @@
     const duration = opts.duration || ev;
     const actors = opts.actors;
     const relative = opts.relative !== false;
-    const type = opts.type || 'line';
-    const yearLabels = (!(opts.yearLabels === false || (opts.yearLabels === undefined && type === 'pie')));
+    const yearLabels = opts.yearLabels;
     const debug = !!(opts && opts.debug);
 
     // Copy actors into wallets
@@ -233,9 +281,11 @@
       .map((actor, i) => Object.assign({}, actor));
 
     // Init balance of active wallets
-    getActiveWallets(wallets, ev).forEach((wallet, i) => wallet.balance = 100 * i);
+    const initialWallets = getActiveWallets(wallets, ev);
+    const minBalance = initialWallets.length > 1 ? 0 : 100; // If only one wallet: force a minium, instead of zero
+    initialWallets.forEach((wallet, i) => wallet.balance = Math.max(minBalance, 100 * i));
 
-    // X axis = YEAR
+    // X axis = years
     if (yearLabels) {
       // Init dataset
       const balancesByWallet = wallets.map(_ => []);
@@ -253,7 +303,7 @@
 
         // Save balance to datasets
         wallets.forEach((wallet, i) => {
-          if (debug && wallet.label) console.debug( " wallet #" + i  + " age=" + wallet.age + ' balance='+wallet.balance + " alive=" + activeWallets.includes(wallet));
+          if (debug && wallet.label) console.debug( " wallet #" + i  + " age=" + wallet.age + ' balance='+ Math.round(wallet.balance) + " alive=" + activeWallets.includes(wallet));
           // Convert in relative, if need
           const balance = relative ? wallet.balance / DU : wallet.balance;
           balancesByWallet[i].push(balance);
@@ -273,12 +323,12 @@
         return {
           data: balancesByWallet[i],
           label: wallet.label,
-          ...getSerieDefault(opts, i)
+          ...getDatasetStyle(opts, i)
         };
       });
     }
 
-    // X axis = WALLET (.e.g for 'pie' chart)
+    // X axis = actors (.e.g for 'pie' chart)
     else {
       // Init dataset
       const balancesByYear = [];
@@ -320,7 +370,7 @@
         return {
           data: balances,
           label,
-          ...getSerieDefault(opts, i)
+          ...getDatasetStyle(opts, i)
         };
       });
       if (opts.type === 'pie') {
@@ -330,31 +380,20 @@
     }
   }
 
-  function getSerieDefault(opts, i){
-    const type = opts && opts.type || 'line';
+  function getDatasetStyle(opts, i){
     const duration = opts && opts.duration || DEFAULT_EV;
-    if (type === 'pie') {
-      const noBorder = duration > 20;
-      const backgroundColor = scaleFillColors.length >= opts.N
-        ? scaleFillColors.slice(0, opts.N)
-        : AppColors.scale.custom(Math.max(10, opts.N), 0.35);
-      const fill = !(opts && opts.fill === false);
-      return {
-        backgroundColor,
-        fill,
-        borderWidth: noBorder ? 0.25 : 1,
-        pointRadius: 0
-      };
-    }
-    else {
+    const scaleColors = opts.scaleColors;
+    const yearLabels = opts.yearLabels;
+    // X axis = years
+    if (yearLabels) {
       i = i || 0;
       const hasExchanges = opts && opts.exchanges && opts.exchanges.length > 0 || false;
       const manyWallets = opts && opts.N > 3;
       const fill = !(opts && opts.fill === false) && (opts && opts.fill === true || !(hasExchanges || manyWallets));
       const borderWidth = fill ? 2 : 4;
       const pointRadius = fill ? 2 : 0;
-      const borderColor = fill ? scaleFillColors[i] : scaleLineColors[i];
-      const backgroundColor = scaleFillColors[i];
+      const borderColor = fill ? scaleColors.fillColors[i] : scaleColors.lineColors[i];
+      const backgroundColor = scaleColors.fillColors[i];
       return {
         fill,
         borderWidth,
@@ -371,6 +410,21 @@
         pointHoverBorderColor: borderColor || AppColors.rgba.white()
       };
     }
+    // X axis = actors
+    else {
+      const noBorder = duration > 20;
+      const actorsCount = opts.actors.length;
+      const backgroundColor = scaleColors.fillColors.length >= actorsCount
+        ? scaleColors.fillColors.slice(0, actorsCount)
+        : AppColors.scale.custom(Math.max(10, actorsCount), 1);
+      const fill = !(opts && opts.fill === false);
+      return {
+        backgroundColor,
+        fill,
+        borderWidth: noBorder ? 0.25 : 1,
+        pointRadius: 0
+      };
+    }
   }
 
   function getActiveWallets(wallets, ev){
@@ -381,12 +435,13 @@
 
   function dividends(wallets, N, opts) {
     const debug = !!(opts && opts.debug);
+    const c = opts.c || 0.1
     const M = wallets
       .reduce((res, wallet) => res + (wallet.balance || 0), 0);
     if (N > 0) {
       const mOverN = Math.round(M / N);
-      const DU = mOverN / 10;
-      if (debug) console.debug(' M=' + M + ' N=' + N + ' DU=' + DU);
+      const DU = mOverN * c;
+      if (debug) console.debug(' c=' + c + ' M=' + M + ' N=' + N + ' DU=' + DU);
 
       return DU;
     }
@@ -434,26 +489,7 @@
   AppTrmCharts = {
 
     initialize,
-
-    trm,
-
-    // TRM A1
-    trmA1_1: (opts) => trm({relative: false, ...opts}),
-    trmA1_2: (opts) => trm({relative: false, duration: 10, ...opts}),
-    trmA1_3: (opts) => trm({relative: true, ...opts}),
-    trmA1_3_2: (opts) => trm({relative: true, duration: 160, ...opts}),
-    trmA1_4: (opts) => trm({type: 'pie', relative: true, duration: 10, ...opts}),
-    trmA1_5: (opts) => trm({type: 'pie', relative: true, duration: 80, ...opts}),
-
-    // TRM B1
-    trmB1_1: (opts) => trm({relative: false, exchanges: [20, 60], ...opts}),
-    trmB1_2: (opts) => trm({relative: true, exchanges: [20, 60], ...opts}),
-
-    trmC1_1: (opts) => trm({relative: false, N: 20, duration: 160, ...opts}),
-    trmC1_2: (opts) => trm({relative: true, N: 20, duration: 160, ...opts}),
-
-    // Demo
-    demo1
+    createData
   };
 
   return AppTrmCharts;
