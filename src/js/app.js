@@ -135,7 +135,7 @@
         transitions: false,
         markers: true,
         hideMissingTitles: true,
-        themes: true,
+        themes: false,
         custom: [
           { title: 'Aide', icon: '<i class="fa fa-question-circle"></i>',
             content: '<ul class="slide-menu-items">' +
