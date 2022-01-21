@@ -254,7 +254,7 @@
 						## Exemple avec un fichier de données CSV et une configuration JSON
 
 						<div style="height:480px">
-							<canvas data-chart="bar" data-chart-src="chart/data.csv">
+							<canvas data-chart="bar" data-chart-src="demo/data.csv">
 								<!--
 								{
 								"data" : {
@@ -491,10 +491,11 @@
 									"ev": 80,        // Espérance de vie (défaut: 80)
 									"duration": 80,  // Nombre d'années (défaut: =ev)
 									"N": 4, 	     // Nombre de membres (défaut: 4)
-									"relative": true,// Soldes relatif au DU (défaut: true)
-									"deaths": true,  // Simuler des morts ? (défaut: false)
+									"c": 0.1,        // Taux de croissance c (défaut: 0.1)
+									"relative": true,// Soldes relatif à DU(t) (défaut: true)
+									"deaths": true,  // Simuler les morts/naissances (défaut: false)
 									"deathsPeriod": 20, // Période entre 2 morts (défaut: auto)
-									"fill": false,   // Remplir sous chaque courbe (défaut: auto)
+									"fill": false,   // Colorier sous les courbes (défaut: auto)
 									"stacked": false,// Cumuler les soldes des comptes (défaut: false)
 									"debug": true    // Activer les logs dans la console Javascript (défaut: false)
 								}
@@ -505,6 +506,7 @@
 
 					</textarea>
 				</section>
+
 			</section>
 		</div>
 	</div>
