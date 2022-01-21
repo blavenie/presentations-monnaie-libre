@@ -2,20 +2,44 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <title>Présentation Monnaie Libre (v10.0)</title>
-    <!--<base href="file:///mnt/data/git/duniter/presentations-monnaie-libre/">-->
 
-    <link rel="stylesheet" href="css/reveal.css">
-    <link rel="stylesheet" href="css/theme/black.css">
-    <link rel="stylesheet" href="css/lesou.css">
+    <meta name="description" content="Présentation Monnaie Libre">
+    <meta name="author" content="Benoit Lavenier <benoit.lavenier@e-is.pro>">
 
-    <!-- Theme used for syntax highlighting of code -->
-    <link rel="stylesheet" href="lib/css/zenburn.css">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-    <link rel="stylesheet" href="plugin/menu/menu.css">
-    <link rel="stylesheet" href="plugin/menu/font-awesome-5.0.2/css/fontawesome-all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+
+    <link rel="stylesheet" href="node_modules/reveal.js/dist/reveal.css">
+    <link rel="stylesheet" href="css/default.css" id="theme">
+    <link rel="stylesheet" href="node_modules/reveal.js/plugin/highlight/zenburn.css">
+    <link rel="stylesheet" href="node_modules/katex/dist/katex.min.css">
+    <link rel="stylesheet" href="node_modules/reveal.js-plugins/chalkboard/style.css">
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="node_modules/reveal.js-plugins/customcontrols/style.css">
+
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/katex/dist/katex.min.js"></script>
+    <script src="node_modules/reveal.js/dist/reveal.js"></script>
+    <script src="node_modules/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="node_modules/reveal.js/plugin/highlight/highlight.js"></script>
+    <script src="node_modules/reveal.js/plugin/math/math.js"></script>
+    <script src="node_modules/reveal.js/plugin/notes/notes.js"></script>
+    <script src="node_modules/reveal.js/plugin/notes/plugin.js"></script>
+    <script src="node_modules/reveal.js-plugins/menu/menu.js"></script>
+    <script src="node_modules/reveal.js-plugins/menu/plugin.js"></script>
+    <script src="node_modules/chart.js/dist/chart.min.js"></script>
+    <script src="node_modules/reveal.js-plugins/chart/plugin.js"></script>
+    <script src="node_modules/reveal.js-plugins/chalkboard/plugin.js"></script>
+    <script src="node_modules/reveal.js-plugins/customcontrols/plugin.js"></script>
+    <script src="js/jquery.comments.js"></script>
+    <script src="js/app-colors.js"></script>
+    <script src="js/app-trm-charts.js"></script>
+    <script src="js/app.js"></script>
 
     <!-- Printing and PDF exports -->
     <script>
@@ -25,9 +49,6 @@
         link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
         document.getElementsByTagName( 'head' )[0].appendChild( link );
     </script>
-    <!--[if lt IE 9]>
-    <script src="../reveal.js/lib/js/html5shiv.js"></script>
-    <![endif]-->
 
     <style>
         /*! normalize.css v2.1.0 | MIT License | git.io/normalize */
@@ -49,20 +70,13 @@
  *
  * @author Hakim El Hattab
  */*{-moz-box-sizing:border-box;box-sizing:border-box}html,body{padding:0;margin:0;color:#252525;font-family:"Open Sans", Helvetica, sans-serif;font-size:16px}html:before,body:before{content:'' !important}html{-webkit-font-smoothing:subpixel-antialiased !important}html.sl-root:not(.loaded) *{-webkit-transition:none !important;transition:none !important}body{overflow-y:scroll}body>*:not(.reveal){font-family:"Open Sans", Helvetica, sans-serif}html,#container{background-color:#eee}#container{position:relative;z-index:1}.icon{display:inline-block;line-height:1}.spinner{display:block;width:32px;height:32px;margin-top:16px;margin-left:16px}.spinner.centered{position:absolute;top:50%;left:50%;margin-top:-16px;margin-left:-16px}.spinner.centered-horizontally{margin-left:auto;margin-right:auto}.spinner-bitmap{display:block;width:32px;height:32px;background-image:url(data:image/png;base64,R0lGODlhIAAgAPMAAP///wAAAMbGxoSEhLa2tpqamjY2NlZWVtjY2OTk5Ly8vB4eHgQEBAAAAAAAAAAAACH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAIAAgAAAE5xDISWlhperN52JLhSSdRgwVo1ICQZRUsiwHpTJT4iowNS8vyW2icCF6k8HMMBkCEDskxTBDAZwuAkkqIfxIQyhBQBFvAQSDITM5VDW6XNE4KagNh6Bgwe60smQUB3d4Rz1ZBApnFASDd0hihh12BkE9kjAJVlycXIg7CQIFA6SlnJ87paqbSKiKoqusnbMdmDC2tXQlkUhziYtyWTxIfy6BE8WJt5YJvpJivxNaGmLHT0VnOgSYf0dZXS7APdpB309RnHOG5gDqXGLDaC457D1zZ/V/nmOM82XiHRLYKhKP1oZmADdEAAAh+QQJCgAAACwAAAAAIAAgAAAE6hDISWlZpOrNp1lGNRSdRpDUolIGw5RUYhhHukqFu8DsrEyqnWThGvAmhVlteBvojpTDDBUEIFwMFBRAmBkSgOrBFZogCASwBDEY/CZSg7GSE0gSCjQBMVG023xWBhklAnoEdhQEfyNqMIcKjhRsjEdnezB+A4k8gTwJhFuiW4dokXiloUepBAp5qaKpp6+Ho7aWW54wl7obvEe0kRuoplCGepwSx2jJvqHEmGt6whJpGpfJCHmOoNHKaHx61WiSR92E4lbFoq+B6QDtuetcaBPnW6+O7wDHpIiK9SaVK5GgV543tzjgGcghAgAh+QQJCgAAACwAAAAAIAAgAAAE7hDISSkxpOrN5zFHNWRdhSiVoVLHspRUMoyUakyEe8PTPCATW9A14E0UvuAKMNAZKYUZCiBMuBakSQKG8G2FzUWox2AUtAQFcBKlVQoLgQReZhQlCIJesQXI5B0CBnUMOxMCenoCfTCEWBsJColTMANldx15BGs8B5wlCZ9Po6OJkwmRpnqkqnuSrayqfKmqpLajoiW5HJq7FL1Gr2mMMcKUMIiJgIemy7xZtJsTmsM4xHiKv5KMCXqfyUCJEonXPN2rAOIAmsfB3uPoAK++G+w48edZPK+M6hLJpQg484enXIdQFSS1u6UhksENEQAAIfkECQoAAAAsAAAAACAAIAAABOcQyEmpGKLqzWcZRVUQnZYg1aBSh2GUVEIQ2aQOE+G+cD4ntpWkZQj1JIiZIogDFFyHI0UxQwFugMSOFIPJftfVAEoZLBbcLEFhlQiqGp1Vd140AUklUN3eCA51C1EWMzMCezCBBmkxVIVHBWd3HHl9JQOIJSdSnJ0TDKChCwUJjoWMPaGqDKannasMo6WnM562R5YluZRwur0wpgqZE7NKUm+FNRPIhjBJxKZteWuIBMN4zRMIVIhffcgojwCF117i4nlLnY5ztRLsnOk+aV+oJY7V7m76PdkS4trKcdg0Zc0tTcKkRAAAIfkECQoAAAAsAAAAACAAIAAABO4QyEkpKqjqzScpRaVkXZWQEximw1BSCUEIlDohrft6cpKCk5xid5MNJTaAIkekKGQkWyKHkvhKsR7ARmitkAYDYRIbUQRQjWBwJRzChi9CRlBcY1UN4g0/VNB0AlcvcAYHRyZPdEQFYV8ccwR5HWxEJ02YmRMLnJ1xCYp0Y5idpQuhopmmC2KgojKasUQDk5BNAwwMOh2RtRq5uQuPZKGIJQIGwAwGf6I0JXMpC8C7kXWDBINFMxS4DKMAWVWAGYsAdNqW5uaRxkSKJOZKaU3tPOBZ4DuK2LATgJhkPJMgTwKCdFjyPHEnKxFCDhEAACH5BAkKAAAALAAAAAAgACAAAATzEMhJaVKp6s2nIkolIJ2WkBShpkVRWqqQrhLSEu9MZJKK9y1ZrqYK9WiClmvoUaF8gIQSNeF1Er4MNFn4SRSDARWroAIETg1iVwuHjYB1kYc1mwruwXKC9gmsJXliGxc+XiUCby9ydh1sOSdMkpMTBpaXBzsfhoc5l58Gm5yToAaZhaOUqjkDgCWNHAULCwOLaTmzswadEqggQwgHuQsHIoZCHQMMQgQGubVEcxOPFAcMDAYUA85eWARmfSRQCdcMe0zeP1AAygwLlJtPNAAL19DARdPzBOWSm1brJBi45soRAWQAAkrQIykShQ9wVhHCwCQCACH5BAkKAAAALAAAAAAgACAAAATrEMhJaVKp6s2nIkqFZF2VIBWhUsJaTokqUCoBq+E71SRQeyqUToLA7VxF0JDyIQh/MVVPMt1ECZlfcjZJ9mIKoaTl1MRIl5o4CUKXOwmyrCInCKqcWtvadL2SYhyASyNDJ0uIiRMDjI0Fd30/iI2UA5GSS5UDj2l6NoqgOgN4gksEBgYFf0FDqKgHnyZ9OX8HrgYHdHpcHQULXAS2qKpENRg7eAMLC7kTBaixUYFkKAzWAAnLC7FLVxLWDBLKCwaKTULgEwbLA4hJtOkSBNqITT3xEgfLpBtzE/jiuL04RGEBgwWhShRgQExHBAAh+QQJCgAAACwAAAAAIAAgAAAE7xDISWlSqerNpyJKhWRdlSAVoVLCWk6JKlAqAavhO9UkUHsqlE6CwO1cRdCQ8iEIfzFVTzLdRAmZX3I2SfZiCqGk5dTESJeaOAlClzsJsqwiJwiqnFrb2nS9kmIcgEsjQydLiIlHehhpejaIjzh9eomSjZR+ipslWIRLAgMDOR2DOqKogTB9pCUJBagDBXR6XB0EBkIIsaRsGGMMAxoDBgYHTKJiUYEGDAzHC9EACcUGkIgFzgwZ0QsSBcXHiQvOwgDdEwfFs0sDzt4S6BK4xYjkDOzn0unFeBzOBijIm1Dgmg5YFQwsCMjp1oJ8LyIAACH5BAkKAAAALAAAAAAgACAAAATwEMhJaVKp6s2nIkqFZF2VIBWhUsJaTokqUCoBq+E71SRQeyqUToLA7VxF0JDyIQh/MVVPMt1ECZlfcjZJ9mIKoaTl1MRIl5o4CUKXOwmyrCInCKqcWtvadL2SYhyASyNDJ0uIiUd6GGl6NoiPOH16iZKNlH6KmyWFOggHhEEvAwwMA0N9GBsEC6amhnVcEwavDAazGwIDaH1ipaYLBUTCGgQDA8NdHz0FpqgTBwsLqAbWAAnIA4FWKdMLGdYGEgraigbT0OITBcg5QwPT4xLrROZL6AuQAPUS7bxLpoWidY0JtxLHKhwwMJBTHgPKdEQAACH5BAkKAAAALAAAAAAgACAAAATrEMhJaVKp6s2nIkqFZF2VIBWhUsJaTokqUCoBq+E71SRQeyqUToLA7VxF0JDyIQh/MVVPMt1ECZlfcjZJ9mIKoaTl1MRIl5o4CUKXOwmyrCInCKqcWtvadL2SYhyASyNDJ0uIiUd6GAULDJCRiXo1CpGXDJOUjY+Yip9DhToJA4RBLwMLCwVDfRgbBAaqqoZ1XBMHswsHtxtFaH1iqaoGNgAIxRpbFAgfPQSqpbgGBqUD1wBXeCYp1AYZ19JJOYgH1KwA4UBvQwXUBxPqVD9L3sbp2BNk2xvvFPJd+MFCN6HAAIKgNggY0KtEBAAh+QQJCgAAACwAAAAAIAAgAAAE6BDISWlSqerNpyJKhWRdlSAVoVLCWk6JKlAqAavhO9UkUHsqlE6CwO1cRdCQ8iEIfzFVTzLdRAmZX3I2SfYIDMaAFdTESJeaEDAIMxYFqrOUaNW4E4ObYcCXaiBVEgULe0NJaxxtYksjh2NLkZISgDgJhHthkpU4mW6blRiYmZOlh4JWkDqILwUGBnE6TYEbCgevr0N1gH4At7gHiRpFaLNrrq8HNgAJA70AWxQIH1+vsYMDAzZQPC9VCNkDWUhGkuE5PxJNwiUK4UfLzOlD4WvzAHaoG9nxPi5d+jYUqfAhhykOFwJWiAAAIfkECQoAAAAsAAAAACAAIAAABPAQyElpUqnqzaciSoVkXVUMFaFSwlpOCcMYlErAavhOMnNLNo8KsZsMZItJEIDIFSkLGQoQTNhIsFehRww2CQLKF0tYGKYSg+ygsZIuNqJksKgbfgIGepNo2cIUB3V1B3IvNiBYNQaDSTtfhhx0CwVPI0UJe0+bm4g5VgcGoqOcnjmjqDSdnhgEoamcsZuXO1aWQy8KAwOAuTYYGwi7w5h+Kr0SJ8MFihpNbx+4Erq7BYBuzsdiH1jCAzoSfl0rVirNbRXlBBlLX+BP0XJLAPGzTkAuAOqb0WT5AH7OcdCm5B8TgRwSRKIHQtaLCwg1RAAAOwAAAAAAAAAAAA==);background-repeat:no-repeat}.clear{clear:both}.vcenter:before{content:'';display:inline-block;height:100%;vertical-align:middle}.vcenter-target{display:inline-block;vertical-align:middle}.no-transition,.no-transition *{-webkit-transition:none !important;transition:none !important}.grow-in-on-load{opacity:0;-webkit-transform:scale(0.96);-ms-transform:scale(0.96);transform:scale(0.96);-webkit-transition:all 0.3s ease;transition:all 0.3s ease}html.loaded .grow-in-on-load{opacity:1;-webkit-transform:none;-ms-transform:none;transform:none}h1,h2,h3,h4,h5,h6{font-family:"Open Sans", Helvetica, sans-serif;line-height:1.3em;font-weight:normal}h1,h2,h3,h4,h5,h6,ul,li{margin:0;padding:0}h1{font-size:35.2px}h2{font-size:27.2px}h3{font-size:20.8px}h4{font-size:16px;font-weight:600}h5{font-size:16px;font-weight:600}h6{font-size:16px;font-weight:600}p{margin:1em 0}a{color:#255c7c;text-decoration:none;outline:0;-webkit-transition:color 0.1s ease;transition:color 0.1s ease}a:hover{color:#4195c6}a:focus{outline:1px solid #1baee1}p a{border-bottom:1px solid #8fc1de}b{font-weight:600}small{font-size:0.8em}button{border:0;background:transparent;cursor:pointer}.text-semi-bold{font-weight:600}.main{line-height:1.5}.reveal-viewport{width:100%;height:100%}.container .column{width:100%;max-width:1140px;margin:0 auto;padding:0 20px}@media screen and (max-width: 380px){.container .column{padding:0 10px}}.container .column>section,.container .column>div>section{position:relative;width:100%;margin:40px auto;padding:40px;background:white;border-radius:2px}.container .column>section h2,.container .column>div>section h2{margin-bottom:20px}.container .column>section .header-with-description h2,.container .column>div>section .header-with-description h2{margin-bottom:10px}.container .column>section .header-with-description p,.container .column>div>section .header-with-description p{margin-top:0;margin-bottom:20px;color:#999;font-size:0.9em}.container .column>section.critical-error,.container .column>div>section.critical-error{border-color:#f00;background:#eb5555;color:#fff}@media screen and (max-width: 380px){.container .column>section,.container .column>div>section{padding:20px}.container .column>section:first-child,.container .column>div>section:first-child{margin-top:10px}}.container .column .page-navigation+section{margin-top:20px}.container .column .page-navigation{display:block;max-width:900px;margin:40px auto 20px auto;text-align:right}.container .column .page-navigation .title{float:left;margin-top:5px;font-weight:bold;color:#bbb}.container .column .page-navigation ul{list-style:none}.container .column .page-navigation ul li{display:inline-block;position:relative;margin-left:5px;margin-bottom:7px}.container .column .page-navigation ul li .button{padding-top:8px;padding-bottom:8px;font-size:0.9em;color:#777;border-color:#aaa}.container .column .page-navigation ul li .button:hover{color:#222;border-color:#444}.container .column .page-navigation ul li .button.selected{color:#222;border-color:#444;opacity:1}.container .column .page-navigation ul li .button.selected:before{content:'';position:absolute;height:0px;width:0px;left:50%;right:initial;top:100%;bottom:initial;border-style:solid;border-width:4px;border-color:transparent;-webkit-transform:rotate(360deg);margin-left:-4px;border-bottom-width:0;border-top-color:#444444}.flash-notification{position:absolute;width:100%;top:0;left:0;text-align:center;z-index:100;display:none}.flash-notification p{display:inline-block;margin:13px;padding:10px 20px;background:#111;color:white;border:1px solid #333;border-radius:4px}.page-loader{position:fixed;width:100%;height:100%;left:0;top:0;z-index:2000;background:#111;color:#fff;opacity:1;visibility:hidden;opacity:0;-webkit-transition:all 0.5s ease;transition:all 0.5s ease}.page-loader .page-loader-inner{position:absolute;display:block;top:40%;width:100%;text-align:center}.page-loader .page-loader-inner .page-loader-spinner{display:block;position:relative;width:50px;height:50px;margin:0 auto 20px auto;-webkit-animation:spin-rectangle-to-circle 2.5s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;animation:spin-rectangle-to-circle 2.5s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;background-color:#E4637C;border-radius:1px}.page-loader .page-loader-inner .page-loader-message{display:block;margin:0;vertical-align:top;line-height:32px;font-size:14px;color:#bbb;font-family:Helvetica, sans-serif}.page-loader.visible{visibility:visible;opacity:1}.page-loader.frozen .page-loader-spinner{-webkit-animation:none;animation:none}.pro-badge{display:inline-block;position:relative;padding:3px 6px 2px 6px;font-size:12px;font-weight:normal;line-height:14px;letter-spacing:1px;border-radius:2px;border:1px solid #2d739c;background:#3990c3;color:#fff;vertical-align:middle}.pro-badge:after{display:inline-block;position:relative;top:-1px;margin-left:2px;color:#fff;content:"\e094";font-family:'slides';font-weight:normal;-webkit-font-smoothing:antialiased}.pro-badge:hover{color:#fff;border-color:#3381af;background:#5fa6d0}.touch .user-view li .controls{opacity:1 !important}.touch .deck-view .options{opacity:1}.sl-info{display:inline-block;font-size:0.8em;width:1.3em;height:1.3em;line-height:1.3em;border-radius:1.3em;color:#fff;background-color:rgba(0,0,0,0.3);text-align:center;vertical-align:middle}.sl-info:hover{background-color:rgba(0,0,0,0.5)}.sl-info-inline{margin-top:-0.2em}.sl-info:after{font-family:serif;content:'i'}.sl-info-help:after{font-family:Helvetica, sans-serif;content:'?'}.funnel-intro{margin-bottom:1.5em}.funnel-intro h2,.funnel-intro h3{margin-top:0 !important;margin-bottom:0.1em;text-align:center}.funnel-intro h2{font-size:2em;font-weight:600;color:#888}.funnel-intro h3{font-size:1.5em;color:#aaa}@media screen and (max-width: 600px){.funnel-intro{margin-top:20px}}.sl-coupon{margin:auto;text-align:center}.sl-coupon .sl-coupon-inner{display:inline-block;padding:12px 20px;margin:0;border-radius:4px;text-align:left;background-color:#fff;border-left:4px solid #1baee1}.sl-coupon .sl-coupon-redeem-by{color:#aaa;margin-top:4px}.sl-coupon p{margin:0}html.decks.offline .reveal{-webkit-transition:opacity 0.3s ease;transition:opacity 0.3s ease;opacity:0}html.decks.offline.fonts-are-ready .reveal{opacity:1}.reveal .sl-block{display:block;position:absolute;z-index:auto}.reveal .sl-block .sl-block-style{display:block;position:relative;width:100%;height:100%;max-width:none;max-height:none;margin:0;outline:0;will-change:opacity}.reveal .sl-block .sl-block-content{display:block;position:relative;width:100%;height:100%;max-width:none;max-height:none;margin:0;outline:0;word-wrap:break-word}.reveal .sl-block .sl-block-content .sl-block-content-preview{position:absolute;width:100%;height:100%;left:0;top:0}.reveal .sl-block .sl-block-content>:first-child{margin-top:0}.reveal .sl-block .sl-block-content>:last-child{margin-bottom:0}.reveal .sl-block .sl-block-content[data-has-letter-spacing] *{letter-spacing:inherit}.reveal .sl-block .sl-block-content[data-has-line-height] *{line-height:inherit}.reveal .sl-block-content[data-animation-type="fade-in"]{opacity:0}.reveal.ready section.present>.sl-block .sl-block-content[data-animation-type="fade-in"]{opacity:1}.reveal .sl-block-content[data-animation-type="fade-out"]{opacity:1}.reveal.ready section.present>.sl-block .sl-block-content[data-animation-type="fade-out"]{opacity:0}.reveal .sl-block-content[data-animation-type="slide-up"]{-webkit-transform:translateY(30px);-ms-transform:translateY(30px);transform:translateY(30px);opacity:0}.reveal.ready section.present>.sl-block .sl-block-content[data-animation-type="slide-up"]{-webkit-transform:none;-ms-transform:none;transform:none;opacity:1}.reveal .sl-block-content[data-animation-type="slide-down"]{-webkit-transform:translateY(-30px);-ms-transform:translateY(-30px);transform:translateY(-30px);opacity:0}.reveal.ready section.present>.sl-block .sl-block-content[data-animation-type="slide-down"]{-webkit-transform:none;-ms-transform:none;transform:none;opacity:1}.reveal .sl-block-content[data-animation-type="slide-left"]{-webkit-transform:translateX(30px);-ms-transform:translateX(30px);transform:translateX(30px);opacity:0}.reveal.ready section.present>.sl-block .sl-block-content[data-animation-type="slide-left"]{-webkit-transform:none;-ms-transform:none;transform:none;opacity:1}.reveal .sl-block-content[data-animation-type="slide-right"]{-webkit-transform:translateX(-30px);-ms-transform:translateX(-30px);transform:translateX(-30px);opacity:0}.reveal.ready section.present>.sl-block .sl-block-content[data-animation-type="slide-right"]{-webkit-transform:none;-ms-transform:none;transform:none;opacity:1}.reveal .sl-block-content[data-animation-type="scale-up"]{-webkit-transform:scale(0.6);-ms-transform:scale(0.6);transform:scale(0.6);opacity:0}.reveal.ready section.present>.sl-block .sl-block-content[data-animation-type="scale-up"]{-webkit-transform:none;-ms-transform:none;transform:none;opacity:1}.reveal .sl-block-content[data-animation-type="scale-down"]{-webkit-transform:scale(1.4);-ms-transform:scale(1.4);transform:scale(1.4);opacity:0}.reveal.ready section.present>.sl-block .sl-block-content[data-animation-type="scale-down"]{-webkit-transform:none;-ms-transform:none;transform:none;opacity:1}.reveal section .sl-block-content[data-animation-type]{-webkit-transition-property:-webkit-transform, opacity;transition-property:transform, opacity}.reveal section.past>.sl-block .sl-block-content[data-animation-type],.reveal section.future>.sl-block .sl-block-content[data-animation-type]{-webkit-transition-delay:0s !important;transition-delay:0s !important}html.decks.edit.is-editing .reveal .sl-block{cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-transition:none;transition:none;pointer-events:none}html.decks.edit.is-editing .reveal .sl-block>*{pointer-events:auto}html.decks.edit.is-editing .reveal .sl-block .sl-block-content{cursor:pointer}html.decks.edit.is-editing .reveal .sl-block .sl-block-content:before{position:absolute;width:100%;height:100%;left:0;top:0;content:'';z-index:1;opacity:0;background-color:rgba(0,0,0,0)}html.decks.edit.is-editing .reveal .sl-block .sl-block-overlay{position:absolute;width:100%;height:100%;left:0;top:0}html.decks.edit.is-editing .reveal .sl-block .sl-block-overlay-message,html.decks.edit.is-editing .reveal .sl-block .sl-block-overlay-warning{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;padding:10px;font-size:14px;font-family:"Open Sans", Helvetica, sans-serif;text-align:center;background-color:#222;color:#fff;opacity:0.9;overflow:hidden}html.decks.edit.is-editing .reveal .sl-block .sl-block-overlay-message .overlay-content,html.decks.edit.is-editing .reveal .sl-block .sl-block-overlay-warning .overlay-content{margin:auto}html.decks.edit.is-editing .reveal .sl-block .sl-block-overlay-message.below-content,html.decks.edit.is-editing .reveal .sl-block .sl-block-overlay-warning.below-content{z-index:0 !important}html.decks.edit.is-editing .reveal .sl-block .sl-block-overlay-warning{color:#ffa660}html.decks.edit.is-editing .reveal .sl-block .sl-block-overlay-warning .icon{display:block;margin:0 auto 10px auto;width:2em;height:2em;line-height:2em;border-radius:1em;text-align:center;font-size:12px;color:#fff;background-color:#e06200}html.decks.edit.is-editing .reveal .sl-block .sl-block-placeholder{background-image:url(//assets.slid.es/assets/editor/block-placeholder-white-transparent-500x500-7823f1840b07555f52c57c14e21dd605.png);background-size:contain;background-color:#222;background-repeat:no-repeat;background-position:50% 50%;opacity:0.9}html.decks.edit.is-editing .reveal .sl-block.is-editing,html.decks.edit.is-editing .reveal .sl-block.is-editing .sl-block-content{cursor:auto}html.decks.edit.is-editing .reveal .sl-block.is-editing .sl-block-content{outline:1px solid rgba(27,174,225,0.4)}html.decks.edit.is-editing .reveal .sl-block.is-editing .sl-block-content:before{display:none}html.decks.edit.is-editing .reveal .sl-block.intro-start{opacity:0;z-index:255;-webkit-transform:scale(1.1);-ms-transform:scale(1.1);transform:scale(1.1)}html.decks.edit.is-editing .reveal .sl-block.intro-end{z-index:255;-webkit-transition:all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),opacity 0.2s ease;transition:all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),opacity 0.2s ease}html.decks.edit.is-editing .sl-block-transform{position:absolute;width:100%;height:100%;left:0;top:0;visibility:hidden;z-index:255;pointer-events:none;border:1px solid #1baee1;font-size:12px}html.decks.edit.is-editing .sl-block-transform .anchor{position:absolute;width:1em;height:1em;pointer-events:all;visibility:hidden}html.decks.edit.is-editing .sl-block-transform .anchor-point{position:relative;width:100%;height:100%;border:1px solid #1baee1;border-radius:50%;background:#fff;cursor:pointer;z-index:2}html.decks.edit.is-editing .sl-block-transform .anchor-rotation{position:absolute;width:24px;height:24px;border-radius:24px;top:0;left:0;z-index:1;-webkit-transform-origin:0 0;-ms-transform-origin:0 0;transform-origin:0 0;cursor:url(//assets.slid.es/assets/icons/block-rotate-icon-16-15c633b5350d6be79bbb180dc707fbdf.cur),pointer;cursor:url(//assets.slid.es/assets/icons/block-rotate-icon-16-e69bd29c5b0064bc917ce48f5fbf6b63.svg) 8 8,pointer;cursor:-webkit-image-set(url(//assets.slid.es/assets/icons/block-rotate-icon-16-e69bd29c5b0064bc917ce48f5fbf6b63.svg) 1x, url(//assets.slid.es/assets/icons/block-rotate-icon-32-222b0ad7f11a03f13964db77735ac36d.svg) 2x) 8 8,pointer}html.decks.edit.is-editing .sl-block-transform .anchor[data-direction=n]{left:50%;bottom:100%;margin-left:-0.5em;margin-bottom:-0.4em}html.decks.edit.is-editing .sl-block-transform .anchor[data-direction=n] .anchor-point{cursor:ns-resize}html.decks.edit.is-editing .sl-block-transform .anchor[data-direction=n] .anchor-rotation{-webkit-transform:rotate(225deg) translate(-1px, -1px);-ms-transform:rotate(225deg) translate(-1px, -1px);transform:rotate(225deg) translate(-1px, -1px);left:6px;top:12px}html.decks.edit.is-editing .sl-block-transform .anchor[data-direction=e]{left:100%;top:50%;margin-top:-0.5em;margin-left:-0.4em}html.decks.edit.is-editing .sl-block-transform .anchor[data-direction=e] .anchor-point{cursor:ew-resize}html.decks.edit.is-editing .sl-block-transform .anchor[data-direction=e] .anchor-rotation{-webkit-transform:rotate(315deg) translate(-1px, -1px);-ms-transform:rotate(315deg) translate(-1px, -1px);transform:rotate(315deg) translate(-1px, -1px);top:6px}html.decks.edit.is-editing .sl-block-transform .anchor[data-direction=s]{left:50%;top:100%;margin-left:-0.5em;margin-top:-0.4em}html.decks.edit.is-editing .sl-block-transform .anchor[data-direction=s] .anchor-point{cursor:ns-resize}html.decks.edit.is-editing .sl-block-transform .anchor[data-direction=s] .anchor-rotation{-webkit-transform:rotate(45deg) translate(-1px, -1px);-ms-transform:rotate(45deg) translate(-1px, -1px);transform:rotate(45deg) translate(-1px, -1px);left:6px}html.decks.edit.is-editing .sl-block-transform .anchor[data-direction=w]{right:100%;top:50%;margin-top:-0.5em;margin-right:-0.4em}html.decks.edit.is-editing .sl-block-transform .anchor[data-direction=w] .anchor-point{cursor:ew-resize}html.decks.edit.is-editing .sl-block-transform .anchor[data-direction=w] .anchor-rotation{-webkit-transform:rotate(135deg) translate(-1px, -1px);-ms-transform:rotate(135deg) translate(-1px, -1px);transform:rotate(135deg) translate(-1px, -1px);left:12px;top:6px}html.decks.edit.is-editing .sl-block-transform .anchor[data-direction=nw]{right:100%;bottom:100%;margin-right:-0.4em;margin-bottom:-0.4em}html.decks.edit.is-editing .sl-block-transform .anchor[data-direction=nw] .anchor-point{cursor:nw-resize}html.decks.edit.is-editing .sl-block-transform .anchor[data-direction=nw] .anchor-rotation{-webkit-transform:rotate(180deg) translate(-1px, -1px);-ms-transform:rotate(180deg) translate(-1px, -1px);transform:rotate(180deg) translate(-1px, -1px);left:12px;top:12px}html.decks.edit.is-editing .sl-block-transform .anchor[data-direction=ne]{left:100%;bottom:100%;margin-left:-0.4em;margin-bottom:-0.4em}html.decks.edit.is-editing .sl-block-transform .anchor[data-direction=ne] .anchor-point{cursor:ne-resize}html.decks.edit.is-editing .sl-block-transform .anchor[data-direction=ne] .anchor-rotation{-webkit-transform:rotate(270deg) translate(-1px, -1px);-ms-transform:rotate(270deg) translate(-1px, -1px);transform:rotate(270deg) translate(-1px, -1px);top:12px}html.decks.edit.is-editing .sl-block-transform .anchor[data-direction=se]{left:100%;top:100%;margin-left:-0.4em;margin-top:-0.4em}html.decks.edit.is-editing .sl-block-transform .anchor[data-direction=se] .anchor-point{cursor:se-resize}html.decks.edit.is-editing .sl-block-transform .anchor[data-direction=se] .anchor-rotation{-webkit-transform:rotate(0deg) translate(-1px, -1px);-ms-transform:rotate(0deg) translate(-1px, -1px);transform:rotate(0deg) translate(-1px, -1px)}html.decks.edit.is-editing .sl-block-transform .anchor[data-direction=sw]{right:100%;top:100%;margin-right:-0.4em;margin-top:-0.4em}html.decks.edit.is-editing .sl-block-transform .anchor[data-direction=sw] .anchor-point{cursor:sw-resize}html.decks.edit.is-editing .sl-block-transform .anchor[data-direction=sw] .anchor-rotation{-webkit-transform:rotate(90deg) translate(-1px, -1px);-ms-transform:rotate(90deg) translate(-1px, -1px);transform:rotate(90deg) translate(-1px, -1px);left:12px}html.decks.edit.is-editing .sl-block-transform .anchor[data-cursor-direction=n] .anchor-point{cursor:ns-resize}html.decks.edit.is-editing .sl-block-transform .anchor[data-cursor-direction=e] .anchor-point{cursor:ew-resize}html.decks.edit.is-editing .sl-block-transform .anchor[data-cursor-direction=s] .anchor-point{cursor:ns-resize}html.decks.edit.is-editing .sl-block-transform .anchor[data-cursor-direction=w] .anchor-point{cursor:ew-resize}html.decks.edit.is-editing .sl-block-transform .anchor[data-cursor-direction=nw] .anchor-point{cursor:nw-resize}html.decks.edit.is-editing .sl-block-transform .anchor[data-cursor-direction=ne] .anchor-point{cursor:ne-resize}html.decks.edit.is-editing .sl-block-transform .anchor[data-cursor-direction=se] .anchor-point{cursor:se-resize}html.decks.edit.is-editing .sl-block-transform .anchor[data-cursor-direction=sw] .anchor-point{cursor:sw-resize}html.decks.edit.is-editing .sl-block-transform .anchor[data-direction=p1],html.decks.edit.is-editing .sl-block-transform .anchor[data-direction=p2]{width:1.6em;height:1.6em;left:0;top:0;margin-left:-0.8em;margin-top:-0.8em}html.decks.edit.is-editing .sl-block-transform .anchor[data-direction=p1] .anchor-point,html.decks.edit.is-editing .sl-block-transform .anchor[data-direction=p2] .anchor-point{background-color:rgba(255,255,255,0.7);border-width:2px;cursor:move}html.decks.edit.is-editing .sl-block-transform.visible{visibility:inherit}html.decks.edit.is-editing .sl-block-transform.visible .anchor{visibility:inherit}html.decks.edit.is-editing .sl-block.is-editing .sl-block-transform{visibility:hidden}html.decks.edit.is-editing.touch-editor .sl-block .sl-block-transform{font-size:20px}html.decks.edit.is-editing.touch-editor .sl-block .sl-block-transform .anchor:before{content:'';position:absolute;left:-0.5em;top:-0.5em;width:2em;height:2em}html.decks.edit.is-editing.touch-editor-small .sl-block .sl-block-transform{font-size:30px}html.decks.edit.is-editing.multiple-blocks-selected .sl-block-transform .anchor-rotation{display:none}html.decks.edit.is-editing .reveal .sl-block[data-block-type="text"].is-focused.is-text-overflowing .sl-block-content{max-height:700px;overflow:auto}.reveal .sl-block[data-block-type="image"] .sl-block-placeholder{background-image:url(//assets.slid.es/assets/editor/image-placeholder-white-transparent-500x500-fbb1e941d141a5bfabfcb4d560f04198.png) !important}.reveal .sl-block[data-block-type="image"] .image-progress{background-color:rgba(0,0,0,0.7);font-size:14px;color:#fff;text-align:center}.reveal .sl-block[data-block-type="image"] .sl-block-content{overflow:hidden}.reveal .sl-block[data-block-type="image"] .sl-block-content img{width:100%;height:100%;margin:0;padding:0;border:0;vertical-align:top}.reveal .sl-block[data-block-type="image"] .sl-block-content svg{position:absolute;width:100%;height:100%;top:0;left:0}.reveal .sl-block[data-block-type="image"] a.sl-block-content{color:inherit}.reveal .sl-block[data-block-type="iframe"] .sl-block-content{overflow:hidden;-webkit-overflow-scrolling:touch}.reveal .sl-block[data-block-type="iframe"] .sl-block-content iframe{width:100%;height:100%}.reveal .sl-block[data-block-type="shape"] .sl-block-content{line-height:0}.reveal .sl-block[data-block-type="shape"] .sl-block-content svg{vertical-align:top}.reveal .sl-block[data-block-type="code"] .sl-block-placeholder{background-image:url(//assets.slid.es/assets/editor/code-placeholder-white-transparent-500x500-5650daa954cfd516de8fee1bfecff32b.png) !important}.reveal .sl-block[data-block-type="code"] .sl-block-content pre,.reveal .sl-block[data-block-type="code"] .sl-block-content code{width:100%;height:100%;margin:0}.reveal .sl-block[data-block-type="code"] .sl-block-content pre{font-size:0.55em;padding:0}.reveal .sl-block[data-block-type="code"] .sl-block-content code{white-space:pre;word-wrap:normal}.reveal .sl-block[data-block-type="math"]{font-size:50px}.reveal .sl-block[data-block-type="math"] .sl-block-content{font-style:normal;font-family:KaTeX_Main;line-height:1.4}.reveal .sl-block[data-block-type="math"] .sl-block-placeholder{background-image:url(//assets.slid.es/assets/editor/math-placeholder-white-transparent-500x500-153b8878a96cd2ca45b9a620b3b721be.png) !important}.reveal .sl-block[data-block-type="math"] .math-input{display:none}.reveal .sl-block[data-block-type="math"] .math-output+.math-output{display:none}.reveal .sl-block[data-block-type="math"].is-empty .sl-block-content{width:300px;height:200px}.reveal .sl-block[data-block-type="table"] .sl-block-content{text-align:left}.reveal .sl-block[data-block-type="table"] .sl-table-column-resizer{display:block;position:absolute;height:100%;width:9px;top:0;margin-left:-4px;z-index:256;cursor:col-resize;opacity:0;background-color:rgba(27,174,225,0.5);-webkit-transition:opacity 0.15s ease;transition:opacity 0.15s ease}.reveal .sl-block[data-block-type="table"] .sl-table-column-resizer:hover,.reveal .sl-block[data-block-type="table"] .sl-table-column-resizer.is-dragging{opacity:1}.reveal .sl-block[data-block-type="table"] table{width:100%;empty-cells:show;table-layout:fixed}.reveal .sl-block[data-block-type="table"] table td,.reveal .sl-block[data-block-type="table"] table th{padding:5px;min-width:40px;border:1px solid currentColor;vertical-align:top;text-align:inherit;outline:0;word-break:break-word}.reveal .sl-block[data-block-type="table"] table td:empty:after,.reveal .sl-block[data-block-type="table"] table th:empty:after,.reveal .sl-block[data-block-type="table"] table td>[contenteditable]:empty:after,.reveal .sl-block[data-block-type="table"] table th>[contenteditable]:empty:after{content:'-';visibility:hidden}.reveal .sl-block[data-block-type="table"] table td.context-menu-is-open,.reveal .sl-block[data-block-type="table"] table th.context-menu-is-open{background-color:rgba(27,174,225,0.2)}.reveal .sl-block[data-block-type="table"] table td>[contenteditable],.reveal .sl-block[data-block-type="table"] table th>[contenteditable]{width:100%;height:100%;outline:0}.reveal .sl-block[data-block-type="line"] svg{display:block;vertical-align:top;overflow:visible}html.decks.edit.is-editing .reveal .sl-block[data-block-type="line"]>*{pointer-events:none}html.decks.edit.is-editing .reveal .sl-block[data-block-type="line"] svg *{pointer-events:auto;pointer-events:all}html.decks.edit.is-editing .reveal .sl-block[data-block-type="line"] .sl-block-transform{border-color:transparent}/*!
- * reveal.js
- * http://lab.hakim.se/reveal-js
- * MIT licensed
- *
- * Copyright (C) 2016 Hakim El Hattab, http://hakim.se
- */html,body,.reveal div,.reveal span,.reveal applet,.reveal object,.reveal iframe,.reveal h1,.reveal h2,.reveal h3,.reveal h4,.reveal h5,.reveal h6,.reveal p,.reveal blockquote,.reveal pre,.reveal a,.reveal abbr,.reveal acronym,.reveal address,.reveal big,.reveal cite,.reveal code,.reveal del,.reveal dfn,.reveal em,.reveal img,.reveal ins,.reveal kbd,.reveal q,.reveal s,.reveal samp,.reveal small,.reveal strike,.reveal strong,.reveal sub,.reveal sup,.reveal tt,.reveal var,.reveal b,.reveal u,.reveal center,.reveal dl,.reveal dt,.reveal dd,.reveal ol,.reveal ul,.reveal li,.reveal fieldset,.reveal form,.reveal label,.reveal legend,.reveal table,.reveal caption,.reveal tbody,.reveal tfoot,.reveal thead,.reveal tr,.reveal th,.reveal td,.reveal article,.reveal aside,.reveal canvas,.reveal details,.reveal embed,.reveal figure,.reveal figcaption,.reveal footer,.reveal header,.reveal hgroup,.reveal menu,.reveal nav,.reveal output,.reveal ruby,.reveal section,.reveal summary,.reveal time,.reveal mark,.reveal audio,.reveal video{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline}.reveal article,.reveal aside,.reveal details,.reveal figcaption,.reveal figure,.reveal footer,.reveal header,.reveal hgroup,.reveal menu,.reveal nav,.reveal section{display:block}html,body{width:100%;height:100%;overflow:hidden}body{position:relative;line-height:1;background-color:#fff;color:#000}.reveal .slides section .fragment{opacity:0;visibility:hidden;-webkit-transition:all .2s ease;transition:all .2s ease}.reveal .slides section .fragment.visible{opacity:1;visibility:inherit}.reveal .slides section .fragment.grow{opacity:1;visibility:inherit}.reveal .slides section .fragment.grow.visible{-webkit-transform:scale(1.3);-ms-transform:scale(1.3);transform:scale(1.3)}.reveal .slides section .fragment.shrink{opacity:1;visibility:inherit}.reveal .slides section .fragment.shrink.visible{-webkit-transform:scale(0.7);-ms-transform:scale(0.7);transform:scale(0.7)}.reveal .slides section .fragment.zoom-in{-webkit-transform:scale(0.1);-ms-transform:scale(0.1);transform:scale(0.1)}.reveal .slides section .fragment.zoom-in.visible{-webkit-transform:none;-ms-transform:none;transform:none}.reveal .slides section .fragment.fade-out{opacity:1;visibility:inherit}.reveal .slides section .fragment.fade-out.visible{opacity:0;visibility:hidden}.reveal .slides section .fragment.semi-fade-out{opacity:1;visibility:inherit}.reveal .slides section .fragment.semi-fade-out.visible{opacity:0.5;visibility:inherit}.reveal .slides section .fragment.strike{opacity:1;visibility:inherit}.reveal .slides section .fragment.strike.visible{text-decoration:line-through}.reveal .slides section .fragment.fade-up{-webkit-transform:translate(0, 20%);-ms-transform:translate(0, 20%);transform:translate(0, 20%)}.reveal .slides section .fragment.fade-up.visible{-webkit-transform:translate(0, 0);-ms-transform:translate(0, 0);transform:translate(0, 0)}.reveal .slides section .fragment.fade-down{-webkit-transform:translate(0, -20%);-ms-transform:translate(0, -20%);transform:translate(0, -20%)}.reveal .slides section .fragment.fade-down.visible{-webkit-transform:translate(0, 0);-ms-transform:translate(0, 0);transform:translate(0, 0)}.reveal .slides section .fragment.fade-right{-webkit-transform:translate(-20%, 0);-ms-transform:translate(-20%, 0);transform:translate(-20%, 0)}.reveal .slides section .fragment.fade-right.visible{-webkit-transform:translate(0, 0);-ms-transform:translate(0, 0);transform:translate(0, 0)}.reveal .slides section .fragment.fade-left{-webkit-transform:translate(20%, 0);-ms-transform:translate(20%, 0);transform:translate(20%, 0)}.reveal .slides section .fragment.fade-left.visible{-webkit-transform:translate(0, 0);-ms-transform:translate(0, 0);transform:translate(0, 0)}.reveal .slides section .fragment.current-visible{opacity:0;visibility:hidden}.reveal .slides section .fragment.current-visible.current-fragment{opacity:1;visibility:inherit}.reveal .slides section .fragment.highlight-red,.reveal .slides section .fragment.highlight-current-red,.reveal .slides section .fragment.highlight-green,.reveal .slides section .fragment.highlight-current-green,.reveal .slides section .fragment.highlight-blue,.reveal .slides section .fragment.highlight-current-blue{opacity:1;visibility:inherit}.reveal .slides section .fragment.highlight-red.visible{color:#ff2c2d}.reveal .slides section .fragment.highlight-green.visible{color:#17ff2e}.reveal .slides section .fragment.highlight-blue.visible{color:#1b91ff}.reveal .slides section .fragment.highlight-current-red.current-fragment{color:#ff2c2d}.reveal .slides section .fragment.highlight-current-green.current-fragment{color:#17ff2e}.reveal .slides section .fragment.highlight-current-blue.current-fragment{color:#1b91ff}.reveal:after{content:'';font-style:italic}.reveal iframe{z-index:1}.reveal a{position:relative}.reveal .stretch{max-width:none;max-height:none}.reveal pre.stretch code{height:100%;max-height:100%;-moz-box-sizing:border-box;box-sizing:border-box}.reveal .controls{display:none;position:fixed;width:110px;height:110px;z-index:30;right:10px;bottom:10px;-webkit-user-select:none}.reveal .controls button{padding:0;position:absolute;opacity:0.05;width:0;height:0;background-color:transparent;border:12px solid transparent;-webkit-transform:scale(0.9999);-ms-transform:scale(0.9999);transform:scale(0.9999);-webkit-transition:all 0.2s ease;transition:all 0.2s ease;-webkit-appearance:none;-webkit-tap-highlight-color:rgba(0,0,0,0)}.reveal .controls .enabled{opacity:0.7;cursor:pointer}.reveal .controls .enabled:active{margin-top:1px}.reveal .controls .navigate-left{top:42px;border-right-width:22px;border-right-color:#000}.reveal .controls .navigate-left.fragmented{opacity:0.3}.reveal .controls .navigate-right{left:74px;top:42px;border-left-width:22px;border-left-color:#000}.reveal .controls .navigate-right.fragmented{opacity:0.3}.reveal .controls .navigate-up{left:42px;border-bottom-width:22px;border-bottom-color:#000}.reveal .controls .navigate-up.fragmented{opacity:0.3}.reveal .controls .navigate-down{left:42px;top:74px;border-top-width:22px;border-top-color:#000}.reveal .controls .navigate-down.fragmented{opacity:0.3}.reveal .progress{position:fixed;display:none;height:3px;width:100%;bottom:0;left:0;z-index:10;background-color:rgba(0,0,0,0.2)}.reveal .progress:after{content:'';display:block;position:absolute;height:20px;width:100%;top:-20px}.reveal .progress span{display:block;height:100%;width:0px;background-color:#000;-webkit-transition:width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);transition:width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985)}.reveal .slide-number{position:fixed;display:block;right:8px;bottom:8px;z-index:31;font-family:Helvetica, sans-serif;font-size:12px;line-height:1;color:#fff;background-color:rgba(0,0,0,0.4);padding:5px}.reveal .slide-number-delimiter{margin:0 3px}.reveal{position:relative;width:100%;height:100%;overflow:hidden;-ms-touch-action:none;touch-action:none}.reveal .slides{position:absolute;width:100%;height:100%;top:0;right:0;bottom:0;left:0;margin:auto;pointer-events:none;overflow:visible;z-index:1;text-align:center;-webkit-perspective:600px;perspective:600px;-webkit-perspective-origin:50% 40%;perspective-origin:50% 40%}.reveal .slides>section{-ms-perspective:600px}.reveal .slides>section,.reveal .slides>section>section{display:none;position:absolute;width:100%;padding:20px 0px;pointer-events:auto;z-index:10;-webkit-transform-style:flat;transform-style:flat;-webkit-transition:-webkit-transform-origin 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985),-webkit-transform 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985),visibility 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985),opacity 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);transition:-ms-transform-origin 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985),transform 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985),visibility 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985),opacity 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);transition:transform-origin 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985),transform 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985),visibility 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985),opacity 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985)}.reveal[data-transition-speed="fast"] .slides section{-webkit-transition-duration:400ms;transition-duration:400ms}.reveal[data-transition-speed="slow"] .slides section{-webkit-transition-duration:1200ms;transition-duration:1200ms}.reveal .slides section[data-transition-speed="fast"]{-webkit-transition-duration:400ms;transition-duration:400ms}.reveal .slides section[data-transition-speed="slow"]{-webkit-transition-duration:1200ms;transition-duration:1200ms}.reveal .slides>section.stack{padding-top:0;padding-bottom:0}.reveal .slides>section.present,.reveal .slides>section>section.present{display:block;z-index:11;opacity:1}.reveal .slides>section:empty,.reveal .slides>section>section:empty{pointer-events:none}.reveal.center,.reveal.center .slides,.reveal.center .slides section{min-height:0 !important}.reveal .slides>section.future,.reveal .slides>section>section.future,.reveal .slides>section.past,.reveal .slides>section>section.past{pointer-events:none}.reveal.overview .slides>section,.reveal.overview .slides>section>section{pointer-events:auto}.reveal .slides>section.past,.reveal .slides>section.future,.reveal .slides>section>section.past,.reveal .slides>section>section.future{opacity:0}.reveal.slide section{-webkit-backface-visibility:hidden;backface-visibility:hidden}.reveal .slides>section[data-transition=slide].past,.reveal .slides>section[data-transition~=slide-out].past,.reveal.slide .slides>section:not([data-transition]).past{-webkit-transform:translate(-150%, 0);-ms-transform:translate(-150%, 0);transform:translate(-150%, 0)}.reveal .slides>section[data-transition=slide].future,.reveal .slides>section[data-transition~=slide-in].future,.reveal.slide .slides>section:not([data-transition]).future{-webkit-transform:translate(150%, 0);-ms-transform:translate(150%, 0);transform:translate(150%, 0)}.reveal .slides>section>section[data-transition=slide].past,.reveal .slides>section>section[data-transition~=slide-out].past,.reveal.slide .slides>section>section:not([data-transition]).past{-webkit-transform:translate(0, -150%);-ms-transform:translate(0, -150%);transform:translate(0, -150%)}.reveal .slides>section>section[data-transition=slide].future,.reveal .slides>section>section[data-transition~=slide-in].future,.reveal.slide .slides>section>section:not([data-transition]).future{-webkit-transform:translate(0, 150%);-ms-transform:translate(0, 150%);transform:translate(0, 150%)}.reveal.linear section{-webkit-backface-visibility:hidden;backface-visibility:hidden}.reveal .slides>section[data-transition=linear].past,.reveal .slides>section[data-transition~=linear-out].past,.reveal.linear .slides>section:not([data-transition]).past{-webkit-transform:translate(-150%, 0);-ms-transform:translate(-150%, 0);transform:translate(-150%, 0)}.reveal .slides>section[data-transition=linear].future,.reveal .slides>section[data-transition~=linear-in].future,.reveal.linear .slides>section:not([data-transition]).future{-webkit-transform:translate(150%, 0);-ms-transform:translate(150%, 0);transform:translate(150%, 0)}.reveal .slides>section>section[data-transition=linear].past,.reveal .slides>section>section[data-transition~=linear-out].past,.reveal.linear .slides>section>section:not([data-transition]).past{-webkit-transform:translate(0, -150%);-ms-transform:translate(0, -150%);transform:translate(0, -150%)}.reveal .slides>section>section[data-transition=linear].future,.reveal .slides>section>section[data-transition~=linear-in].future,.reveal.linear .slides>section>section:not([data-transition]).future{-webkit-transform:translate(0, 150%);-ms-transform:translate(0, 150%);transform:translate(0, 150%)}.reveal .slides section[data-transition=default].stack,.reveal.default .slides section.stack{-webkit-transform-style:preserve-3d;transform-style:preserve-3d}.reveal .slides>section[data-transition=default].past,.reveal .slides>section[data-transition~=default-out].past,.reveal.default .slides>section:not([data-transition]).past{-webkit-transform:translate3d(-100%, 0, 0) rotateY(-90deg) translate3d(-100%, 0, 0);transform:translate3d(-100%, 0, 0) rotateY(-90deg) translate3d(-100%, 0, 0)}.reveal .slides>section[data-transition=default].future,.reveal .slides>section[data-transition~=default-in].future,.reveal.default .slides>section:not([data-transition]).future{-webkit-transform:translate3d(100%, 0, 0) rotateY(90deg) translate3d(100%, 0, 0);transform:translate3d(100%, 0, 0) rotateY(90deg) translate3d(100%, 0, 0)}.reveal .slides>section>section[data-transition=default].past,.reveal .slides>section>section[data-transition~=default-out].past,.reveal.default .slides>section>section:not([data-transition]).past{-webkit-transform:translate3d(0, -300px, 0) rotateX(70deg) translate3d(0, -300px, 0);transform:translate3d(0, -300px, 0) rotateX(70deg) translate3d(0, -300px, 0)}.reveal .slides>section>section[data-transition=default].future,.reveal .slides>section>section[data-transition~=default-in].future,.reveal.default .slides>section>section:not([data-transition]).future{-webkit-transform:translate3d(0, 300px, 0) rotateX(-70deg) translate3d(0, 300px, 0);transform:translate3d(0, 300px, 0) rotateX(-70deg) translate3d(0, 300px, 0)}.reveal .slides section[data-transition=convex].stack,.reveal.convex .slides section.stack{-webkit-transform-style:preserve-3d;transform-style:preserve-3d}.reveal .slides>section[data-transition=convex].past,.reveal .slides>section[data-transition~=convex-out].past,.reveal.convex .slides>section:not([data-transition]).past{-webkit-transform:translate3d(-100%, 0, 0) rotateY(-90deg) translate3d(-100%, 0, 0);transform:translate3d(-100%, 0, 0) rotateY(-90deg) translate3d(-100%, 0, 0)}.reveal .slides>section[data-transition=convex].future,.reveal .slides>section[data-transition~=convex-in].future,.reveal.convex .slides>section:not([data-transition]).future{-webkit-transform:translate3d(100%, 0, 0) rotateY(90deg) translate3d(100%, 0, 0);transform:translate3d(100%, 0, 0) rotateY(90deg) translate3d(100%, 0, 0)}.reveal .slides>section>section[data-transition=convex].past,.reveal .slides>section>section[data-transition~=convex-out].past,.reveal.convex .slides>section>section:not([data-transition]).past{-webkit-transform:translate3d(0, -300px, 0) rotateX(70deg) translate3d(0, -300px, 0);transform:translate3d(0, -300px, 0) rotateX(70deg) translate3d(0, -300px, 0)}.reveal .slides>section>section[data-transition=convex].future,.reveal .slides>section>section[data-transition~=convex-in].future,.reveal.convex .slides>section>section:not([data-transition]).future{-webkit-transform:translate3d(0, 300px, 0) rotateX(-70deg) translate3d(0, 300px, 0);transform:translate3d(0, 300px, 0) rotateX(-70deg) translate3d(0, 300px, 0)}.reveal .slides section[data-transition=concave].stack,.reveal.concave .slides section.stack{-webkit-transform-style:preserve-3d;transform-style:preserve-3d}.reveal .slides>section[data-transition=concave].past,.reveal .slides>section[data-transition~=concave-out].past,.reveal.concave .slides>section:not([data-transition]).past{-webkit-transform:translate3d(-100%, 0, 0) rotateY(90deg) translate3d(-100%, 0, 0);transform:translate3d(-100%, 0, 0) rotateY(90deg) translate3d(-100%, 0, 0)}.reveal .slides>section[data-transition=concave].future,.reveal .slides>section[data-transition~=concave-in].future,.reveal.concave .slides>section:not([data-transition]).future{-webkit-transform:translate3d(100%, 0, 0) rotateY(-90deg) translate3d(100%, 0, 0);transform:translate3d(100%, 0, 0) rotateY(-90deg) translate3d(100%, 0, 0)}.reveal .slides>section>section[data-transition=concave].past,.reveal .slides>section>section[data-transition~=concave-out].past,.reveal.concave .slides>section>section:not([data-transition]).past{-webkit-transform:translate3d(0, -80%, 0) rotateX(-70deg) translate3d(0, -80%, 0);transform:translate3d(0, -80%, 0) rotateX(-70deg) translate3d(0, -80%, 0)}.reveal .slides>section>section[data-transition=concave].future,.reveal .slides>section>section[data-transition~=concave-in].future,.reveal.concave .slides>section>section:not([data-transition]).future{-webkit-transform:translate3d(0, 80%, 0) rotateX(70deg) translate3d(0, 80%, 0);transform:translate3d(0, 80%, 0) rotateX(70deg) translate3d(0, 80%, 0)}.reveal .slides section[data-transition=zoom],.reveal.zoom .slides section:not([data-transition]){-webkit-transition-timing-function:ease;transition-timing-function:ease}.reveal .slides>section[data-transition=zoom].past,.reveal .slides>section[data-transition~=zoom-out].past,.reveal.zoom .slides>section:not([data-transition]).past{visibility:hidden;-webkit-transform:scale(16);-ms-transform:scale(16);transform:scale(16)}.reveal .slides>section[data-transition=zoom].future,.reveal .slides>section[data-transition~=zoom-in].future,.reveal.zoom .slides>section:not([data-transition]).future{visibility:hidden;-webkit-transform:scale(0.2);-ms-transform:scale(0.2);transform:scale(0.2)}.reveal .slides>section>section[data-transition=zoom].past,.reveal .slides>section>section[data-transition~=zoom-out].past,.reveal.zoom .slides>section>section:not([data-transition]).past{-webkit-transform:translate(0, -150%);-ms-transform:translate(0, -150%);transform:translate(0, -150%)}.reveal .slides>section>section[data-transition=zoom].future,.reveal .slides>section>section[data-transition~=zoom-in].future,.reveal.zoom .slides>section>section:not([data-transition]).future{-webkit-transform:translate(0, 150%);-ms-transform:translate(0, 150%);transform:translate(0, 150%)}.reveal.cube .slides{-webkit-perspective:1300px;perspective:1300px}.reveal.cube .slides section{padding:30px;min-height:700px;-webkit-backface-visibility:hidden;backface-visibility:hidden;-moz-box-sizing:border-box;box-sizing:border-box;-webkit-transform-style:preserve-3d;transform-style:preserve-3d}.reveal.center.cube .slides section{min-height:0}.reveal.cube .slides section:not(.stack):before{content:'';position:absolute;display:block;width:100%;height:100%;left:0;top:0;background:rgba(0,0,0,0.1);border-radius:4px;-webkit-transform:translateZ(-20px);transform:translateZ(-20px)}.reveal.cube .slides section:not(.stack):after{content:'';position:absolute;display:block;width:90%;height:30px;left:5%;bottom:0;background:none;z-index:1;border-radius:4px;box-shadow:0px 95px 25px rgba(0,0,0,0.2);-webkit-transform:translateZ(-90px) rotateX(65deg);transform:translateZ(-90px) rotateX(65deg)}.reveal.cube .slides>section.stack{padding:0;background:none}.reveal.cube .slides>section.past{-webkit-transform-origin:100% 0%;-ms-transform-origin:100% 0%;transform-origin:100% 0%;-webkit-transform:translate3d(-100%, 0, 0) rotateY(-90deg);transform:translate3d(-100%, 0, 0) rotateY(-90deg)}.reveal.cube .slides>section.future{-webkit-transform-origin:0% 0%;-ms-transform-origin:0% 0%;transform-origin:0% 0%;-webkit-transform:translate3d(100%, 0, 0) rotateY(90deg);transform:translate3d(100%, 0, 0) rotateY(90deg)}.reveal.cube .slides>section>section.past{-webkit-transform-origin:0% 100%;-ms-transform-origin:0% 100%;transform-origin:0% 100%;-webkit-transform:translate3d(0, -100%, 0) rotateX(90deg);transform:translate3d(0, -100%, 0) rotateX(90deg)}.reveal.cube .slides>section>section.future{-webkit-transform-origin:0% 0%;-ms-transform-origin:0% 0%;transform-origin:0% 0%;-webkit-transform:translate3d(0, 100%, 0) rotateX(-90deg);transform:translate3d(0, 100%, 0) rotateX(-90deg)}.reveal.page .slides{-webkit-perspective-origin:0% 50%;perspective-origin:0% 50%;-webkit-perspective:3000px;perspective:3000px}.reveal.page .slides section{padding:30px;min-height:700px;-moz-box-sizing:border-box;box-sizing:border-box;-webkit-transform-style:preserve-3d;transform-style:preserve-3d}.reveal.page .slides section.past{z-index:12}.reveal.page .slides section:not(.stack):before{content:'';position:absolute;display:block;width:100%;height:100%;left:0;top:0;background:rgba(0,0,0,0.1);-webkit-transform:translateZ(-20px);transform:translateZ(-20px)}.reveal.page .slides section:not(.stack):after{content:'';position:absolute;display:block;width:90%;height:30px;left:5%;bottom:0;background:none;z-index:1;border-radius:4px;box-shadow:0px 95px 25px rgba(0,0,0,0.2);-webkit-transform:translateZ(-90px) rotateX(65deg)}.reveal.page .slides>section.stack{padding:0;background:none}.reveal.page .slides>section.past{-webkit-transform-origin:0% 0%;-ms-transform-origin:0% 0%;transform-origin:0% 0%;-webkit-transform:translate3d(-40%, 0, 0) rotateY(-80deg);transform:translate3d(-40%, 0, 0) rotateY(-80deg)}.reveal.page .slides>section.future{-webkit-transform-origin:100% 0%;-ms-transform-origin:100% 0%;transform-origin:100% 0%;-webkit-transform:translate3d(0, 0, 0);transform:translate3d(0, 0, 0)}.reveal.page .slides>section>section.past{-webkit-transform-origin:0% 0%;-ms-transform-origin:0% 0%;transform-origin:0% 0%;-webkit-transform:translate3d(0, -40%, 0) rotateX(80deg);transform:translate3d(0, -40%, 0) rotateX(80deg)}.reveal.page .slides>section>section.future{-webkit-transform-origin:0% 100%;-ms-transform-origin:0% 100%;transform-origin:0% 100%;-webkit-transform:translate3d(0, 0, 0);transform:translate3d(0, 0, 0)}.reveal .slides section[data-transition=fade],.reveal.fade .slides section:not([data-transition]),.reveal.fade .slides>section>section:not([data-transition]){-webkit-transform:none;-ms-transform:none;transform:none;-webkit-transition:opacity 0.5s;transition:opacity 0.5s}.reveal.fade.overview .slides section,.reveal.fade.overview .slides>section>section{-webkit-transition:none;transition:none}.reveal .slides section[data-transition=none],.reveal.none .slides section:not([data-transition]){-webkit-transform:none;-ms-transform:none;transform:none;-webkit-transition:none;transition:none}.reveal .pause-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:black;visibility:hidden;opacity:0;z-index:100;-webkit-transition:all 1s ease;transition:all 1s ease}.reveal.paused .pause-overlay{visibility:visible;opacity:1}.no-transforms{overflow-y:auto}.no-transforms .reveal .slides{position:relative;width:80%;height:auto !important;top:0;left:50%;margin:0;text-align:center}.no-transforms .reveal .controls,.no-transforms .reveal .progress{display:none !important}.no-transforms .reveal .slides section{display:block !important;opacity:1 !important;position:relative !important;height:auto;min-height:0;top:0;left:-50%;margin:70px 0;-webkit-transform:none;-ms-transform:none;transform:none}.no-transforms .reveal .slides section section{left:0}.reveal .no-transition,.reveal .no-transition *{-webkit-transition:none !important;transition:none !important}.reveal .backgrounds{position:absolute;width:100%;height:100%;top:0;left:0;-webkit-perspective:600px;perspective:600px}.reveal .slide-background{display:none;position:absolute;width:100%;height:100%;opacity:0;visibility:hidden;overflow:hidden;background-color:rgba(0,0,0,0);background-position:50% 50%;background-repeat:no-repeat;background-size:cover;-webkit-transition:all 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);transition:all 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985)}.reveal .slide-background.stack{display:block}.reveal .slide-background.present{opacity:1;visibility:visible;z-index:2}.print-pdf .reveal .slide-background{opacity:1 !important;visibility:visible !important}.reveal .slide-background video{position:absolute;width:100%;height:100%;max-width:none;max-height:none;top:0;left:0;object-fit:cover}.reveal .slide-background[data-background-size="contain"] video{object-fit:contain}.reveal[data-background-transition=none]>.backgrounds .slide-background,.reveal>.backgrounds .slide-background[data-background-transition=none]{-webkit-transition:none;transition:none}.reveal[data-background-transition=slide]>.backgrounds .slide-background,.reveal>.backgrounds .slide-background[data-background-transition=slide]{opacity:1;-webkit-backface-visibility:hidden;backface-visibility:hidden}.reveal[data-background-transition=slide]>.backgrounds .slide-background.past,.reveal>.backgrounds .slide-background.past[data-background-transition=slide]{-webkit-transform:translate(-100%, 0);-ms-transform:translate(-100%, 0);transform:translate(-100%, 0)}.reveal[data-background-transition=slide]>.backgrounds .slide-background.future,.reveal>.backgrounds .slide-background.future[data-background-transition=slide]{-webkit-transform:translate(100%, 0);-ms-transform:translate(100%, 0);transform:translate(100%, 0)}.reveal[data-background-transition=slide]>.backgrounds .slide-background>.slide-background.past,.reveal>.backgrounds .slide-background>.slide-background.past[data-background-transition=slide]{-webkit-transform:translate(0, -100%);-ms-transform:translate(0, -100%);transform:translate(0, -100%)}.reveal[data-background-transition=slide]>.backgrounds .slide-background>.slide-background.future,.reveal>.backgrounds .slide-background>.slide-background.future[data-background-transition=slide]{-webkit-transform:translate(0, 100%);-ms-transform:translate(0, 100%);transform:translate(0, 100%)}.reveal[data-background-transition=convex]>.backgrounds .slide-background.past,.reveal>.backgrounds .slide-background.past[data-background-transition=convex]{opacity:0;-webkit-transform:translate3d(-100%, 0, 0) rotateY(-90deg) translate3d(-100%, 0, 0);transform:translate3d(-100%, 0, 0) rotateY(-90deg) translate3d(-100%, 0, 0)}.reveal[data-background-transition=convex]>.backgrounds .slide-background.future,.reveal>.backgrounds .slide-background.future[data-background-transition=convex]{opacity:0;-webkit-transform:translate3d(100%, 0, 0) rotateY(90deg) translate3d(100%, 0, 0);transform:translate3d(100%, 0, 0) rotateY(90deg) translate3d(100%, 0, 0)}.reveal[data-background-transition=convex]>.backgrounds .slide-background>.slide-background.past,.reveal>.backgrounds .slide-background>.slide-background.past[data-background-transition=convex]{opacity:0;-webkit-transform:translate3d(0, -100%, 0) rotateX(90deg) translate3d(0, -100%, 0);transform:translate3d(0, -100%, 0) rotateX(90deg) translate3d(0, -100%, 0)}.reveal[data-background-transition=convex]>.backgrounds .slide-background>.slide-background.future,.reveal>.backgrounds .slide-background>.slide-background.future[data-background-transition=convex]{opacity:0;-webkit-transform:translate3d(0, 100%, 0) rotateX(-90deg) translate3d(0, 100%, 0);transform:translate3d(0, 100%, 0) rotateX(-90deg) translate3d(0, 100%, 0)}.reveal[data-background-transition=concave]>.backgrounds .slide-background.past,.reveal>.backgrounds .slide-background.past[data-background-transition=concave]{opacity:0;-webkit-transform:translate3d(-100%, 0, 0) rotateY(90deg) translate3d(-100%, 0, 0);transform:translate3d(-100%, 0, 0) rotateY(90deg) translate3d(-100%, 0, 0)}.reveal[data-background-transition=concave]>.backgrounds .slide-background.future,.reveal>.backgrounds .slide-background.future[data-background-transition=concave]{opacity:0;-webkit-transform:translate3d(100%, 0, 0) rotateY(-90deg) translate3d(100%, 0, 0);transform:translate3d(100%, 0, 0) rotateY(-90deg) translate3d(100%, 0, 0)}.reveal[data-background-transition=concave]>.backgrounds .slide-background>.slide-background.past,.reveal>.backgrounds .slide-background>.slide-background.past[data-background-transition=concave]{opacity:0;-webkit-transform:translate3d(0, -100%, 0) rotateX(-90deg) translate3d(0, -100%, 0);transform:translate3d(0, -100%, 0) rotateX(-90deg) translate3d(0, -100%, 0)}.reveal[data-background-transition=concave]>.backgrounds .slide-background>.slide-background.future,.reveal>.backgrounds .slide-background>.slide-background.future[data-background-transition=concave]{opacity:0;-webkit-transform:translate3d(0, 100%, 0) rotateX(90deg) translate3d(0, 100%, 0);transform:translate3d(0, 100%, 0) rotateX(90deg) translate3d(0, 100%, 0)}.reveal[data-background-transition=zoom]>.backgrounds .slide-background,.reveal>.backgrounds .slide-background[data-background-transition=zoom]{-webkit-transition-timing-function:ease;transition-timing-function:ease}.reveal[data-background-transition=zoom]>.backgrounds .slide-background.past,.reveal>.backgrounds .slide-background.past[data-background-transition=zoom]{opacity:0;visibility:hidden;-webkit-transform:scale(16);-ms-transform:scale(16);transform:scale(16)}.reveal[data-background-transition=zoom]>.backgrounds .slide-background.future,.reveal>.backgrounds .slide-background.future[data-background-transition=zoom]{opacity:0;visibility:hidden;-webkit-transform:scale(0.2);-ms-transform:scale(0.2);transform:scale(0.2)}.reveal[data-background-transition=zoom]>.backgrounds .slide-background>.slide-background.past,.reveal>.backgrounds .slide-background>.slide-background.past[data-background-transition=zoom]{opacity:0;visibility:hidden;-webkit-transform:scale(16);-ms-transform:scale(16);transform:scale(16)}.reveal[data-background-transition=zoom]>.backgrounds .slide-background>.slide-background.future,.reveal>.backgrounds .slide-background>.slide-background.future[data-background-transition=zoom]{opacity:0;visibility:hidden;-webkit-transform:scale(0.2);-ms-transform:scale(0.2);transform:scale(0.2)}.reveal[data-transition-speed="fast"]>.backgrounds .slide-background{-webkit-transition-duration:400ms;transition-duration:400ms}.reveal[data-transition-speed="slow"]>.backgrounds .slide-background{-webkit-transition-duration:1200ms;transition-duration:1200ms}.reveal.overview{-webkit-perspective-origin:50% 50%;perspective-origin:50% 50%;-webkit-perspective:700px;perspective:700px}.reveal.overview .slides{-moz-transform-style:preserve-3d}.reveal.overview .slides section{height:100%;top:0 !important;opacity:1 !important;overflow:hidden;visibility:visible !important;cursor:pointer;-moz-box-sizing:border-box;box-sizing:border-box}.reveal.overview .slides section:hover,.reveal.overview .slides section.present{outline:10px solid rgba(150,150,150,0.4);outline-offset:10px}.reveal.overview .slides section .fragment{opacity:1;-webkit-transition:none;transition:none}.reveal.overview .slides section:after,.reveal.overview .slides section:before{display:none !important}.reveal.overview .slides>section.stack{padding:0;top:0 !important;background:none;outline:none;overflow:visible}.reveal.overview .backgrounds{-webkit-perspective:inherit;perspective:inherit;-moz-transform-style:preserve-3d}.reveal.overview .backgrounds .slide-background{opacity:1;visibility:visible;outline:10px solid rgba(150,150,150,0.1);outline-offset:10px}.reveal.overview .slides section,.reveal.overview-deactivating .slides section{-webkit-transition:none;transition:none}.reveal.overview .backgrounds .slide-background,.reveal.overview-deactivating .backgrounds .slide-background{-webkit-transition:none;transition:none}.reveal.overview-animated .slides{-webkit-transition:-webkit-transform 0.4s ease;transition:transform 0.4s ease}.reveal.rtl .slides,.reveal.rtl .slides h1,.reveal.rtl .slides h2,.reveal.rtl .slides h3,.reveal.rtl .slides h4,.reveal.rtl .slides h5,.reveal.rtl .slides h6{direction:rtl;font-family:sans-serif}.reveal.rtl pre,.reveal.rtl code{direction:ltr}.reveal.rtl ol,.reveal.rtl ul{text-align:right}.reveal.rtl .progress span{float:right}.reveal.has-parallax-background .backgrounds{-webkit-transition:all 0.8s ease;transition:all 0.8s ease}.reveal.has-parallax-background[data-transition-speed="fast"] .backgrounds{-webkit-transition-duration:400ms;transition-duration:400ms}.reveal.has-parallax-background[data-transition-speed="slow"] .backgrounds{-webkit-transition-duration:1200ms;transition-duration:1200ms}.reveal .overlay{position:absolute;top:0;left:0;width:100%;height:100%;z-index:1000;background:rgba(0,0,0,0.9);opacity:0;visibility:hidden;-webkit-transition:all 0.3s ease;transition:all 0.3s ease}.reveal .overlay.visible{opacity:1;visibility:visible}.reveal .overlay .spinner{position:absolute;display:block;top:50%;left:50%;width:32px;height:32px;margin:-16px 0 0 -16px;z-index:10;background-image:url(data:image/gif;base64,R0lGODlhIAAgAPMAAJmZmf%2F%2F%2F6%2Bvr8nJybW1tcDAwOjo6Nvb26ioqKOjo7Ozs%2FLy8vz8%2FAAAAAAAAAAAACH%2FC05FVFNDQVBFMi4wAwEAAAAh%2FhpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh%2BQQJCgAAACwAAAAAIAAgAAAE5xDISWlhperN52JLhSSdRgwVo1ICQZRUsiwHpTJT4iowNS8vyW2icCF6k8HMMBkCEDskxTBDAZwuAkkqIfxIQyhBQBFvAQSDITM5VDW6XNE4KagNh6Bgwe60smQUB3d4Rz1ZBApnFASDd0hihh12BkE9kjAJVlycXIg7CQIFA6SlnJ87paqbSKiKoqusnbMdmDC2tXQlkUhziYtyWTxIfy6BE8WJt5YJvpJivxNaGmLHT0VnOgSYf0dZXS7APdpB309RnHOG5gDqXGLDaC457D1zZ%2FV%2FnmOM82XiHRLYKhKP1oZmADdEAAAh%2BQQJCgAAACwAAAAAIAAgAAAE6hDISWlZpOrNp1lGNRSdRpDUolIGw5RUYhhHukqFu8DsrEyqnWThGvAmhVlteBvojpTDDBUEIFwMFBRAmBkSgOrBFZogCASwBDEY%2FCZSg7GSE0gSCjQBMVG023xWBhklAnoEdhQEfyNqMIcKjhRsjEdnezB%2BA4k8gTwJhFuiW4dokXiloUepBAp5qaKpp6%2BHo7aWW54wl7obvEe0kRuoplCGepwSx2jJvqHEmGt6whJpGpfJCHmOoNHKaHx61WiSR92E4lbFoq%2BB6QDtuetcaBPnW6%2BO7wDHpIiK9SaVK5GgV543tzjgGcghAgAh%2BQQJCgAAACwAAAAAIAAgAAAE7hDISSkxpOrN5zFHNWRdhSiVoVLHspRUMoyUakyEe8PTPCATW9A14E0UvuAKMNAZKYUZCiBMuBakSQKG8G2FzUWox2AUtAQFcBKlVQoLgQReZhQlCIJesQXI5B0CBnUMOxMCenoCfTCEWBsJColTMANldx15BGs8B5wlCZ9Po6OJkwmRpnqkqnuSrayqfKmqpLajoiW5HJq7FL1Gr2mMMcKUMIiJgIemy7xZtJsTmsM4xHiKv5KMCXqfyUCJEonXPN2rAOIAmsfB3uPoAK%2B%2BG%2Bw48edZPK%2BM6hLJpQg484enXIdQFSS1u6UhksENEQAAIfkECQoAAAAsAAAAACAAIAAABOcQyEmpGKLqzWcZRVUQnZYg1aBSh2GUVEIQ2aQOE%2BG%2BcD4ntpWkZQj1JIiZIogDFFyHI0UxQwFugMSOFIPJftfVAEoZLBbcLEFhlQiqGp1Vd140AUklUN3eCA51C1EWMzMCezCBBmkxVIVHBWd3HHl9JQOIJSdSnJ0TDKChCwUJjoWMPaGqDKannasMo6WnM562R5YluZRwur0wpgqZE7NKUm%2BFNRPIhjBJxKZteWuIBMN4zRMIVIhffcgojwCF117i4nlLnY5ztRLsnOk%2BaV%2BoJY7V7m76PdkS4trKcdg0Zc0tTcKkRAAAIfkECQoAAAAsAAAAACAAIAAABO4QyEkpKqjqzScpRaVkXZWQEximw1BSCUEIlDohrft6cpKCk5xid5MNJTaAIkekKGQkWyKHkvhKsR7ARmitkAYDYRIbUQRQjWBwJRzChi9CRlBcY1UN4g0%2FVNB0AlcvcAYHRyZPdEQFYV8ccwR5HWxEJ02YmRMLnJ1xCYp0Y5idpQuhopmmC2KgojKasUQDk5BNAwwMOh2RtRq5uQuPZKGIJQIGwAwGf6I0JXMpC8C7kXWDBINFMxS4DKMAWVWAGYsAdNqW5uaRxkSKJOZKaU3tPOBZ4DuK2LATgJhkPJMgTwKCdFjyPHEnKxFCDhEAACH5BAkKAAAALAAAAAAgACAAAATzEMhJaVKp6s2nIkolIJ2WkBShpkVRWqqQrhLSEu9MZJKK9y1ZrqYK9WiClmvoUaF8gIQSNeF1Er4MNFn4SRSDARWroAIETg1iVwuHjYB1kYc1mwruwXKC9gmsJXliGxc%2BXiUCby9ydh1sOSdMkpMTBpaXBzsfhoc5l58Gm5yToAaZhaOUqjkDgCWNHAULCwOLaTmzswadEqggQwgHuQsHIoZCHQMMQgQGubVEcxOPFAcMDAYUA85eWARmfSRQCdcMe0zeP1AAygwLlJtPNAAL19DARdPzBOWSm1brJBi45soRAWQAAkrQIykShQ9wVhHCwCQCACH5BAkKAAAALAAAAAAgACAAAATrEMhJaVKp6s2nIkqFZF2VIBWhUsJaTokqUCoBq%2BE71SRQeyqUToLA7VxF0JDyIQh%2FMVVPMt1ECZlfcjZJ9mIKoaTl1MRIl5o4CUKXOwmyrCInCKqcWtvadL2SYhyASyNDJ0uIiRMDjI0Fd30%2FiI2UA5GSS5UDj2l6NoqgOgN4gksEBgYFf0FDqKgHnyZ9OX8HrgYHdHpcHQULXAS2qKpENRg7eAMLC7kTBaixUYFkKAzWAAnLC7FLVxLWDBLKCwaKTULgEwbLA4hJtOkSBNqITT3xEgfLpBtzE%2FjiuL04RGEBgwWhShRgQExHBAAh%2BQQJCgAAACwAAAAAIAAgAAAE7xDISWlSqerNpyJKhWRdlSAVoVLCWk6JKlAqAavhO9UkUHsqlE6CwO1cRdCQ8iEIfzFVTzLdRAmZX3I2SfZiCqGk5dTESJeaOAlClzsJsqwiJwiqnFrb2nS9kmIcgEsjQydLiIlHehhpejaIjzh9eomSjZR%2BipslWIRLAgMDOR2DOqKogTB9pCUJBagDBXR6XB0EBkIIsaRsGGMMAxoDBgYHTKJiUYEGDAzHC9EACcUGkIgFzgwZ0QsSBcXHiQvOwgDdEwfFs0sDzt4S6BK4xYjkDOzn0unFeBzOBijIm1Dgmg5YFQwsCMjp1oJ8LyIAACH5BAkKAAAALAAAAAAgACAAAATwEMhJaVKp6s2nIkqFZF2VIBWhUsJaTokqUCoBq%2BE71SRQeyqUToLA7VxF0JDyIQh%2FMVVPMt1ECZlfcjZJ9mIKoaTl1MRIl5o4CUKXOwmyrCInCKqcWtvadL2SYhyASyNDJ0uIiUd6GGl6NoiPOH16iZKNlH6KmyWFOggHhEEvAwwMA0N9GBsEC6amhnVcEwavDAazGwIDaH1ipaYLBUTCGgQDA8NdHz0FpqgTBwsLqAbWAAnIA4FWKdMLGdYGEgraigbT0OITBcg5QwPT4xLrROZL6AuQAPUS7bxLpoWidY0JtxLHKhwwMJBTHgPKdEQAACH5BAkKAAAALAAAAAAgACAAAATrEMhJaVKp6s2nIkqFZF2VIBWhUsJaTokqUCoBq%2BE71SRQeyqUToLA7VxF0JDyIQh%2FMVVPMt1ECZlfcjZJ9mIKoaTl1MRIl5o4CUKXOwmyrCInCKqcWtvadL2SYhyASyNDJ0uIiUd6GAULDJCRiXo1CpGXDJOUjY%2BYip9DhToJA4RBLwMLCwVDfRgbBAaqqoZ1XBMHswsHtxtFaH1iqaoGNgAIxRpbFAgfPQSqpbgGBqUD1wBXeCYp1AYZ19JJOYgH1KwA4UBvQwXUBxPqVD9L3sbp2BNk2xvvFPJd%2BMFCN6HAAIKgNggY0KtEBAAh%2BQQJCgAAACwAAAAAIAAgAAAE6BDISWlSqerNpyJKhWRdlSAVoVLCWk6JKlAqAavhO9UkUHsqlE6CwO1cRdCQ8iEIfzFVTzLdRAmZX3I2SfYIDMaAFdTESJeaEDAIMxYFqrOUaNW4E4ObYcCXaiBVEgULe0NJaxxtYksjh2NLkZISgDgJhHthkpU4mW6blRiYmZOlh4JWkDqILwUGBnE6TYEbCgevr0N1gH4At7gHiRpFaLNrrq8HNgAJA70AWxQIH1%2BvsYMDAzZQPC9VCNkDWUhGkuE5PxJNwiUK4UfLzOlD4WvzAHaoG9nxPi5d%2BjYUqfAhhykOFwJWiAAAIfkECQoAAAAsAAAAACAAIAAABPAQyElpUqnqzaciSoVkXVUMFaFSwlpOCcMYlErAavhOMnNLNo8KsZsMZItJEIDIFSkLGQoQTNhIsFehRww2CQLKF0tYGKYSg%2BygsZIuNqJksKgbfgIGepNo2cIUB3V1B3IvNiBYNQaDSTtfhhx0CwVPI0UJe0%2Bbm4g5VgcGoqOcnjmjqDSdnhgEoamcsZuXO1aWQy8KAwOAuTYYGwi7w5h%2BKr0SJ8MFihpNbx%2B4Erq7BYBuzsdiH1jCAzoSfl0rVirNbRXlBBlLX%2BBP0XJLAPGzTkAuAOqb0WT5AH7OcdCm5B8TgRwSRKIHQtaLCwg1RAAAOwAAAAAAAAAAAA%3D%3D);visibility:visible;opacity:0.6;-webkit-transition:all 0.3s ease;transition:all 0.3s ease}.reveal .overlay header{position:absolute;left:0;top:0;width:100%;height:40px;z-index:2;border-bottom:1px solid #222}.reveal .overlay header a{display:inline-block;width:40px;height:40px;line-height:36px;padding:0 10px;float:right;opacity:0.6;-moz-box-sizing:border-box;box-sizing:border-box}.reveal .overlay header a:hover{opacity:1}.reveal .overlay header a .icon{display:inline-block;width:20px;height:20px;background-position:50% 50%;background-size:100%;background-repeat:no-repeat}.reveal .overlay header a.close .icon{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABkklEQVRYR8WX4VHDMAxG6wnoJrABZQPYBCaBTWAD2g1gE5gg6OOsXuxIlr40d81dfrSJ9V4c2VLK7spHuTJ/5wpM07QXuXc5X0opX2tEJcadjHuV80li/FgxTIEK/5QBCICBD6xEhSMGHgQPgBgLiYVAB1dpSqKDawxTohFw4JSEA3clzgIBPCURwE2JucBR7rhPJJv5OpJwDX+SfDjgx1wACQeJG1aChP9K/IMmdZ8DtESV1WyP3Bt4MwM6sj4NMxMYiqUWHQu4KYA/SYkIjOsm3BXYWMKFDwU2khjCQ4ELJUJ4SmClRArOCmSXGuKma0fYD5CbzHxFpCSGAhfAVSSUGDUk2BWZaff2g6GE15BsBQ9nwmpIGDiyHQddwNTMKkbZaf9fajXQca1EX44puJZUsnY0ObGmITE3GVLCbEhQUjGVt146j6oasWN+49Vph2w1pZ5EansNZqKBm1txbU57iRRcZ86RWMDdWtBJUHBHwoQPi1GV+JCbntmvok7iTX4/Up9mgyTc/FJYDTcndgH/AA5A/CHsyEkVAAAAAElFTkSuQmCC)}.reveal .overlay header a.external .icon{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAcElEQVRYR+2WSQoAIQwEzf8f7XiOMkUQxUPlGkM3hVmiQfQR9GYnH1SsAQlI4DiBqkCMoNb9y2e90IAEJPAcgdznU9+engMaeJ7Azh5Y1U67gAho4DqBqmB1buAf0MB1AlVBek83ZPkmJMGc1wAR+AAqod/B97TRpQAAAABJRU5ErkJggg==)}.reveal .overlay .viewport{position:absolute;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;top:40px;right:0;bottom:0;left:0}.reveal .overlay.overlay-preview .viewport iframe{width:100%;height:100%;max-width:100%;max-height:100%;border:0;opacity:0;visibility:hidden;-webkit-transition:all 0.3s ease;transition:all 0.3s ease}.reveal .overlay.overlay-preview.loaded .viewport iframe{opacity:1;visibility:visible}.reveal .overlay.overlay-preview.loaded .viewport-inner{position:absolute;z-index:-1;left:0;top:45%;width:100%;text-align:center;letter-spacing:normal}.reveal .overlay.overlay-preview .x-frame-error{opacity:0;-webkit-transition:opacity 0.3s ease 0.3s;transition:opacity 0.3s ease 0.3s}.reveal .overlay.overlay-preview.loaded .x-frame-error{opacity:1}.reveal .overlay.overlay-preview.loaded .spinner{opacity:0;visibility:hidden;-webkit-transform:scale(0.2);-ms-transform:scale(0.2);transform:scale(0.2)}.reveal .overlay.overlay-help .viewport{overflow:auto;color:#fff}.reveal .overlay.overlay-help .viewport .viewport-inner{width:600px;margin:auto;padding:20px 20px 80px 20px;text-align:center;letter-spacing:normal}.reveal .overlay.overlay-help .viewport .viewport-inner .title{font-size:20px}.reveal .overlay.overlay-help .viewport .viewport-inner table{border:1px solid #fff;border-collapse:collapse;font-size:16px}.reveal .overlay.overlay-help .viewport .viewport-inner table th,.reveal .overlay.overlay-help .viewport .viewport-inner table td{width:200px;padding:14px;border:1px solid #fff;vertical-align:middle}.reveal .overlay.overlay-help .viewport .viewport-inner table th{padding-top:20px;padding-bottom:20px}.reveal .playback{position:fixed;left:15px;bottom:20px;z-index:30;cursor:pointer;-webkit-transition:all 400ms ease;transition:all 400ms ease}.reveal.overview .playback{opacity:0;visibility:hidden}.reveal .roll{display:inline-block;line-height:1.2;overflow:hidden;vertical-align:top;-webkit-perspective:400px;perspective:400px;-webkit-perspective-origin:50% 50%;perspective-origin:50% 50%}.reveal .roll:hover{background:none;text-shadow:none}.reveal .roll span{display:block;position:relative;padding:0 2px;pointer-events:none;-webkit-transition:all 400ms ease;transition:all 400ms ease;-webkit-transform-origin:50% 0%;-ms-transform-origin:50% 0%;transform-origin:50% 0%;-webkit-transform-style:preserve-3d;transform-style:preserve-3d;-webkit-backface-visibility:hidden;backface-visibility:hidden}.reveal .roll:hover span{background:rgba(0,0,0,0.5);-webkit-transform:translate3d(0px, 0px, -45px) rotateX(90deg);transform:translate3d(0px, 0px, -45px) rotateX(90deg)}.reveal .roll span:after{content:attr(data-title);display:block;position:absolute;left:0;top:0;padding:0 2px;-webkit-backface-visibility:hidden;backface-visibility:hidden;-webkit-transform-origin:50% 0%;-ms-transform-origin:50% 0%;transform-origin:50% 0%;-webkit-transform:translate3d(0px, 110%, 0px) rotateX(-90deg);transform:translate3d(0px, 110%, 0px) rotateX(-90deg)}.reveal aside.notes{display:none}.reveal .speaker-notes{display:none;position:absolute;width:70%;max-height:15%;left:15%;bottom:26px;padding:10px;z-index:1;font-size:18px;line-height:1.4;color:#fff;background-color:rgba(0,0,0,0.5);overflow:auto;-moz-box-sizing:border-box;box-sizing:border-box;text-align:left;font-family:Helvetica, sans-serif;-webkit-overflow-scrolling:touch}.reveal .speaker-notes.visible:not(:empty){display:block}@media screen and (max-width: 1024px){.reveal .speaker-notes{font-size:14px}}@media screen and (max-width: 600px){.reveal .speaker-notes{width:90%;left:5%}}.zoomed .reveal *,.zoomed .reveal *:before,.zoomed .reveal *:after{-webkit-backface-visibility:visible !important;backface-visibility:visible !important}.zoomed .reveal .progress,.zoomed .reveal .controls{opacity:0}.zoomed .reveal .roll span{background:none}.zoomed .reveal .roll span:after{visibility:hidden}.reveal .slides>section,.reveal .slides>section>section{height:700px;font-weight:inherit;padding:0}.reveal h1{font-size:2.50em;margin-bottom:0.15em}.reveal h2{font-size:1.90em;margin-bottom:0.20em}.reveal h3{font-size:1.30em;margin-bottom:0.25em}.reveal h4{font-size:1.00em;margin-bottom:0.25em}.reveal h5{font-size:1.00em;margin-bottom:0.25em}.reveal h6{font-size:1.00em;margin-bottom:0.25em}.reveal p{margin-bottom:0.25em}.reveal a{text-decoration:none}.reveal b,.reveal strong{font-weight:bold}.reveal em{font-style:italic}.reveal sup{vertical-align:super}.reveal sub{vertical-align:sub}.reveal small{font-size:0.6em}.reveal ol,.reveal dl,.reveal ul{display:inline-block;margin:0.25em 0 0.25em 1.5em;text-align:left}.reveal ol{list-style-type:decimal}.reveal ul{list-style-type:disc}.reveal ul ul{list-style-type:square}.reveal ul ul ul{list-style-type:circle}.reveal ul ul,.reveal ul ol,.reveal ol ol,.reveal ol ul{display:block;margin-left:1.5em}.reveal dt{font-weight:bold}.reveal dd{margin-left:1.5em}.reveal q{quotes:none;font-style:italic}.reveal blockquote{display:block;margin:0.25em auto;font-style:italic}.reveal blockquote:before{content:"\201C";display:inline-block;padding:0 0.15em;font-size:2em;line-height:1em;height:1px;vertical-align:top}.reveal blockquote>:first-child{margin-top:0;display:inline}.reveal blockquote>:last-child{margin-bottom:0}.reveal pre{display:block;position:relative;margin:0.25em auto;text-align:left;font-family:monospace;line-height:1.2;word-wrap:break-word}.reveal code{font-family:monospace}.reveal pre code{display:block;padding:5px;overflow:auto;word-wrap:normal}.reveal table{margin:auto;border-collapse:collapse;border-spacing:0}.reveal table th{font-weight:bold}.reveal table th,.reveal table td{text-align:left;padding:0.2em 0.5em 0.2em 0.5em;border-bottom:1px solid}.reveal table tr:last-child td{border-bottom:none}.reveal .speaker-notes{white-space:pre-wrap}.reveal.overview .slides .fragment,.reveal.overview .slides [data-animation-type]{-webkit-transition:none !important;transition:none !important;-webkit-transform:none !important;-ms-transform:none !important;transform:none !important;opacity:1 !important;visibility:visible !important}.theme-color-asphalt-orange{background-color:#2c3e50;background-image:-webkit-radial-gradient(center, circle farthest-corner, #415b77 0%, #2c3e50 100%);background-image:radial-gradient(circle farthest-corner at center, #415b77 0%, #2c3e50 100%)}.theme-color-asphalt-orange body{background:transparent}.theme-color-asphalt-orange .theme-body-color-block{background:white}.theme-color-asphalt-orange .theme-link-color-block{background:#ffc200}.theme-color-asphalt-orange .themed,.theme-color-asphalt-orange .reveal{color:white}.theme-color-asphalt-orange .themed a,.theme-color-asphalt-orange .reveal a{color:#ffc200}.theme-color-asphalt-orange .themed a:hover,.theme-color-asphalt-orange .reveal a:hover{color:#ffda66}.theme-color-asphalt-orange .reveal .controls .navigate-left,.theme-color-asphalt-orange .reveal .controls .navigate-left.enabled{border-right-color:#ffc200}.theme-color-asphalt-orange .reveal .controls .navigate-right,.theme-color-asphalt-orange .reveal .controls .navigate-right.enabled{border-left-color:#ffc200}.theme-color-asphalt-orange .reveal .controls .navigate-up,.theme-color-asphalt-orange .reveal .controls .navigate-up.enabled{border-bottom-color:#ffc200}.theme-color-asphalt-orange .reveal .controls .navigate-down,.theme-color-asphalt-orange .reveal .controls .navigate-down.enabled{border-top-color:#ffc200}.theme-color-asphalt-orange .reveal .controls .navigate-left.enabled:hover{border-right-color:#ffda66}.theme-color-asphalt-orange .reveal .controls .navigate-right.enabled:hover{border-left-color:#ffda66}.theme-color-asphalt-orange .reveal .controls .navigate-up.enabled:hover{border-bottom-color:#ffda66}.theme-color-asphalt-orange .reveal .controls .navigate-down.enabled:hover{border-top-color:#ffda66}.theme-color-asphalt-orange .reveal .progress{background:rgba(0,0,0,0.2)}.theme-color-asphalt-orange .reveal .progress span{background:#ffc200;-webkit-transition:width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);transition:width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985)}.theme-color-asphalt-orange .reveal .slide-number{color:#ddd;background-color:rgba(0,0,0,0.3)}.theme-color-beige-brown{background-color:#f7f3de;background-image:-webkit-radial-gradient(center, circle farthest-corner, #fff 0%, #f7f2d3 100%);background-image:radial-gradient(circle farthest-corner at center, #fff 0%, #f7f2d3 100%)}.theme-color-beige-brown body{background:transparent}.theme-color-beige-brown .theme-body-color-block{background:#333333}.theme-color-beige-brown .theme-link-color-block{background:#8b743d}.theme-color-beige-brown .themed,.theme-color-beige-brown .reveal{color:#333333}.theme-color-beige-brown .themed a,.theme-color-beige-brown .reveal a{color:#8b743d}.theme-color-beige-brown .themed a:hover,.theme-color-beige-brown .reveal a:hover{color:#c0a86e}.theme-color-beige-brown .reveal .controls .navigate-left,.theme-color-beige-brown .reveal .controls .navigate-left.enabled{border-right-color:#8b743d}.theme-color-beige-brown .reveal .controls .navigate-right,.theme-color-beige-brown .reveal .controls .navigate-right.enabled{border-left-color:#8b743d}.theme-color-beige-brown .reveal .controls .navigate-up,.theme-color-beige-brown .reveal .controls .navigate-up.enabled{border-bottom-color:#8b743d}.theme-color-beige-brown .reveal .controls .navigate-down,.theme-color-beige-brown .reveal .controls .navigate-down.enabled{border-top-color:#8b743d}.theme-color-beige-brown .reveal .controls .navigate-left.enabled:hover{border-right-color:#c0a86e}.theme-color-beige-brown .reveal .controls .navigate-right.enabled:hover{border-left-color:#c0a86e}.theme-color-beige-brown .reveal .controls .navigate-up.enabled:hover{border-bottom-color:#c0a86e}.theme-color-beige-brown .reveal .controls .navigate-down.enabled:hover{border-top-color:#c0a86e}.theme-color-beige-brown .reveal .progress{background:rgba(0,0,0,0.2)}.theme-color-beige-brown .reveal .progress span{background:#8b743d;-webkit-transition:width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);transition:width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985)}.theme-color-beige-brown .reveal .slide-number{color:#111;background-color:rgba(255,255,255,0.3)}.theme-color-black-blue{background:#111111}.theme-color-black-blue body{background:transparent}.theme-color-black-blue .theme-body-color-block{background:white}.theme-color-black-blue .theme-link-color-block{background:#2f90f8}.theme-color-black-blue .themed,.theme-color-black-blue .reveal{color:white}.theme-color-black-blue .themed a,.theme-color-black-blue .reveal a{color:#2f90f8}.theme-color-black-blue .themed a:hover,.theme-color-black-blue .reveal a:hover{color:#79b7fa}.theme-color-black-blue .reveal .controls .navigate-left,.theme-color-black-blue .reveal .controls .navigate-left.enabled{border-right-color:#2f90f8}.theme-color-black-blue .reveal .controls .navigate-right,.theme-color-black-blue .reveal .controls .navigate-right.enabled{border-left-color:#2f90f8}.theme-color-black-blue .reveal .controls .navigate-up,.theme-color-black-blue .reveal .controls .navigate-up.enabled{border-bottom-color:#2f90f8}.theme-color-black-blue .reveal .controls .navigate-down,.theme-color-black-blue .reveal .controls .navigate-down.enabled{border-top-color:#2f90f8}.theme-color-black-blue .reveal .controls .navigate-left.enabled:hover{border-right-color:#79b7fa}.theme-color-black-blue .reveal .controls .navigate-right.enabled:hover{border-left-color:#79b7fa}.theme-color-black-blue .reveal .controls .navigate-up.enabled:hover{border-bottom-color:#79b7fa}.theme-color-black-blue .reveal .controls .navigate-down.enabled:hover{border-top-color:#79b7fa}.theme-color-black-blue .reveal .progress{background:rgba(0,0,0,0.2)}.theme-color-black-blue .reveal .progress span{background:#2f90f8;-webkit-transition:width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);transition:width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985)}.theme-color-black-blue .reveal .slide-number{color:#ddd;background-color:rgba(0,0,0,0.3)}.theme-color-black-mint{background:#111111}.theme-color-black-mint body{background:transparent}.theme-color-black-mint .theme-body-color-block{background:white}.theme-color-black-mint .theme-link-color-block{background:#8dd792}.theme-color-black-mint .themed,.theme-color-black-mint .reveal{color:white}.theme-color-black-mint .themed a,.theme-color-black-mint .reveal a{color:#8dd792}.theme-color-black-mint .themed a:hover,.theme-color-black-mint .reveal a:hover{color:#c6ebc8}.theme-color-black-mint .reveal .controls .navigate-left,.theme-color-black-mint .reveal .controls .navigate-left.enabled{border-right-color:#8dd792}.theme-color-black-mint .reveal .controls .navigate-right,.theme-color-black-mint .reveal .controls .navigate-right.enabled{border-left-color:#8dd792}.theme-color-black-mint .reveal .controls .navigate-up,.theme-color-black-mint .reveal .controls .navigate-up.enabled{border-bottom-color:#8dd792}.theme-color-black-mint .reveal .controls .navigate-down,.theme-color-black-mint .reveal .controls .navigate-down.enabled{border-top-color:#8dd792}.theme-color-black-mint .reveal .controls .navigate-left.enabled:hover{border-right-color:#c6ebc8}.theme-color-black-mint .reveal .controls .navigate-right.enabled:hover{border-left-color:#c6ebc8}.theme-color-black-mint .reveal .controls .navigate-up.enabled:hover{border-bottom-color:#c6ebc8}.theme-color-black-mint .reveal .controls .navigate-down.enabled:hover{border-top-color:#c6ebc8}.theme-color-black-mint .reveal .progress{background:rgba(0,0,0,0.2)}.theme-color-black-mint .reveal .progress span{background:#8dd792;-webkit-transition:width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);transition:width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985)}.theme-color-black-mint .reveal .slide-number{color:#ddd;background-color:rgba(0,0,0,0.3)}.theme-color-black-orange{background:#222222}.theme-color-black-orange body{background:transparent}.theme-color-black-orange .theme-body-color-block{background:white}.theme-color-black-orange .theme-link-color-block{background:#e7ad52}.theme-color-black-orange .themed,.theme-color-black-orange .reveal{color:white}.theme-color-black-orange .themed a,.theme-color-black-orange .reveal a{color:#e7ad52}.theme-color-black-orange .themed a:hover,.theme-color-black-orange .reveal a:hover{color:#f3d7ac}.theme-color-black-orange .reveal .controls .navigate-left,.theme-color-black-orange .reveal .controls .navigate-left.enabled{border-right-color:#e7ad52}.theme-color-black-orange .reveal .controls .navigate-right,.theme-color-black-orange .reveal .controls .navigate-right.enabled{border-left-color:#e7ad52}.theme-color-black-orange .reveal .controls .navigate-up,.theme-color-black-orange .reveal .controls .navigate-up.enabled{border-bottom-color:#e7ad52}.theme-color-black-orange .reveal .controls .navigate-down,.theme-color-black-orange .reveal .controls .navigate-down.enabled{border-top-color:#e7ad52}.theme-color-black-orange .reveal .controls .navigate-left.enabled:hover{border-right-color:#f3d7ac}.theme-color-black-orange .reveal .controls .navigate-right.enabled:hover{border-left-color:#f3d7ac}.theme-color-black-orange .reveal .controls .navigate-up.enabled:hover{border-bottom-color:#f3d7ac}.theme-color-black-orange .reveal .controls .navigate-down.enabled:hover{border-top-color:#f3d7ac}.theme-color-black-orange .reveal .progress{background:rgba(0,0,0,0.2)}.theme-color-black-orange .reveal .progress span{background:#e7ad52;-webkit-transition:width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);transition:width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985)}.theme-color-black-orange .reveal .slide-number{color:#ddd;background-color:rgba(0,0,0,0.3)}.theme-color-blue-yellow{background:#44a0dd}.theme-color-blue-yellow body{background:transparent}.theme-color-blue-yellow .theme-body-color-block{background:white}.theme-color-blue-yellow .theme-link-color-block{background:#ecec6a}.theme-color-blue-yellow .themed,.theme-color-blue-yellow .reveal{color:white}.theme-color-blue-yellow .themed a,.theme-color-blue-yellow .reveal a{color:#ecec6a}.theme-color-blue-yellow .themed a:hover,.theme-color-blue-yellow .reveal a:hover{color:#f8f8c4}.theme-color-blue-yellow .reveal .controls .navigate-left,.theme-color-blue-yellow .reveal .controls .navigate-left.enabled{border-right-color:#ecec6a}.theme-color-blue-yellow .reveal .controls .navigate-right,.theme-color-blue-yellow .reveal .controls .navigate-right.enabled{border-left-color:#ecec6a}.theme-color-blue-yellow .reveal .controls .navigate-up,.theme-color-blue-yellow .reveal .controls .navigate-up.enabled{border-bottom-color:#ecec6a}.theme-color-blue-yellow .reveal .controls .navigate-down,.theme-color-blue-yellow .reveal .controls .navigate-down.enabled{border-top-color:#ecec6a}.theme-color-blue-yellow .reveal .controls .navigate-left.enabled:hover{border-right-color:#f8f8c4}.theme-color-blue-yellow .reveal .controls .navigate-right.enabled:hover{border-left-color:#f8f8c4}.theme-color-blue-yellow .reveal .controls .navigate-up.enabled:hover{border-bottom-color:#f8f8c4}.theme-color-blue-yellow .reveal .controls .navigate-down.enabled:hover{border-top-color:#f8f8c4}.theme-color-blue-yellow .reveal .progress{background:rgba(0,0,0,0.2)}.theme-color-blue-yellow .reveal .progress span{background:#ecec6a;-webkit-transition:width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);transition:width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985)}.theme-color-blue-yellow .reveal .slide-number{color:#111;background-color:rgba(255,255,255,0.3)}.theme-color-cobalt-orange{background-color:#13335a;background-image:-webkit-radial-gradient(center, circle farthest-corner, #1a4984 0%, #13335a 100%);background-image:radial-gradient(circle farthest-corner at center, #1a4984 0%, #13335a 100%)}.theme-color-cobalt-orange body{background:transparent}.theme-color-cobalt-orange .theme-body-color-block{background:white}.theme-color-cobalt-orange .theme-link-color-block{background:#e08c14}.theme-color-cobalt-orange .themed,.theme-color-cobalt-orange .reveal{color:white}.theme-color-cobalt-orange .themed a,.theme-color-cobalt-orange .reveal a{color:#e08c14}.theme-color-cobalt-orange .themed a:hover,.theme-color-cobalt-orange .reveal a:hover{color:#f2b968}.theme-color-cobalt-orange .reveal .controls .navigate-left,.theme-color-cobalt-orange .reveal .controls .navigate-left.enabled{border-right-color:#e08c14}.theme-color-cobalt-orange .reveal .controls .navigate-right,.theme-color-cobalt-orange .reveal .controls .navigate-right.enabled{border-left-color:#e08c14}.theme-color-cobalt-orange .reveal .controls .navigate-up,.theme-color-cobalt-orange .reveal .controls .navigate-up.enabled{border-bottom-color:#e08c14}.theme-color-cobalt-orange .reveal .controls .navigate-down,.theme-color-cobalt-orange .reveal .controls .navigate-down.enabled{border-top-color:#e08c14}.theme-color-cobalt-orange .reveal .controls .navigate-left.enabled:hover{border-right-color:#f2b968}.theme-color-cobalt-orange .reveal .controls .navigate-right.enabled:hover{border-left-color:#f2b968}.theme-color-cobalt-orange .reveal .controls .navigate-up.enabled:hover{border-bottom-color:#f2b968}.theme-color-cobalt-orange .reveal .controls .navigate-down.enabled:hover{border-top-color:#f2b968}.theme-color-cobalt-orange .reveal .progress{background:rgba(0,0,0,0.2)}.theme-color-cobalt-orange .reveal .progress span{background:#e08c14;-webkit-transition:width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);transition:width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985)}.theme-color-cobalt-orange .reveal .slide-number{color:#ddd;background-color:rgba(0,0,0,0.3)}.theme-color-coral-blue{background-color:#c97150;background-image:-webkit-radial-gradient(center, circle farthest-corner, #d59177 0%, #c97150 100%);background-image:radial-gradient(circle farthest-corner at center, #d59177 0%, #c97150 100%)}.theme-color-coral-blue body{background:transparent}.theme-color-coral-blue .theme-body-color-block{background:white}.theme-color-coral-blue .theme-link-color-block{background:#3a65c0}.theme-color-coral-blue .themed,.theme-color-coral-blue .reveal{color:white}.theme-color-coral-blue .themed a,.theme-color-coral-blue .reveal a{color:#3a65c0}.theme-color-coral-blue .themed a:hover,.theme-color-coral-blue .reveal a:hover{color:#86a1da}.theme-color-coral-blue .reveal .controls .navigate-left,.theme-color-coral-blue .reveal .controls .navigate-left.enabled{border-right-color:#3a65c0}.theme-color-coral-blue .reveal .controls .navigate-right,.theme-color-coral-blue .reveal .controls .navigate-right.enabled{border-left-color:#3a65c0}.theme-color-coral-blue .reveal .controls .navigate-up,.theme-color-coral-blue .reveal .controls .navigate-up.enabled{border-bottom-color:#3a65c0}.theme-color-coral-blue .reveal .controls .navigate-down,.theme-color-coral-blue .reveal .controls .navigate-down.enabled{border-top-color:#3a65c0}.theme-color-coral-blue .reveal .controls .navigate-left.enabled:hover{border-right-color:#86a1da}.theme-color-coral-blue .reveal .controls .navigate-right.enabled:hover{border-left-color:#86a1da}.theme-color-coral-blue .reveal .controls .navigate-up.enabled:hover{border-bottom-color:#86a1da}.theme-color-coral-blue .reveal .controls .navigate-down.enabled:hover{border-top-color:#86a1da}.theme-color-coral-blue .reveal .progress{background:rgba(0,0,0,0.2)}.theme-color-coral-blue .reveal .progress span{background:#3a65c0;-webkit-transition:width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);transition:width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985)}.theme-color-coral-blue .reveal .slide-number{color:#111;background-color:rgba(255,255,255,0.3)}.theme-color-forest-yellow{background:#2ba056}.theme-color-forest-yellow body{background:transparent}.theme-color-forest-yellow .theme-body-color-block{background:white}.theme-color-forest-yellow .theme-link-color-block{background:#ecec6a}.theme-color-forest-yellow .themed,.theme-color-forest-yellow .reveal{color:white}.theme-color-forest-yellow .themed a,.theme-color-forest-yellow .reveal a{color:#ecec6a}.theme-color-forest-yellow .themed a:hover,.theme-color-forest-yellow .reveal a:hover{color:#f8f8c4}.theme-color-forest-yellow .reveal .controls .navigate-left,.theme-color-forest-yellow .reveal .controls .navigate-left.enabled{border-right-color:#ecec6a}.theme-color-forest-yellow .reveal .controls .navigate-right,.theme-color-forest-yellow .reveal .controls .navigate-right.enabled{border-left-color:#ecec6a}.theme-color-forest-yellow .reveal .controls .navigate-up,.theme-color-forest-yellow .reveal .controls .navigate-up.enabled{border-bottom-color:#ecec6a}.theme-color-forest-yellow .reveal .controls .navigate-down,.theme-color-forest-yellow .reveal .controls .navigate-down.enabled{border-top-color:#ecec6a}.theme-color-forest-yellow .reveal .controls .navigate-left.enabled:hover{border-right-color:#f8f8c4}.theme-color-forest-yellow .reveal .controls .navigate-right.enabled:hover{border-left-color:#f8f8c4}.theme-color-forest-yellow .reveal .controls .navigate-up.enabled:hover{border-bottom-color:#f8f8c4}.theme-color-forest-yellow .reveal .controls .navigate-down.enabled:hover{border-top-color:#f8f8c4}.theme-color-forest-yellow .reveal .progress{background:rgba(0,0,0,0.2)}.theme-color-forest-yellow .reveal .progress span{background:#ecec6a;-webkit-transition:width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);transition:width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985)}.theme-color-forest-yellow .reveal .slide-number{color:#ddd;background-color:rgba(0,0,0,0.3)}.theme-color-grey-blue{background-color:#313538;background-image:-webkit-radial-gradient(center, circle farthest-corner, #555a5f 0%, #1c1e20 100%);background-image:radial-gradient(circle farthest-corner at center, #555a5f 0%, #1c1e20 100%)}.theme-color-grey-blue body{background:transparent}.theme-color-grey-blue .theme-body-color-block{background:white}.theme-color-grey-blue .theme-link-color-block{background:#13daec}.theme-color-grey-blue .themed,.theme-color-grey-blue .reveal{color:white}.theme-color-grey-blue .themed a,.theme-color-grey-blue .reveal a{color:#13daec}.theme-color-grey-blue .themed a:hover,.theme-color-grey-blue .reveal a:hover{color:#71e9f4}.theme-color-grey-blue .reveal .controls .navigate-left,.theme-color-grey-blue .reveal .controls .navigate-left.enabled{border-right-color:#13daec}.theme-color-grey-blue .reveal .controls .navigate-right,.theme-color-grey-blue .reveal .controls .navigate-right.enabled{border-left-color:#13daec}.theme-color-grey-blue .reveal .controls .navigate-up,.theme-color-grey-blue .reveal .controls .navigate-up.enabled{border-bottom-color:#13daec}.theme-color-grey-blue .reveal .controls .navigate-down,.theme-color-grey-blue .reveal .controls .navigate-down.enabled{border-top-color:#13daec}.theme-color-grey-blue .reveal .controls .navigate-left.enabled:hover{border-right-color:#71e9f4}.theme-color-grey-blue .reveal .controls .navigate-right.enabled:hover{border-left-color:#71e9f4}.theme-color-grey-blue .reveal .controls .navigate-up.enabled:hover{border-bottom-color:#71e9f4}.theme-color-grey-blue .reveal .controls .navigate-down.enabled:hover{border-top-color:#71e9f4}.theme-color-grey-blue .reveal .progress{background:rgba(0,0,0,0.2)}.theme-color-grey-blue .reveal .progress span{background:#13daec;-webkit-transition:width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);transition:width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985)}.theme-color-grey-blue .reveal .slide-number{color:#ddd;background-color:rgba(0,0,0,0.3)}.theme-color-mint-beige{background-color:#207c5f;background-image:-webkit-radial-gradient(center, circle farthest-corner, #2aa57e 0%, #207c5f 100%);background-image:radial-gradient(circle farthest-corner at center, #2aa57e 0%, #207c5f 100%)}.theme-color-mint-beige body{background:transparent}.theme-color-mint-beige .theme-body-color-block{background:white}.theme-color-mint-beige .theme-link-color-block{background:#ecec6a}.theme-color-mint-beige .themed,.theme-color-mint-beige .reveal{color:white}.theme-color-mint-beige .themed a,.theme-color-mint-beige .reveal a{color:#ecec6a}.theme-color-mint-beige .themed a:hover,.theme-color-mint-beige .reveal a:hover{color:#f8f8c4}.theme-color-mint-beige .reveal .controls .navigate-left,.theme-color-mint-beige .reveal .controls .navigate-left.enabled{border-right-color:#ecec6a}.theme-color-mint-beige .reveal .controls .navigate-right,.theme-color-mint-beige .reveal .controls .navigate-right.enabled{border-left-color:#ecec6a}.theme-color-mint-beige .reveal .controls .navigate-up,.theme-color-mint-beige .reveal .controls .navigate-up.enabled{border-bottom-color:#ecec6a}.theme-color-mint-beige .reveal .controls .navigate-down,.theme-color-mint-beige .reveal .controls .navigate-down.enabled{border-top-color:#ecec6a}.theme-color-mint-beige .reveal .controls .navigate-left.enabled:hover{border-right-color:#f8f8c4}.theme-color-mint-beige .reveal .controls .navigate-right.enabled:hover{border-left-color:#f8f8c4}.theme-color-mint-beige .reveal .controls .navigate-up.enabled:hover{border-bottom-color:#f8f8c4}.theme-color-mint-beige .reveal .controls .navigate-down.enabled:hover{border-top-color:#f8f8c4}.theme-color-mint-beige .reveal .progress{background:rgba(0,0,0,0.2)}.theme-color-mint-beige .reveal .progress span{background:#ecec6a;-webkit-transition:width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);transition:width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985)}.theme-color-mint-beige .reveal .slide-number{color:#ddd;background-color:rgba(0,0,0,0.3)}.theme-color-no-color{background-color:white}.theme-color-no-color .theme-body-color-block,.theme-color-no-color .theme-link-color-block{background:black}.theme-color-no-color .themed,.theme-color-no-color.themed,.theme-color-no-color .reveal,.theme-color-no-color.reveal{color:black}.theme-color-sand-blue{background:#f0f1eb}.theme-color-sand-blue body{background:transparent}.theme-color-sand-blue .theme-body-color-block{background:#111111}.theme-color-sand-blue .theme-link-color-block{background:#2f90f8}.theme-color-sand-blue .themed,.theme-color-sand-blue .reveal{color:#111111}.theme-color-sand-blue .themed a,.theme-color-sand-blue .reveal a{color:#2f90f8}.theme-color-sand-blue .themed a:hover,.theme-color-sand-blue .reveal a:hover{color:#92c5fb}.theme-color-sand-blue .reveal .controls .navigate-left,.theme-color-sand-blue .reveal .controls .navigate-left.enabled{border-right-color:#2f90f8}.theme-color-sand-blue .reveal .controls .navigate-right,.theme-color-sand-blue .reveal .controls .navigate-right.enabled{border-left-color:#2f90f8}.theme-color-sand-blue .reveal .controls .navigate-up,.theme-color-sand-blue .reveal .controls .navigate-up.enabled{border-bottom-color:#2f90f8}.theme-color-sand-blue .reveal .controls .navigate-down,.theme-color-sand-blue .reveal .controls .navigate-down.enabled{border-top-color:#2f90f8}.theme-color-sand-blue .reveal .controls .navigate-left.enabled:hover{border-right-color:#92c5fb}.theme-color-sand-blue .reveal .controls .navigate-right.enabled:hover{border-left-color:#92c5fb}.theme-color-sand-blue .reveal .controls .navigate-up.enabled:hover{border-bottom-color:#92c5fb}.theme-color-sand-blue .reveal .controls .navigate-down.enabled:hover{border-top-color:#92c5fb}.theme-color-sand-blue .reveal .progress{background:rgba(0,0,0,0.2)}.theme-color-sand-blue .reveal .progress span{background:#2f90f8;-webkit-transition:width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);transition:width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985)}.theme-color-sand-blue .reveal .slide-number{color:#111;background-color:rgba(255,255,255,0.3)}.theme-color-sea-yellow{background-color:#297477;background-image:-webkit-linear-gradient(top, #6cc9cd 0%, #297477 100%);background-image:linear-gradient(to bottom, #6cc9cd 0%, #297477 100%)}.theme-color-sea-yellow body{background:transparent}.theme-color-sea-yellow .theme-body-color-block{background:white}.theme-color-sea-yellow .theme-link-color-block{background:#ffc200}.theme-color-sea-yellow .themed,.theme-color-sea-yellow .reveal{color:white}.theme-color-sea-yellow .themed a,.theme-color-sea-yellow .reveal a{color:#ffc200}.theme-color-sea-yellow .themed a:hover,.theme-color-sea-yellow .reveal a:hover{color:#ffda66}.theme-color-sea-yellow .reveal .controls .navigate-left,.theme-color-sea-yellow .reveal .controls .navigate-left.enabled{border-right-color:#ffc200}.theme-color-sea-yellow .reveal .controls .navigate-right,.theme-color-sea-yellow .reveal .controls .navigate-right.enabled{border-left-color:#ffc200}.theme-color-sea-yellow .reveal .controls .navigate-up,.theme-color-sea-yellow .reveal .controls .navigate-up.enabled{border-bottom-color:#ffc200}.theme-color-sea-yellow .reveal .controls .navigate-down,.theme-color-sea-yellow .reveal .controls .navigate-down.enabled{border-top-color:#ffc200}.theme-color-sea-yellow .reveal .controls .navigate-left.enabled:hover{border-right-color:#ffda66}.theme-color-sea-yellow .reveal .controls .navigate-right.enabled:hover{border-left-color:#ffda66}.theme-color-sea-yellow .reveal .controls .navigate-up.enabled:hover{border-bottom-color:#ffda66}.theme-color-sea-yellow .reveal .controls .navigate-down.enabled:hover{border-top-color:#ffda66}.theme-color-sea-yellow .reveal .progress{background:rgba(0,0,0,0.2)}.theme-color-sea-yellow .reveal .progress span{background:#ffc200;-webkit-transition:width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);transition:width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985)}.theme-color-sea-yellow .reveal .slide-number{color:#ddd;background-color:rgba(0,0,0,0.3)}.theme-color-silver-blue{background-color:#dddddd;background-image:-webkit-radial-gradient(center, circle farthest-corner, #fff 0%, #ddd 100%);background-image:radial-gradient(circle farthest-corner at center, #fff 0%, #ddd 100%)}.theme-color-silver-blue body{background:transparent}.theme-color-silver-blue .theme-body-color-block{background:#111111}.theme-color-silver-blue .theme-link-color-block{background:#106bcc}.theme-color-silver-blue .themed,.theme-color-silver-blue .reveal{color:#111111}.theme-color-silver-blue .themed a,.theme-color-silver-blue .reveal a{color:#106bcc}.theme-color-silver-blue .themed a:hover,.theme-color-silver-blue .reveal a:hover{color:#2184ee}.theme-color-silver-blue .reveal .controls .navigate-left,.theme-color-silver-blue .reveal .controls .navigate-left.enabled{border-right-color:#106bcc}.theme-color-silver-blue .reveal .controls .navigate-right,.theme-color-silver-blue .reveal .controls .navigate-right.enabled{border-left-color:#106bcc}.theme-color-silver-blue .reveal .controls .navigate-up,.theme-color-silver-blue .reveal .controls .navigate-up.enabled{border-bottom-color:#106bcc}.theme-color-silver-blue .reveal .controls .navigate-down,.theme-color-silver-blue .reveal .controls .navigate-down.enabled{border-top-color:#106bcc}.theme-color-silver-blue .reveal .controls .navigate-left.enabled:hover{border-right-color:#2184ee}.theme-color-silver-blue .reveal .controls .navigate-right.enabled:hover{border-left-color:#2184ee}.theme-color-silver-blue .reveal .controls .navigate-up.enabled:hover{border-bottom-color:#2184ee}.theme-color-silver-blue .reveal .controls .navigate-down.enabled:hover{border-top-color:#2184ee}.theme-color-silver-blue .reveal .progress{background:rgba(0,0,0,0.2)}.theme-color-silver-blue .reveal .progress span{background:#106bcc;-webkit-transition:width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);transition:width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985)}.theme-color-silver-blue .reveal .slide-number{color:#111;background-color:rgba(255,255,255,0.3)}.theme-color-silver-green{background-color:#dddddd;background-image:-webkit-radial-gradient(center, circle farthest-corner, #fff 0%, #ddd 100%);background-image:radial-gradient(circle farthest-corner at center, #fff 0%, #ddd 100%)}.theme-color-silver-green body{background:transparent}.theme-color-silver-green .theme-body-color-block{background:#111111}.theme-color-silver-green .theme-link-color-block{background:#039426}.theme-color-silver-green .themed,.theme-color-silver-green .reveal{color:#111111}.theme-color-silver-green .themed a,.theme-color-silver-green .reveal a{color:#039426}.theme-color-silver-green .themed a:hover,.theme-color-silver-green .reveal a:hover{color:#04c633}.theme-color-silver-green .reveal .controls .navigate-left,.theme-color-silver-green .reveal .controls .navigate-left.enabled{border-right-color:#039426}.theme-color-silver-green .reveal .controls .navigate-right,.theme-color-silver-green .reveal .controls .navigate-right.enabled{border-left-color:#039426}.theme-color-silver-green .reveal .controls .navigate-up,.theme-color-silver-green .reveal .controls .navigate-up.enabled{border-bottom-color:#039426}.theme-color-silver-green .reveal .controls .navigate-down,.theme-color-silver-green .reveal .controls .navigate-down.enabled{border-top-color:#039426}.theme-color-silver-green .reveal .controls .navigate-left.enabled:hover{border-right-color:#04c633}.theme-color-silver-green .reveal .controls .navigate-right.enabled:hover{border-left-color:#04c633}.theme-color-silver-green .reveal .controls .navigate-up.enabled:hover{border-bottom-color:#04c633}.theme-color-silver-green .reveal .controls .navigate-down.enabled:hover{border-top-color:#04c633}.theme-color-silver-green .reveal .progress{background:rgba(0,0,0,0.2)}.theme-color-silver-green .reveal .progress span{background:#039426;-webkit-transition:width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);transition:width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985)}.theme-color-silver-green .reveal .slide-number{color:#111;background-color:rgba(255,255,255,0.3)}.theme-color-sky-blue{background-color:#dcedf1;background-image:-webkit-radial-gradient(center, circle farthest-corner, #f7fbfc 0%, #add9e4 100%);background-image:radial-gradient(circle farthest-corner at center, #f7fbfc 0%, #add9e4 100%)}.theme-color-sky-blue body{background:transparent}.theme-color-sky-blue .theme-body-color-block{background:#333333}.theme-color-sky-blue .theme-link-color-block{background:#3b759e}.theme-color-sky-blue .themed,.theme-color-sky-blue .reveal{color:#333333}.theme-color-sky-blue .themed a,.theme-color-sky-blue .reveal a{color:#3b759e}.theme-color-sky-blue .themed a:hover,.theme-color-sky-blue .reveal a:hover{color:#74a7cb}.theme-color-sky-blue .reveal .controls .navigate-left,.theme-color-sky-blue .reveal .controls .navigate-left.enabled{border-right-color:#3b759e}.theme-color-sky-blue .reveal .controls .navigate-right,.theme-color-sky-blue .reveal .controls .navigate-right.enabled{border-left-color:#3b759e}.theme-color-sky-blue .reveal .controls .navigate-up,.theme-color-sky-blue .reveal .controls .navigate-up.enabled{border-bottom-color:#3b759e}.theme-color-sky-blue .reveal .controls .navigate-down,.theme-color-sky-blue .reveal .controls .navigate-down.enabled{border-top-color:#3b759e}.theme-color-sky-blue .reveal .controls .navigate-left.enabled:hover{border-right-color:#74a7cb}.theme-color-sky-blue .reveal .controls .navigate-right.enabled:hover{border-left-color:#74a7cb}.theme-color-sky-blue .reveal .controls .navigate-up.enabled:hover{border-bottom-color:#74a7cb}.theme-color-sky-blue .reveal .controls .navigate-down.enabled:hover{border-top-color:#74a7cb}.theme-color-sky-blue .reveal .progress{background:rgba(0,0,0,0.2)}.theme-color-sky-blue .reveal .progress span{background:#3b759e;-webkit-transition:width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);transition:width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985)}.theme-color-sky-blue .reveal .slide-number{color:#111;background-color:rgba(255,255,255,0.3)}.theme-color-white-blue{background:white}.theme-color-white-blue body{background:transparent}.theme-color-white-blue .theme-body-color-block{background:black}.theme-color-white-blue .theme-link-color-block{background:#106bcc}.theme-color-white-blue .themed,.theme-color-white-blue .reveal{color:black}.theme-color-white-blue .themed a,.theme-color-white-blue .reveal a{color:#106bcc}.theme-color-white-blue .themed a:hover,.theme-color-white-blue .reveal a:hover{color:#3991ef}.theme-color-white-blue .reveal .controls .navigate-left,.theme-color-white-blue .reveal .controls .navigate-left.enabled{border-right-color:#106bcc}.theme-color-white-blue .reveal .controls .navigate-right,.theme-color-white-blue .reveal .controls .navigate-right.enabled{border-left-color:#106bcc}.theme-color-white-blue .reveal .controls .navigate-up,.theme-color-white-blue .reveal .controls .navigate-up.enabled{border-bottom-color:#106bcc}.theme-color-white-blue .reveal .controls .navigate-down,.theme-color-white-blue .reveal .controls .navigate-down.enabled{border-top-color:#106bcc}.theme-color-white-blue .reveal .controls .navigate-left.enabled:hover{border-right-color:#3991ef}.theme-color-white-blue .reveal .controls .navigate-right.enabled:hover{border-left-color:#3991ef}.theme-color-white-blue .reveal .controls .navigate-up.enabled:hover{border-bottom-color:#3991ef}.theme-color-white-blue .reveal .controls .navigate-down.enabled:hover{border-top-color:#3991ef}.theme-color-white-blue .reveal .progress{background:rgba(0,0,0,0.2)}.theme-color-white-blue .reveal .progress span{background:#106bcc;-webkit-transition:width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);transition:width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985)}.theme-color-white-blue .reveal .slide-number{color:#111;background-color:rgba(255,255,255,0.3)}.theme-color-yellow-black{background:#fff000}.theme-color-yellow-black body{background:transparent}.theme-color-yellow-black .theme-body-color-block{background:black}.theme-color-yellow-black .theme-link-color-block{background:#4654ec}.theme-color-yellow-black .themed,.theme-color-yellow-black .reveal{color:black}.theme-color-yellow-black .themed a,.theme-color-yellow-black .reveal a{color:#4654ec}.theme-color-yellow-black .themed a:hover,.theme-color-yellow-black .reveal a:hover{color:#a3aaf6}.theme-color-yellow-black .reveal .controls .navigate-left,.theme-color-yellow-black .reveal .controls .navigate-left.enabled{border-right-color:#4654ec}.theme-color-yellow-black .reveal .controls .navigate-right,.theme-color-yellow-black .reveal .controls .navigate-right.enabled{border-left-color:#4654ec}.theme-color-yellow-black .reveal .controls .navigate-up,.theme-color-yellow-black .reveal .controls .navigate-up.enabled{border-bottom-color:#4654ec}.theme-color-yellow-black .reveal .controls .navigate-down,.theme-color-yellow-black .reveal .controls .navigate-down.enabled{border-top-color:#4654ec}.theme-color-yellow-black .reveal .controls .navigate-left.enabled:hover{border-right-color:#a3aaf6}.theme-color-yellow-black .reveal .controls .navigate-right.enabled:hover{border-left-color:#a3aaf6}.theme-color-yellow-black .reveal .controls .navigate-up.enabled:hover{border-bottom-color:#a3aaf6}.theme-color-yellow-black .reveal .controls .navigate-down.enabled:hover{border-top-color:#a3aaf6}.theme-color-yellow-black .reveal .progress{background:rgba(0,0,0,0.2)}.theme-color-yellow-black .reveal .progress span{background:#4654ec;-webkit-transition:width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);transition:width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985)}.theme-color-yellow-black .reveal .slide-number{color:#ddd;background-color:rgba(0,0,0,0.3)}
-
 
 
     </style>
 
 </head>
 <body>
-<div class="theme-font-montserrat theme-color-mint-beige" style="width: 100%; height: 100%;">
+<div style="width: 100%; height: 100%;">
     <div class="reveal">
         <div class="slides">
             <section>
@@ -165,17 +179,16 @@
                     </div>
                 </div>
             </section>
-            <section class="stack">
+            <section>
                 <section data-menu-title="Pourquoi changer ?">
-
-                    <div class="sl-block" data-block-type="text" style="width: 800px; left: 22px; top: 269px; height: auto;">
+                    <div class="sl-block" data-block-type="text" style="width: 800px; left: 22px; top: 125px; height: auto;">
                         <div style="z-index: 10;" class="sl-block-content">
                             <h1>
                                 <span style="font-size:1.0em">Pourquoi</span>
                             </h1>
                         </div>
                     </div>
-                    <div class="sl-block" data-block-type="text" style="width: 169px; left: 422px; top: 359px; height: auto;">
+                    <div class="sl-block" data-block-type="text" style="width: 169px; left: 390px; top: 185px; height: auto;">
                         <div style="z-index: 11;" class="sl-block-content">
                             <p>
                                 <span style="font-size:1.4em">
@@ -184,7 +197,7 @@
                             </p>
                         </div>
                     </div>
-                    <div style="height: auto; width: 91px; left: 608px; top: 220px;" data-block-type="text" class="sl-block">
+                    <div style="height: auto; width: 91px; left: 538px; top: 94px;" data-block-type="text" class="sl-block">
                         <div style="z-index: 13; color: rgb(255, 255, 255);" class="sl-block-content">
                             <h1>
                                 <span style="font-size:2.5em">?</span>
@@ -192,7 +205,7 @@
                         </div>
                     </div>
                 </section>
-                <section data-menu-title="La finalité de l'économie ?">
+                <section data-menu-title="La finalité de l'économie ?" data-transition="fade">
                     <div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 190px; height: auto;">
                         <div class="sl-block-content">
                             <h2>La finalité de l'économie ?</h2>
@@ -269,7 +282,7 @@
                         </div>
                     </div>
                 </section>
-                <section >
+                <section data-transition="fade">
                     <div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 190px; height: auto;">
                         <div class="sl-block-content">
                             <h2>La finalité de l'économie ?</h2>
@@ -346,7 +359,7 @@
                         </div>
                     </div>
                 </section>
-                <section>
+                <section data-transition="fade">
                     <menu-title>8,8 millions de pauvres</menu-title>
                     <div style="width: 63px; height: 63px; left: 451px; top: 320px;" data-block-type="image" class="sl-block">
                         <div style="z-index: 11;" class="sl-block-content fragment" data-fragment-index="1">
@@ -416,7 +429,7 @@ de Pauvres* en France
                         </div>
                     </div>
                 </section>
-                <section>
+                <section data-transition="fade">
                     <div style="width: 63px; height: 63px; left: 451px; top: 320px;" data-block-type="image" class="sl-block">
                         <div style="z-index: 10;" class="sl-block-content">
                             <img data-natural-height="533" data-natural-width="533" style="" data-lazy-loaded="" data-src="./images/direction242.png"/>
@@ -520,7 +533,7 @@ de
                         </div>
                     </div>
                 </section>
-                <section>
+                <section data-transition="fade">
                     <menu-title>Le mot "économie"</menu-title>
                     <div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 190px; height: auto;">
                         <div style="z-index: 10;" class="sl-block-content">
@@ -549,7 +562,7 @@ de
                         </div>
                     </div>
                 </section>
-                <section>
+                <section data-transition="fade">
                     <div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 190px; height: auto;">
                         <div style="z-index: 10;" class="sl-block-content">
                             <h1>Economie</h1>
@@ -1075,7 +1088,7 @@ Services
                 <section>
                     <menu-title>A quoit sert la monnaie ?</menu-title>
 
-                    <div class="sl-block" data-block-type="text" style="width: 863px; left: -10px; top: 269px; height: auto;">
+                    <div class="sl-block" data-block-type="text" style="width: 863px; left: 10px; top: 150px; height: auto;">
                         <div style="z-index: 10;" class="sl-block-content">
                             <h1>A quoi
 
@@ -1084,14 +1097,14 @@ Services
                             </h1>
                         </div>
                     </div>
-                    <div class="sl-block" data-block-type="text" style="width: 863px; left: 87px; top: 355px; height: auto;">
+                    <div class="sl-block" data-block-type="text" style="width: 863px; left: 51px; top: 213px; height: auto;">
                         <div style="z-index: 11;" class="sl-block-content" dir="ui">
                             <p>
                                 <span style="font-size:1.4em">la monnaie</span>
                             </p>
                         </div>
                     </div>
-                    <div style="height: auto; width: 91px; left: 634px; top: 210px;" data-block-type="text" class="sl-block">
+                    <div style="height: auto; width: 91px; left: 574px; top: 121px;" data-block-type="text" class="sl-block">
                         <div style="z-index: 12; color: rgb(255, 255, 255);" class="sl-block-content">
                             <h1>
                                 <span style="font-size:2.5em">?</span>
@@ -1326,7 +1339,7 @@ Services
                         </div>
                     </div>
                 </section>
-                <section>
+                <section data-transition="fade">
                     <menu-title>Intermédiaire d'échange ?</menu-title>
                     <div style="height: auto; width: 240px; left: 74px; top: 542px;" data-block-type="text" class="sl-block">
                         <div style="z-index: 10;" class="sl-block-content">
@@ -1436,7 +1449,7 @@ Services
                         </div>
                     </div>
                 </section>
-                <section>
+                <section data-transition="fade">
                     <div style="height: auto; width: 240px; left: 74px; top: 542px;" data-block-type="text" class="sl-block">
                         <div style="z-index: 10;" class="sl-block-content">
                             <p>
@@ -1563,7 +1576,7 @@ Services
                         </div>
                     </div>
                 </section>
-                <section>
+                <section data-transition="fade">
                     <div style="height: auto; width: 240px; left: 74px; top: 542px;" data-block-type="text" class="sl-block">
                         <div style="z-index: 13;" class="sl-block-content">
                             <p>
@@ -1695,7 +1708,7 @@ Services
                         </div>
                     </div>
                 </section>
-                <section>
+                <section data-transition="fade">
                     <div style="height: auto; width: 240px; left: 74px; top: 542px;" data-block-type="text" class="sl-block">
                         <div style="z-index: 12;" class="sl-block-content">
                             <p>
@@ -1821,7 +1834,7 @@ Services
                         </div>
                     </div>
                 </section>
-                <section>
+                <section data-transition="fade">
                     <div style="height: auto; width: 240px; left: 74px; top: 542px;" data-block-type="text" class="sl-block">
                         <div style="z-index: 10;" class="sl-block-content">
                             <p>
@@ -2009,7 +2022,7 @@ Services
                         </div>
                     </div>
                 </section>
-                <section>
+                <section data-transition="fade">
                     <div style="height: auto; width: 240px; left: 74px; top: 542px;" data-block-type="text" class="sl-block">
                         <div style="z-index: 10;" class="sl-block-content">
                             <p>
@@ -2222,7 +2235,7 @@ Services
                         </div>
                     </div>
                 </section>
-                <section>
+                <section data-transition="fade">
                     <div style="height: auto; width: 240px; left: 74px; top: 542px;" data-block-type="text" class="sl-block">
                         <div style="z-index: 10;" class="sl-block-content">
                             <p>
@@ -2565,7 +2578,7 @@ Services
                         </div>
                     </div>
                 </section>
-                <section>
+                <section data-transition="fade">
                     <div style="height: auto; width: 240px; left: 74px; top: 542px;" data-block-type="text" class="sl-block">
                         <div style="z-index: 10;" class="sl-block-content">
                             <p>
@@ -2778,7 +2791,7 @@ Services
                         </div>
                     </div>
                 </section>
-                <section>
+                <section data-transition="fade">
                     <div style="height: auto; width: 240px; left: 74px; top: 542px;" data-block-type="text" class="sl-block">
                         <div style="z-index: 10;" class="sl-block-content">
                             <p>
@@ -2981,7 +2994,7 @@ Services
                         </div>
                     </div>
                 </section>
-                <section>
+                <section >
                     <div class="sl-block" data-block-type="text" style="width: 847px; left: 57px; top: 178px; height: auto;">
                         <div class="sl-block-style" style="z-index: 10; opacity: 0.6;">
                             <div style="z-index: 10;" class="sl-block-content" dir="ui">
@@ -3076,7 +3089,7 @@ Services
                         </div>
                     </div>
                 </section>
-                <section>
+                <section data-transition="fade">
 
                     <menu-title>Outil de mesure ?</menu-title>
                     <div class="sl-block" data-block-type="text" style="width: 847px; left: 57px; top: 178px; height: auto;">
@@ -3350,8 +3363,8 @@ Services
                         </div>
                     </div>
                 </section>
-                <section>
-                    <menu-title>Euro : quel unité de mesure ?</menu-title>
+                <section data-transition="fade">
+                    <menu-title>Euro : quel invariant ?</menu-title>
                     <div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 35px; height: auto;">
                         <div style="z-index: 10;" class="sl-block-content">
                             <h1>Euro</h1>
@@ -3501,7 +3514,7 @@ Services
                     </div>
                 </section>
                 <section>
-                    <div style="height: auto; width: 357px; left: 299px; top: 400px;" data-block-type="text" class="sl-block">
+                    <div style="height: auto; width: 357px; left: 255px; top: 382px;" data-block-type="text" class="sl-block">
                         <div style="z-index: 11; color: rgb(255, 255, 0);" class="sl-block-content">
                             <p>
                                 <span style="color:#FFFF00">
@@ -3530,7 +3543,7 @@ Services
                             </h2>
                         </div>
                     </div>
-                    <div style="height: auto; width: 61px; left: 238px; top: 389px;" data-block-type="text" class="sl-block">
+                    <div style="height: auto; width: 61px; left: 235px; top: 382px;" data-block-type="text" class="sl-block">
                         <div style="z-index: 10; color: rgb(255, 255, 0);" class="sl-block-content">
                             <h2>
                                 <span style="color:#FFFFFF">
@@ -3550,7 +3563,7 @@ Services
                             </div>
                         </div>
                     </div>
-                    <div style="height: auto; width: 91px; left: 638px; top: 253px;" data-block-type="text" class="sl-block">
+                    <div style="height: auto; width: 91px; left: 576px; top: 288px;" data-block-type="text" class="sl-block">
                         <div style="z-index: 15; color: rgb(255, 255, 255);" class="sl-block-content">
                             <h1>
                                 <span style="font-size:2.5em">?</span>
@@ -3562,21 +3575,21 @@ Services
             <section class="stack">
                 <section>
                     <menu-title>Comment fonctionne la monnaie Euro ?</menu-title>
-                    <div style="height: auto; width: 546px; left: 226px; top: 387px;" data-block-type="text" class="sl-block">
+                    <div style="height: auto; width: 546px; left: 226px; top: 245px;" data-block-type="text" class="sl-block">
                         <div style="z-index: 10; color: rgb(255, 255, 0);" class="sl-block-content">
                             <h3>
                                 <span style="color:#FFFFFF">
                                     <span style="font-size:0.9em">la
 
                                         <span style="font-size:1.6em">
-                                            <strong>monnaie</strong>
+                                            monnaie
                                         </span>
                                     </span>
                                 </span>
                             </h3>
                         </div>
                     </div>
-                    <div style="height: auto; width: 437px; left: 221px; top: 313px;" data-block-type="text" class="sl-block">
+                    <div style="height: auto; width: 437px; left: 231px; top: 185px;" data-block-type="text" class="sl-block">
                         <div class="sl-block-style" style="z-index: 11; transform: rotate(360deg);">
                             <div style="z-index: 11; color: rgb(255, 255, 0);" class="sl-block-content">
                                 <h1>
@@ -3587,7 +3600,7 @@ Services
                             </div>
                         </div>
                     </div>
-                    <div style="height: auto; width: 312px; left: 218px; top: 262px;" data-block-type="text" class="sl-block">
+                    <div style="height: auto; width: 312px; left: 218px; top: 130px;" data-block-type="text" class="sl-block">
                         <div class="sl-block-style" style="z-index: 12; transform: rotate(360deg);">
                             <div style="z-index: 12; color: rgb(255, 255, 0);" class="sl-block-content">
                                 <h3>
@@ -3600,7 +3613,7 @@ Services
                             </div>
                         </div>
                     </div>
-                    <div style="height: auto; width: 546px; left: 247px; top: 451px;" data-block-type="text" class="sl-block">
+                    <div style="height: auto; width: 546px; left: 247px; top: 300px;" data-block-type="text" class="sl-block">
                         <div class="sl-block-style" style="z-index: 13;">
                             <div style="z-index: 13; color: rgb(255, 255, 0);" class="sl-block-content">
                                 <p>
@@ -3611,7 +3624,7 @@ Services
                             </div>
                         </div>
                     </div>
-                    <div style="height: auto; width: 91px; left: 638px; top: 253px;" data-block-type="text" class="sl-block">
+                    <div style="height: auto; width: 91px; left: 598px; top: 155px;" data-block-type="text" class="sl-block">
                         <div style="z-index: 15; color: rgb(255, 255, 255);" class="sl-block-content">
                             <h1>
                                 <span style="font-size:2.5em">?</span>
@@ -3619,34 +3632,15 @@ Services
                         </div>
                     </div>
                 </section>
-                <section>
+                <section data-markdown>
                     <menu-title>Qui crée la monnaie ?</menu-title>
-                    <div class="sl-block" data-block-type="text" style="width: 880px; left: 30px; top: 309px; height: auto;">
-                        <div style="z-index: 10;" class="sl-block-content fragment" data-fragment-index="0">
-                            <ul>
-                                <li class="">
-                                    <h3>
-                                        <span style="font-size:1.0em">Les Etats ?</span>
-                                    </h3>
-                                </li>
-                                <li>
-                                    <h3>
-                                        <span style="font-size:1.0em">Les Banques Centrales ?</span>
-                                    </h3>
-                                </li>
-                                <li>
-                                    <h3>
-                                        <span style="font-size:1.0em">Quelqu'un d'autre ?</span>
-                                    </h3>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="sl-block" data-block-type="text" style="width: 863px; left: 49px; top: 91px; height: auto;">
-                        <div style="z-index: 11;" class="sl-block-content">
-                            <h1>Qui crée la monnaie ?</h1>
-                        </div>
-                    </div>
+                    <textarea data-template>
+                        # Qui crée la monnaie ?
+
+                        - Les Etats ?
+                        - Les Banques Centrales ?
+                        - Quelqu'un d'autre ?
+                    </textarea>
                 </section>
                 <section>
                     <div style="width: 361.776px; height: 382px; left: 299px; top: 286px;" data-block-type="image" class="sl-block">
@@ -3683,7 +3677,7 @@ Services
                             </p>
                         </div>
                     </div>
-                    <div style="height: auto; width: 230px; left: 115px; top: 417px;" data-block-type="text" class="sl-block">
+                    <div style="height: auto; width: 230px; left: 40px; top: 515px;" data-block-type="text" class="sl-block">
                         <div style="z-index: 16;" class="sl-block-content fragment" data-fragment-index="0">
                             <h2>
                                 <span style="font-size:1.4em">90%</span>
@@ -3712,38 +3706,14 @@ Services
                         </div>
                     </div>
                 </section>
-                <section>
-                    <div style="height: auto; width: 676px; left: 214px; top: 440px;" data-block-type="text" class="sl-block">
-                        <div dir="ui" style="z-index: 10;" class="sl-block-content">
-                            <h2 style="text-align:left">&nbsp; &nbsp; &nbsp;&nbsp; de la monnaie &nbsp; &nbsp; mondiale est
+                <section data-markdown>
+                    <textarea data-template>
+                        # Qui crée la monnaie ?
 
-
-
-
-                                <strong>
-                                    <span style="color:#FFFF00">
-                                        <em>privée</em>
-                                    </span>
-                                </strong>
-                            </h2>
-                        </div>
-                    </div>
-                    <div style="height: auto; width: 230px; left: 115px; top: 417px;" data-block-type="text" class="sl-block">
-                        <div style="z-index: 11;" class="sl-block-content">
-                            <h2>
-                                <span style="color:#FFFF00">
-                                    <span style="font-size:1.4em">90%</span>
-                                </span>
-                            </h2>
-                        </div>
-                    </div>
-                    <div class="sl-block" data-block-type="text" style="width: 863px; left: 49px; top: 91px; height: auto;">
-                        <div style="z-index: 13;" class="sl-block-content">
-                            <h1>Qui crée la monnaie ?</h1>
-                        </div>
-                    </div>
+                        ## **90%** de la monnaie mondial est **privée**
+                    </textarea>
                 </section>
-                <section>
+                <section data-transition="fade">
                     <menu-title>Création monétaire par la dette</menu-title>
 
                     <div class="sl-block" data-block-type="text" style="width: 931px; left: 15px; top: 59px; height: auto;">
@@ -3915,7 +3885,7 @@ Services
                         </div>
                     </div>
                 </section>
-                <section>
+                <section data-transition="fade">
                     <div class="sl-block" data-block-type="text" style="width: 931px; left: 15px; top: 59px; height: auto;">
                         <div style="z-index: 13;" class="sl-block-content">
                             <h1>Création monétaire</h1>
@@ -4069,7 +4039,7 @@ Services
                         </div>
                     </div>
                 </section>
-                <section>
+                <section data-transition="fade">
                     <div class="sl-block" data-block-type="text" style="width: 931px; left: 15px; top: 59px; height: auto;">
                         <div style="z-index: 11;" class="sl-block-content">
                             <h1>Création monétaire</h1>
@@ -4089,7 +4059,7 @@ Services
                             </h2>
                         </div>
                     </div>
-                    <div style="height: auto; width: 61px; left: 188px; top: 350px;" data-block-type="text" class="sl-block">
+                    <div style="height: auto; width: 61px; left: 270px; top: 350px;" data-block-type="text" class="sl-block">
                         <div style="z-index: 14; color: rgb(255, 255, 0);" class="sl-block-content">
                             <h2>
                                 <span style="color:#FFFFFF">
@@ -4099,51 +4069,22 @@ Services
                         </div>
                     </div>
                 </section>
-                <section>
+                <section data-markdown data-transition="fade">
                     <menu-title>Citation d'Henri Ford</menu-title>
+                    <script type="text/template">
+                        « Il est **appréciable** que<br/>
+                        le peuple de cette nation<br/>
+                        **ne comprenne rien**<br/>
+                        au système bancaire et monétaire,
 
-                    <div class="sl-block" data-block-type="text" style="width: 847px; left: 57px; top: 167px; height: auto;">
-                        <div style="z-index: 11;" class="sl-block-content">
-                            <p>« Il est
+                        car si tel était le cas, je pense que<br/>
+                        nous serions confrontés à une révolution<br/>
+                        avant demain matin »
+                        <br/>
 
-                                <strong>appréciable</strong> que
+                        <small>**Henri Ford** (1863 - 1947)</small>
 
-                                <br/>
-                                le peuple de cette nation
-
-                                <br/>
-                                <strong>ne comprenne rien</strong>
-                                <br/>
-                                au système bancaire et monétaire,
-
-                            </p>
-                            <p>
-                                <br/>
-                                car si tel était le cas, je pense que
-
-                            </p>
-                            <p>nous serions confrontés à une révolution
-
-                                <br/>
-                                avant demain matin »
-
-                            </p>
-                        </div>
-                    </div>
-                    <div style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 181px; top: 551px;" data-block-type="text" class="sl-block">
-                        <div style="z-index: 12;" class="sl-block-content">
-                            <p>
-                                <span style="font-size:0.7em">
-                                    <strong>
-                                        <span style="font-size:1.2em">
-                                            <em>Henri Ford</em>
-                                        </span>
-                                    </strong> (1863 - 1947)
-
-                                </span>
-                            </p>
-                        </div>
-                    </div>
+                    </script>
                 </section>
             </section>
             <section class="stack">
@@ -4156,7 +4097,7 @@ Services
                             </h1>
                         </div>
                     </div>
-                    <div class="sl-block" data-block-type="text" style="width: 863px; left: 95px; top: 346px; height: auto;">
+                    <div class="sl-block" data-block-type="text" style="width: 863px; left: 35px; top: 320px; height: auto;">
                         <div style="z-index: 11;" class="sl-block-content" dir="ui">
                             <p>
                                 <span style="font-size:1.4em">
@@ -4167,7 +4108,7 @@ Services
                             </p>
                         </div>
                     </div>
-                    <div style="height: auto; width: 91px; left: 727px; top: 203px;" data-block-type="text" class="sl-block">
+                    <div style="height: auto; width: 91px; left: 630px; top: 225px;" data-block-type="text" class="sl-block">
                         <div style="z-index: 13; color: rgb(255, 255, 255);" class="sl-block-content">
                             <h1>
                                 <span style="font-size:2.5em">?</span>
@@ -4668,14 +4609,14 @@ Services
             </section>
             <section class="stack">
                 <section>
-                    <div class="sl-block" data-block-type="text" style="width: 800px; left: 40px; top: 261px; height: auto;">
+                    <div class="sl-block" data-block-type="text" style="width: 800px; left: 40px; top: 151px; height: auto;">
                         <div style="z-index: 10;" class="sl-block-content">
                             <h1>
                                 <span style="font-size:1.0em">Comment</span>
                             </h1>
                         </div>
                     </div>
-                    <div class="sl-block" data-block-type="text" style="width: 574px; left: 52px; top: 350px; height: auto;">
+                    <div class="sl-block" data-block-type="text" style="width: 574px; left: -10px; top: 215px; height: auto;">
                         <div class="sl-block-style" style="z-index: 11; transform: rotate(360deg);">
                             <div style="z-index: 11;" class="sl-block-content">
                                 <p style="text-align:right">
@@ -4689,7 +4630,7 @@ Services
                             </div>
                         </div>
                     </div>
-                    <div style="height: auto; width: 91px; left: 640px; top: 204px;" data-block-type="text" class="sl-block">
+                    <div style="height: auto; width: 91px; left: 560px; top: 120px;" data-block-type="text" class="sl-block">
                         <div style="z-index: 13; color: rgb(255, 255, 255);" class="sl-block-content">
                             <h1>
                                 <span style="font-size:2.5em">?</span>
@@ -4737,16 +4678,8 @@ Services
                     </div>
                 </section>
                 <section>
-                    <div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 88px; height: auto;">
-                        <div style="z-index: 10;" class="sl-block-content">
-                            <h2>Quelle
-
-                                <span style="color:#FFFF00">transition</span> vers un modèle durable ?
-
-                            </h2>
-                        </div>
-                    </div>
-                    <div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 350px; height: auto;">
+                    <h1>Quelle <strong>transition</strong> vers un modèle durable ?</h1>
+                    <div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 250px; height: auto;">
                         <div data-fragment-index="0" style="z-index: 11;" class="sl-block-content fragment">
                             <p>
                                 <em>Existe-t-il</em> un système
@@ -4770,7 +4703,7 @@ Services
                             </p>
                         </div>
                     </div>
-                    <div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 389px; height: auto;">
+                    <div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 310px; height: auto;">
                         <div data-fragment-index="1" style="z-index: 12;" class="sl-block-content fragment">
                             <p>permettant d'atteindre le
 
@@ -4787,7 +4720,7 @@ Services
                             </p>
                         </div>
                     </div>
-                    <div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 428px; height: auto;">
+                    <div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 370px; height: auto;">
                         <div data-fragment-index="2" style="z-index: 14;" class="sl-block-content fragment">
                             <p>pour
 
@@ -4814,12 +4747,12 @@ Services
             </section>
             <section class="stack">
                 <section>
-                    <div style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 149px; top: 279px;" data-block-type="text" class="sl-block">
+                    <div style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 149px; top: 179px;" data-block-type="text" class="sl-block">
                         <div style="z-index: 10;" class="sl-block-content">
                             <h1>monnaie</h1>
                         </div>
                     </div>
-                    <div style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 124px; top: 244px;" data-block-type="text" class="sl-block">
+                    <div style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 124px; top: 144px;" data-block-type="text" class="sl-block">
                         <div style="z-index: 12;" class="sl-block-content">
                             <p>
                                 <span style="font-size:1.4em">C'est
@@ -4832,14 +4765,14 @@ Services
                             </p>
                         </div>
                     </div>
-                    <div style="height: auto; width: 91px; left: 622px; top: 235px;" data-block-type="text" class="sl-block">
+                    <div style="height: auto; width: 91px; left: 545px; top: 150px;" data-block-type="text" class="sl-block">
                         <div style="z-index: 15; color: rgb(255, 255, 255);" class="sl-block-content">
                             <h1>
                                 <span style="font-size:2.5em">?</span>
                             </h1>
                         </div>
                     </div>
-                    <div style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 229px; top: 350px;" data-block-type="text" class="sl-block">
+                    <div style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 205px; top: 230px;" data-block-type="text" class="sl-block">
                         <div style="z-index: 16;" class="sl-block-content">
                             <h1>
                                 <em>
@@ -5249,448 +5182,24 @@ Services
                         </div>
                     </div>
                 </section>
-                <section>
-                    <div class="sl-block" data-block-type="text" style="width: 911px; left: 25px; top: 301px; height: auto;">
-                        <div style="z-index: 14;" class="sl-block-content">
-                            <h3>
-                                <span style="font-size:1.0em">
-                                    <span class="fn">« Les hommes naissent et demeurent
+                <section data-markdown>
+                    <script type="text/template">
+                        « Les hommes naissent et demeurent<br/>
+                        **libres et égaux** en droits »
 
-
-
-
-
-                                        <br/>
-                                        <strong>libres et égaux</strong> en droits »
-
-
-
-
-
-                                    </span>
-                                </span>
-                            </h3>
-                        </div>
-                    </div>
-                    <div class="sl-block" data-block-type="text" style="height: auto; width: 600px; left: 180px; top: 402px;">
-                        <div class="sl-block-content" style="z-index: 12;">
-                            <p>
-                                <span style="font-size:0.7em">Déclaration des Droits de l'Homme et du Citoyen, 1789</span>
-                            </p>
-                        </div>
-                    </div>
+                        <small>Déclaration des Droits de l'Homme et du Citoyen, 1789</small>
+                    </script>
                 </section>
             </section>
-            <section class="stack">
-                <section>
-                    <div class="sl-block" data-block-type="text" style="width: 800px; left: 81px; top: 70px; height: auto;">
-                        <div style="z-index: 10;" class="sl-block-content">
-                            <h1>Unité de mesure ?</h1>
-                        </div>
-                    </div>
-                    <div style="height: auto; min-width: 30px; min-height: 30px; width: 881px; left: 41px; top: 241px;" data-block-type="text" class="sl-block">
-                        <div style="z-index: 11;" class="sl-block-content">
-                            <p>Dividende Universel (DU) =
 
-
-
-
-                                <strong>unité de mesure</strong>
-                                <span style="color:#FFFF00">
-                                    <strong>stable</strong>
-                                </span>
-                            </p>
-                        </div>
-                    </div>
-                    <div style="height: auto; min-width: 30px; min-height: 30px; width: 800px; left: 75px; top: 420px;" data-block-type="text" class="sl-block">
-                        <div data-fragment-index="0" style="z-index: 13;" class="sl-block-content fragment">
-                            <p>
-                                <em>Exemples de prix, exprimés en </em>«
-
-
-
-
-
-                                <em>€ / RSA </em>» :
-
-
-
-
-
-                            </p>
-                        </div>
-                    </div>
-                    <div style="height: auto; min-width: 30px; min-height: 30px; width: 800px; left: 82px; top: 467px;" data-block-type="text" class="sl-block">
-                        <div style="z-index: 14;" class="sl-block-content">
-                            <ul>
-                                <li class="fragment" data-fragment-index="1">une maison : &nbsp; 195 RSA</li>
-                                <li class="fragment" data-fragment-index="2">une voiture : &nbsp; &nbsp; 19 RSA</li>
-                                <li class="fragment" data-fragment-index="3">un déjeuner : &nbsp; &nbsp; &nbsp;&nbsp; 19,5
-
-
-
-                                    <em>centimes</em> de RSA
-
-
-
-                                </li>
-                                <li class="fragment" data-fragment-index="4">une baguette : &nbsp; &nbsp; &nbsp;&nbsp; 1,95
-
-
-
-                                    <em>centimes</em> de RSA
-
-
-
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div style="height: auto; width: 800px; left: 82px; top: 280px;" data-block-type="text" class="sl-block">
-                        <div style="z-index: 15;" class="sl-block-content">
-                            <p>
-                                <strong>Tout</strong>
-                                <strong>peut être mesuré</strong> selon ce DU mensuel
-
-
-
-
-                            </p>
-                        </div>
-                    </div>
-                </section>
-                <section>
-                    <div class="sl-block" data-block-type="text" style="width: 800px; left: 81px; top: 70px; height: auto;">
-                        <div style="z-index: 10;" class="sl-block-content">
-                            <h1>Unité de mesure ?</h1>
-                        </div>
-                    </div>
-                    <div style="height: auto; width: 881px; left: 41px; top: 241px;" data-block-type="text" class="sl-block">
-                        <div style="z-index: 11;" class="sl-block-content">
-                            <p>Dividende Universel (DU) =
-
-
-
-
-                                <strong>unité de mesure</strong>
-                                <span style="color:#FFFF00">
-                                    <strong>stable</strong>
-                                </span>
-                            </p>
-                        </div>
-                    </div>
-                    <div style="height: auto; width: 800px; left: 82px; top: 280px;" data-block-type="text" class="sl-block">
-                        <div style="z-index: 12;" class="sl-block-content">
-                            <p>
-                                <strong>Tout</strong>
-                                <strong>peut être mesuré</strong> selon ce DU mensuel
-
-
-
-
-                            </p>
-                        </div>
-                    </div>
-                    <div style="height: auto; width: 800px; left: 191px; top: 421px;" data-block-type="text" class="sl-block">
-                        <div style="z-index: 13;" class="sl-block-content">
-                            <p style="text-align:left">
-                                <em>Et en </em>«
-
-
-
-                                <span style="color:#FFFF00">Ğ1</span>
-                                <em>
-                                    <span style="color:#FFFF00"> / DU</span>
-                                </em>» ?
-
-
-
-                            </p>
-                        </div>
-                    </div>
-                    <div style="height: auto; width: 800px; left: 113px; top: 467px;" data-block-type="text" class="sl-block">
-                        <div style="z-index: 14;" class="sl-block-content">
-                            <ul>
-                                <li>Une maison : 2050
-
-
-
-                                    <span style="color:#FFFF00">DU
-
-
-
-                                        <span style="font-size:0.7em"> de Ğ1</span>
-                                    </span>
-                                    <span style="color:#FFFF00"></span>
-                                </li>
-                                <li>Une voiture : &nbsp; 205
-
-
-
-                                    <span style="color:#FFFF00">DU
-
-
-
-                                        <span style="font-size:0.7em"> de Ğ1</span>
-                                    </span>
-                                </li>
-                                <li>Un déjeuner :&nbsp; &nbsp; &nbsp; 2,05
-
-
-
-                                    <span style="color:#FFFF00">DU
-
-
-
-                                        <span style="font-size:0.7em"> de Ğ1</span>
-                                    </span>
-                                </li>
-                                <li>Une baguette : &nbsp; &nbsp; &nbsp; 20 centimes de
-
-
-
-                                    <span style="color:#FFFF00">DU
-
-
-
-                                        <span style="font-size:0.7em">de Ğ1</span>
-                                    </span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </section>
-                <section>
-                    <div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 486px; height: auto;">
-                        <div style="z-index: 10;" class="sl-block-content">
-                            <h2>Vers la
-
-
-
-
-                                <span style="color:#FFFF00">simplicité </span>d'usage
-
-
-
-
-                            </h2>
-                        </div>
-                    </div>
-                    <div class="sl-block" data-block-type="text" style="width: 800px; left: 81px; top: 70px; height: auto;">
-                        <div style="z-index: 12;" class="sl-block-content">
-                            <h1>Unité de mesure ?</h1>
-                        </div>
-                    </div>
-                    <div style="height: auto; width: 881px; left: 41px; top: 241px;" data-block-type="text" class="sl-block">
-                        <div style="z-index: 13;" class="sl-block-content">
-                            <p>Dividende Universel (DU) =
-
-
-
-
-                                <strong>unité de mesure</strong>
-                                <span style="color:#FFFF00">
-                                    <strong>stable</strong>
-                                </span>
-                            </p>
-                        </div>
-                    </div>
-                    <div style="height: auto; width: 800px; left: 82px; top: 280px;" data-block-type="text" class="sl-block">
-                        <div style="z-index: 14;" class="sl-block-content">
-                            <p>
-                                <strong>Tout</strong>
-                                <strong>peut être mesuré</strong> selon ce DU mensuel
-
-
-
-
-                            </p>
-                        </div>
-                    </div>
-                </section>
-                <section>
-                    <div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 112px; height: auto;">
-                        <div class="sl-block-content" style="z-index: 10;">
-                            <h1>Ça change quoi ?</h1>
-                        </div>
-                    </div>
-                    <div class="sl-block" data-block-type="text" style="width: 800px; left: 132px; top: 243px; height: auto;">
-                        <div class="sl-block-content" style="z-index: 11;">
-                            <ul>
-                                <li>
-                                    <h3>Développe les biens et services de l'économie réelle</h3>
-                                </li>
-                                <li>
-                                    <h3>Durable et juste, à long terme</h3>
-                                </li>
-                                <li>
-                                    <h3>Système transparent et simple</h3>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="sl-block" data-block-type="text" style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 108px; top: 512px;">
-                        <div class="sl-block-content fragment" style="z-index: 12;" data-fragment-index="0">
-                            <ul>
-                                <li class="">
-                                    <h3>
-                                        <span style="font-size:1.0em">Pas de dette perpétuelle</span>
-                                    </h3>
-                                </li>
-                                <li>
-                                    <h3>
-                                        <span style="font-size:1.0em">Empêche la spéculation</span>
-                                    </h3>
-                                </li>
-                                <li>
-                                    <h3>
-                                        <span style="font-size:1.0em">Pas d'inflation, ni déflation</span>
-                                    </h3>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="sl-block" data-block-type="shape" style="min-width: 4px; min-height: 4px; width: 67px; height: 64px; left: 47px; top: 318px;">
-                        <div class="sl-block-content" data-shape-type="symbol-checkmark-circle" data-shape-fill-color="rgb(255, 255, 0)" data-shape-stretch="true" style="z-index: 13;">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" preserveAspectRatio="none" viewBox="0 0 32 32">
-                                <g class="shape-element" fill="rgb(255, 255, 0)">
-                                    <path d="M16 0c-8.836 0-16 7.164-16 16s7.164 16 16 16 16-7.164 16-16-7.164-16-16-16zM13.52 23.383l-7.362-7.363 2.828-2.828 4.533 4.535 9.617-9.617 2.828 2.828-12.444 12.445z"></path>
-                                </g>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="sl-block" data-block-type="shape" style="min-width: 4px; min-height: 4px; width: 67px; height: 64px; left: 47px; top: 566px;">
-                        <div class="sl-block-content fragment" data-shape-type="symbol-x-circle" data-shape-fill-color="rgb(255, 255, 0)" data-shape-stretch="true" style="z-index: 15;" data-fragment-index="0">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" preserveAspectRatio="none" viewBox="0 0 32 32">
-                                <g class="shape-element" fill="rgb(255, 255, 0)">
-                                    <path d="M16 0c-8.836 0-16 7.164-16 16s7.164 16 16 16 16-7.164 16-16-7.164-16-16-16zM23.914 21.086l-2.828 2.828-5.086-5.086-5.086 5.086-2.828-2.828 5.086-5.086-5.086-5.086 2.828-2.828 5.086 5.086 5.086-5.086 2.828 2.828-5.086 5.086 5.086 5.086z"></path>
-                                </g>
-                            </svg>
-                        </div>
-                    </div>
-                </section>
-                <section>
-                    <div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 21px; height: auto;">
-                        <div style="z-index: 10;" class="sl-block-content">
-                            <h2>Masse monétaire libre</h2>
-                        </div>
-                    </div>
-                    <div style="min-width: 30px; min-height: 30px; width: 753.297px; height: 536px; left: 104px; top: 164px;" data-block-type="image" class="sl-block">
-                        <div style="z-index: 11;" class="sl-block-content">
-                            <img data-natural-height="444" data-natural-width="624" style="" data-lazy-loaded="" data-src="images/masse_mon_taire_DU.png"/>
-                        </div>
-                    </div>
-                    <div style="height: auto; min-width: 30px; min-height: 30px; width: 800px; left: 80px; top: 98px;" data-block-type="text" class="sl-block">
-                        <div style="z-index: 13;" class="sl-block-content">
-                            <p>Evolution sur 80 ans, en unité de monnaie</p>
-                        </div>
-                    </div>
-                </section>
-                <section>
-                    <div style="height: auto; width: 800px; left: 77px; top: 87px;" data-block-type="text" class="sl-block">
-                        <div style="z-index: 11;" class="sl-block-content">
-                            <p>Evolution sur 80 ans en
-
-
-
-
-
-                                <br/>
-                                « Unité de monnaie / Dividende Universel »
-
-
-
-
-
-                            </p>
-                        </div>
-                    </div>
-                    <div style="min-width: 30px; min-height: 30px; width: 887.446px; height: 500px; left: 37px; top: 200px;" data-block-type="image" class="sl-block">
-                        <div style="z-index: 12;" class="sl-block-content">
-                            <img data-natural-height="462" data-natural-width="820" style="" data-lazy-loaded="" data-src="images/masse_mon_taire_relative_DU.png"/>
-                        </div>
-                    </div>
-                    <div style="height: auto; min-width: 30px; min-height: 30px; width: 117px; left: 765px; top: 400px;" data-block-type="text" class="sl-block">
-                        <div style="z-index: 13; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);" class="sl-block-content">
-                            <p style="text-align:left">
-                                <span style="font-size:0.9em">Sophie</span>
-                            </p>
-                        </div>
-                    </div>
-                    <div style="height: auto; min-width: 30px; min-height: 30px; width: 127px; left: 765px; top: 355px;" data-block-type="text" class="sl-block">
-                        <div style="z-index: 14; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);" class="sl-block-content">
-                            <p style="text-align:left">
-                                <span style="font-size:0.9em">Moyenne</span>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 21px; height: auto;">
-                        <div style="z-index: 15;" class="sl-block-content">
-                            <h2>Masse monétaire libre</h2>
-                        </div>
-                    </div>
-                </section>
-                <section>
-                    <div style="height: auto; width: 800px; left: 77px; top: 87px;" data-block-type="text" class="sl-block">
-                        <div style="z-index: 13;" class="sl-block-content">
-                            <p>Evolution sur 80 ans en
-
-
-
-
-
-                                <br/>
-                                « Unité de monnaie / Dividende Universel »
-
-
-
-
-
-                            </p>
-                        </div>
-                    </div>
-                    <div style="height: auto; width: 127px; left: 765px; top: 455px;" data-block-type="text" class="sl-block">
-                        <div style="z-index: 15; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);" class="sl-block-content">
-                            <p style="text-align:left">
-                                <span style="font-size:0.9em">Moyenne</span>
-                            </p>
-                        </div>
-                    </div>
-                    <div style="min-width: 30px; min-height: 30px; width: 898.944px; height: 514px; left: 30px; top: 186px;" data-block-type="image" class="sl-block">
-                        <div style="z-index: 10;" class="sl-block-content">
-                            <img data-natural-height="462" data-natural-width="808" style="" data-lazy-loaded="" data-src="images/masse_mon_taire_relative_Alice_et_Bob.png"/>
-                        </div>
-                    </div>
-                    <div style="height: auto; width: 100px; left: 765px; top: 375px;" data-block-type="text" class="sl-block">
-                        <div style="z-index: 16; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);" class="sl-block-content">
-                            <p style="text-align:left">
-                                <span style="font-size:0.9em">Sophie</span>
-                                <br/>
-                                &nbsp;
-
-
-
-
-
-                            </p>
-                        </div>
-                    </div>
-                    <div style="height: auto; width: 127px; left: 765px; top: 415px;" data-block-type="text" class="sl-block">
-                        <div style="z-index: 17; color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);" class="sl-block-content">
-                            <p style="text-align:left">
-                                <span style="font-size:0.9em">Marcel</span>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 21px; height: auto;">
-                        <div style="z-index: 18;" class="sl-block-content">
-                            <h2>Masse monétaire libre</h2>
-                        </div>
-                    </div>
-                </section>
+            <!-- TRM charts - simple cases -->
+            <section data-src="src/trm-01-chart-simple.html">
             </section>
+
+            <!-- TRM end -->
+            <section data-src="src/trm-05-end.html">
+            </section>
+
             <section class="stack">
                 <section>
                     <div class="sl-block" data-block-type="text" style="width: 800px; left: 80px; top: 46px; height: auto;">
@@ -5703,7 +5212,7 @@ Services
                             </h1>
                         </div>
                     </div>
-                    <div style="height: auto; width: 496px; left: 215px; top: 420px;" data-block-type="text" class="sl-block">
+                    <div style="height: auto; width: 496px; left: 265px; top: 420px;" data-block-type="text" class="sl-block">
                         <div style="z-index: 11;" class="sl-block-content" dir="ui">
                             <p style="text-align:left">
                                 <strong>
@@ -6361,26 +5870,26 @@ Services
             </section>
             <section class="stack">
                 <section>
-                    <div style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 124px; top: 280px;" data-block-type="text" class="sl-block">
+                    <div style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 124px; top: 180px;" data-block-type="text" class="sl-block">
                         <div style="z-index: 11;" class="sl-block-content">
                             <h1>puis-je agir</h1>
                         </div>
                     </div>
-                    <div style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 12px; top: 240px;" data-block-type="text" class="sl-block">
+                    <div style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 12px; top: 140px;" data-block-type="text" class="sl-block">
                         <div style="z-index: 12;" class="sl-block-content">
                             <p>
                                 <span style="font-size:1.4em">Comment</span>
                             </p>
                         </div>
                     </div>
-                    <div style="height: auto; width: 91px; left: 640px; top: 217px;" data-block-type="text" class="sl-block">
+                    <div style="height: auto; width: 91px; left: 570px; top: 150px;" data-block-type="text" class="sl-block">
                         <div style="z-index: 13; color: rgb(255, 255, 255);" class="sl-block-content">
                             <h1>
                                 <span style="font-size:2.5em">?</span>
                             </h1>
                         </div>
                     </div>
-                    <div style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 210px; top: 365px;" data-block-type="text" class="sl-block">
+                    <div style="height: auto; min-width: 30px; min-height: 30px; width: 600px; left: 150px; top: 245px;" data-block-type="text" class="sl-block">
                         <div style="z-index: 14;" class="sl-block-content">
                             <p>
                                 <span style="font-size:1.4em">
@@ -6486,7 +5995,7 @@ d'information
                         </div>
                     </div>
                     <div class="sl-block" data-block-type="text" style="width: 442px; left: 144px; top: 614px; height: auto;">
-                        <div class="sl-block-content" style="text-align: left; z-index: 17;">
+                        <div data-fragment-index="1" class="sl-block-content fragment" style="text-align: left; z-index: 17;">
                             <p>
                                 <span style="color:rgb(255, 255, 255)">S'abonner</span>
                             </p>
@@ -6847,7 +6356,7 @@ d'information
                         </h3>
                     </div>
                 </div>
-                <div style="height: auto; min-width: 30px; min-height: 30px; width: 142px; left: 233px; top: 266px;" data-block-type="text" class="sl-block">
+                <div style="height: auto; min-width: 30px; min-height: 30px; width: 142px; left: 280px; top: 266px;" data-block-type="text" class="sl-block">
                     <div data-fragment-index="0" style="z-index: 16;" class="sl-block-content fragment">
                         <h1>
                             <span style="font-size:0.7em">vous</span>
@@ -6863,14 +6372,14 @@ d'information
                         </h1>
                     </div>
                 </div>
-                <div style="height: auto; min-width: 30px; min-height: 30px; width: 153px; left: 233px; top: 315px;" data-block-type="text" class="sl-block">
+                <div style="height: auto; min-width: 30px; min-height: 30px; width: 153px; left: 280px; top: 305px;" data-block-type="text" class="sl-block">
                     <div data-fragment-index="0" style="z-index: 19;" class="sl-block-content fragment">
                         <h1>
                             <span style="font-size:0.7em">êtes</span>
                         </h1>
                     </div>
                 </div>
-                <div style="height: auto; min-width: 30px; min-height: 30px; width: 56px; left: 642px; top: 210px;" data-block-type="text" class="sl-block">
+                <div style="height: auto; min-width: 30px; min-height: 30px; width: 56px; left: 612px; top: 200px;" data-block-type="text" class="sl-block">
                     <div data-fragment-index="0" style="z-index: 20;" class="sl-block-content fragment">
                         <h1>
                             <span style="color:#FFFF00">
@@ -6879,7 +6388,7 @@ d'information
                         </h1>
                     </div>
                 </div>
-                <div class="sl-block" data-block-type="text" style="width: 530px; left: 101px; top: 400px; height: auto;">
+                <div class="sl-block" data-block-type="text" style="width: 530px; left: 101px; top: 370px; height: auto;">
                     <div dir="ui" style="z-index: 21;" class="sl-block-content fragment" data-fragment-index="0">
                         <p style="text-align:right">de choisir <b>votre</b> monnaie</p>
                     </div>
@@ -6893,105 +6402,12 @@ d'information
         </div>
     </div>
 </div>
-<script src="lib/js/head.min.js"></script>
-<script src="js/reveal.js"></script>
 
 <script>
-
-    var isServerLivePresentation = false;
-
-    var showNotes = function() {
-        RevealMenu.toggle();
-        RevealNotes.open();
-        Reveal.configure({
-            controls:false,
-            menu: {
-                openButton: false
-            }
-        });
-        var elements = document.getElementsByClassName('slide-menu-button');
-        elements[0].classList.add('hidden');
-    };
-
-    var showControls = function() {
-        RevealMenu.toggle();
-        Reveal.configure({
-            controls:true
-        });
-        var elements = document.getElementsByClassName('slide-menu-button');
-        elements[0].classList.remove('hidden');
-    };
-
-    // More info https://github.com/hakimel/reveal.js#configuration
-    var config = {
-
-        controls: true,
-        controlsTutorial: true,
-        fragments: true,
-        showNotes:true,
-
-        controlsLayout: 'edges',
-        keyboard: true,
-        history: true,
-        center: false,
-        mouseWheel: true,
-        transition: 'fade',
-        touch: true,
-        controlsBackArrows: 'faded',
-        pdfMaxPagesPerSlide: 1,
-        help: true,
-
-        menu: { // Menu works best with font-awesome installed: sudo apt-get install fonts-font-awesome
-            //themes: true,
-            transitions: false, // TODO: fix some section transition, to be be able to change here
-            markers: true,
-            hideMissingTitles: true,
-            titleSelector: 'menu-title',
-            keyboard: true,
-            openButton: true,
-
-            // Specifies the themes that will be available in the themes
-            // menu panel. Set to 'false' to hide themes panel.
-            themes: [
-                { name: 'Black', theme: 'css/theme/black.css' },
-                { name: 'White', theme: 'css/theme/white.css' },
-                { name: 'League', theme: 'css/theme/league.css' },
-                { name: 'Sky', theme: 'css/theme/sky.css' },
-                { name: 'Beige', theme: 'css/theme/beige.css' },
-                { name: 'Simple', theme: 'css/theme/simple.css' },
-                { name: 'Serif', theme: 'css/theme/serif.css' },
-                { name: 'Blood', theme: 'css/theme/blood.css' },
-                { name: 'Night', theme: 'css/theme/night.css' },
-                { name: 'Moon', theme: 'css/theme/moon.css' },
-                { name: 'Solarized', theme: 'css/theme/solarized.css' }
-            ],
-            custom: [
-                { title: 'Aide', icon: '<i class="fa fa-question-circle"></i>',
-                    content: '<ul class="slide-menu-items">' +
-                        '<a class="slide-menu-item" style="text-decoration: none;" data-transition="none" onclick="RevealMenu.toggle();Reveal.toggleHelp();" href="#">Raccourcis clavier (?)</a>'+
-                        '<a class="slide-menu-item" style="text-decoration: none;" data-transition="none" onclick="showNotes()" href="#">Ouvrir la vue présentateur (S)</a>'+
-                        '<a class="slide-menu-item" style="text-decoration: none;" data-transition="none" onclick="showControls()" href="#">Afficher les contrôles</a>'+
-                        '</ul>' }
-            ]
-        },
-
-        // More info https://github.com/hakimel/reveal.js#dependencies
-        dependencies: [
-
-            { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
-            // Zoom in and out with Alt+click
-            { src: 'plugin/zoom-js/zoom.js', async: true },
-            { src: 'plugin/markdown/marked.js' },
-            { src: 'plugin/markdown/markdown.js' },
-            { src: 'plugin/notes/notes.js', async: true },
-            { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-            { src: 'plugin/search/search.js', async: true },
-            { src: 'plugin/menu/menu.js' }
-        ]
-    };
-
-    Reveal.initialize(config);
-
+    App.initialize({
+        //transition: 'fade'
+    });
 </script>
+
 </body>
 </html>

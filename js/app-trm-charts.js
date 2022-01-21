@@ -241,14 +241,11 @@
   }
 
   function getScaleColors(opts) {
-    const yearLabels = opts.yearLabels;
-    const duration = opts.duration;
-    const actorsCount = opts.actors.length;
+    const colorCount = Math.max(10, opts.actors.length);
 
-    const colorsCount = yearLabels ? actorsCount : duration;
     return {
-      fillColors: AppColors.scale.custom(colorsCount, 0.35), // Fill colors have opacity < 1
-      lineColors: AppColors.scale.custom(colorsCount, 1) // Fill colors have opacity=1
+      fillColors: AppColors.scale.custom(colorCount, 0.35), // Fill colors have opacity < 1
+      lineColors: AppColors.scale.custom(colorCount, 1) // Fill colors have opacity=1
     }
   }
 
@@ -414,9 +411,7 @@
     else {
       const noBorder = duration > 20;
       const actorsCount = opts.actors.length;
-      const backgroundColor = scaleColors.fillColors.length >= actorsCount
-        ? scaleColors.fillColors.slice(0, actorsCount)
-        : AppColors.scale.custom(Math.max(10, actorsCount), 1);
+      const backgroundColor = scaleColors.fillColors.slice(0, actorsCount);
       const fill = !(opts && opts.fill === false);
       return {
         backgroundColor,

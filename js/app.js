@@ -19,12 +19,12 @@
   var App;
   var menu, notes;
 
-  function initialize() {
+  function initialize(opts) {
     chainByCallback([
       $(document).ready,
       loadExternalFiles,
       insertChartData,
-      initReveal,
+      (done) => initReveal(opts, done),
       onRevealReady,
       () => console.info('[app] App is ready!')
     ]);
@@ -72,7 +72,7 @@
     callback();
   }
 
-  function initReveal(callback) {
+  function initReveal(opts, callback) {
 
     console.debug('[app] Initialize Reveal...');
 
@@ -87,17 +87,13 @@
       slideNumber: true,
       keyboard: true,
       fragments: true,
-      //showNotes:true,
-
-      // Background
-
       controlsBackArrows: 'faded',
       pdfMaxPagesPerSlide: 1,
       hideInactiveCursor: true,
+      touch: true,
 
-      markdown: {
+      ...opts,
 
-      },
       customcontrols: {
         controls: [
           {

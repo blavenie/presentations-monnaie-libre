@@ -1,0 +1,102 @@
+<section data-markdown>
+  <script type="text/template">
+    # Exemples pratiques (1)
+
+    Étudions **l'évolution de comptes** en monnaie libre
+    ```
+    Soit 3 membres (N = 3)
+    co-créateurs de monnaie libre.
+
+    Soit un DU(t) avec une croissance c à 10%.
+    ```
+
+
+    ---
+    # Quantitatif
+
+    Evolution de 3 comptes, sur **80 ans**
+
+    <div style="height:480px">
+      <canvas data-trm-chart>
+        <!--
+          {
+          "N": 3,
+          "relative": false
+          }
+        -->
+      </canvas>
+    </div>
+
+
+    ---
+    # Quantitatif (zoom)
+
+    Evolution de 3 comptes, sur **10 ans**
+
+    <div style="height:480px">
+      <canvas data-trm-chart>
+        <!--
+          {
+          "N": 3,
+          "relative": false,
+          "duration": 10
+          }
+        -->
+      </canvas>
+    </div>
+
+    ---
+    # Quantitatif (zoom)
+
+    Répartition de la masse monétaire, **sur 10 ans**
+
+    <div style="height:480px">
+      <canvas data-trm-chart="pie">
+        <!--
+        {
+          "N": 3,
+          "duration": 10,
+          "relative": false
+        }
+        -->
+      </canvas>
+    </div>
+
+
+    ---
+
+    # Quantitatif (80 ans)
+
+    Répartition de la masse monétaire, sur **80 ans**
+
+    <div style="height:480px">
+      <canvas data-trm-chart="pie">
+        <!--
+         {
+           "N": 3,
+           "relative": false
+         }
+         -->
+      </canvas>
+    </div>
+
+
+    ---
+
+    # Relatif
+
+    Evolution de 3 comptes **en DU(t)**, sur 80 ans
+
+    <div style="height:480px">
+      <canvas data-trm-chart>
+        <!--
+           {
+             "N": 3,
+             "relative": true
+           }
+           -->
+      </canvas>
+    </div>
+
+  </script>
+</section>
