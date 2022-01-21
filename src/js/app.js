@@ -1,11 +1,5 @@
 (function( root, factory ) {
-  if( typeof define === 'function' && define.amd ) {
-    // AMD. Register as an anonymous module.
-    define( function() {
-      root.App = factory();
-      return root.App;
-    } );
-  } else if( typeof exports === 'object' ) {
+  if( typeof exports === 'object' ) {
     // Node. Does not work with strict CommonJS.
     module.exports = factory();
   } else {
@@ -128,7 +122,7 @@
         radar: { borderColor: [ "rgba(20,220,220,.8)" , "rgba(220,120,120,.8)", "rgba(20,120,220,.8)" ]},
       },
       katex: { // Formula
-        local: 'node_modules/katex',
+        local: '',
         delimiters: [
           {left: '$$', right: '$$', display: true},
           {left: '$', right: '$', display: false},
@@ -141,20 +135,7 @@
         transitions: false,
         markers: true,
         hideMissingTitles: true,
-        themes: [
-          { name: 'Défaut', theme: 'css/default.css' },
-          { name: 'Black', theme: 'node_modules/reveal.js/dist/theme/black.css' },
-          { name: 'White', theme: 'node_modules/reveal.js/dist/theme/white.css' },
-          { name: 'League', theme: 'node_modules/reveal.js/dist/theme/league.css' },
-          { name: 'Sky', theme: 'node_modules/reveal.js/dist/theme/sky.css' },
-          { name: 'Beige', theme: 'node_modules/reveal.js/dist/theme/beige.css' },
-          { name: 'Simple', theme: 'node_modules/reveal.js/dist/theme/simple.css' },
-          { name: 'Serif', theme: 'node_modules/reveal.js/dist/theme/serif.css' },
-          { name: 'Blood', theme: 'node_modules/reveal.js/dist/theme/blood.css' },
-          { name: 'Night', theme: 'node_modules/reveal.js/dist/theme/night.css' },
-          { name: 'Moon', theme: 'node_modules/reveal.js/dist/theme/moon.css' },
-          { name: 'Solarized', theme: 'node_modules/reveal.js/dist/theme/solarized.css' }
-        ],
+        themes: true,
         custom: [
           { title: 'Aide', icon: '<i class="fa fa-question-circle"></i>',
             content: '<ul class="slide-menu-items">' +
@@ -189,7 +170,7 @@
   }
 
   function onRevealReady(callback){
-    var plugins = Reveal.getPlugins();
+    const plugins = Reveal.getPlugins();
     menu = plugins.menu;
     notes = plugins.notes;
 

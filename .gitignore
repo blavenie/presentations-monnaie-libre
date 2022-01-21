@@ -1,4 +1,5 @@
 
-images/.directory
+src/images/.directory
 .idea
 node_modules
+dist

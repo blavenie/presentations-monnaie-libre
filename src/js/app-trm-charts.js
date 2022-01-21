@@ -91,7 +91,6 @@
   }
 
   function createData(opts) {
-    const name = opts && opts.name || 'trm';
     const type = opts && opts.type || 'line';
     const N = opts && opts.N || ACTOR_NAMES.length;
     const ev = opts && opts.ev || DEFAULT_EV;
@@ -102,30 +101,33 @@
     const yearLabels = !(opts && opts.yearLabels === false || type === 'pie');
     const exchanges = opts && opts.exchanges || [];
     const deaths = !!(opts && opts.deaths);
-    const deathsPeriod = deaths ? (opts && opts.deathsPeriod > 0 ? opts.deathsPeriod : Math.min(20, Math.round(duration / N))) : 0;
     const stacked = (opts && opts.stacked === true) && type !== 'pie';
     const chartOptions = {
       ...(stacked ? { "scales": { "x": { "stacked": true }, "y": { "stacked": true } } } : {}),
       ...(opts && opts.options)
     };
+    const debug = !!(opts && opts.debug);
 
     opts = {
       type,
+      ev,
+      duration,
+      N,
       startYear,
       endYear,
       relative,
       yearLabels,
       exchanges,
       deaths,
-      ev,
-      duration,
+      stacked,
+      debug,
       ...opts
     }
     opts.deathsPeriod = getDeathsPeriod(opts);
     opts.actors = getActors(opts);
     opts.scaleColors = getScaleColors(opts);
 
-    if (name) console.debug('[app-trm-chart] Generating chart data \'' + name + '\'...', opts);
+    if (debug) console.debug('[app-trm-chart] Generating data for \'' + type + '\'...', opts);
 
     const labels = yearLabels ? getYearLabels(opts) : getActorLabels(opts);
     const datasets =  getDataSets(opts);
@@ -141,7 +143,7 @@
         ...chartOptions
       }
     };
-    if (name) console.debug('[app-trm-chart] Generating chart data \'' + name + '\' [OK]', result);
+    if (debug) console.debug('[app-trm-chart] Generating data for \'' + type + '\' [OK]', result);
 
     return result;
   }
@@ -160,7 +162,7 @@
       deathsPeriod--;
     }
 
-    console.debug('[app-trm-chart] Best deathsPeriod=' + deathsPeriod);
+    if (opts.debug) console.debug('[app-trm-chart] Best deathsPeriod=' + deathsPeriod);
     return deathsPeriod;
 
   }
@@ -191,9 +193,9 @@
           const deadYear = yearIndex;
           let deadActor = actors[deathIndex];
 
-          if (opts.debug) {
-            console.debug('[app-trm-chart] Death at year=' + yearIndex + ' - wallet #' + deathIndex);
-          }
+          // Debug
+          if (opts.debug) console.debug('[app-trm-chart] Death at year=' + yearIndex + ' - wallet #' + deathIndex);
+
           // Dead actor not exists yet: create it
           if (deadActor.age < 0) {
             const addDeadActor = (yearIndex + deadActor.age) >= 80
@@ -457,28 +459,6 @@
       toWallet.balance += amount;
       fromWallet.balance -= amount;
     }
-  }
-
-  function demo1() {
-    return {
-      "type": "line",
-      "data": {
-        "labels": ["January"," February"," March"," April"," May"," June"," July"],
-        "datasets":[
-          {
-            "data":[65,59,80,81,56,55,40],
-            "label":"My first dataset",
-            "backgroundColor":"rgba(20,220,220,.8)"
-          },
-          {
-            "data":[28,48,40,19,86,27,90],
-            "label":"My second dataset",
-            "backgroundColor":"rgba(220,120,120,.8)"
-          }
-        ],
-        "options": { "scales": { "x": { "stacked": true }, "y": { "stacked": true } } }
-      }
-    };
   }
 
   AppTrmCharts = {
