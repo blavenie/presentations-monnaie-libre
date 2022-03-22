@@ -16,7 +16,8 @@ const gulp = require('gulp'),
   log = require('fancy-log'),
   del = require('del'),
   colors = require('ansi-colors'),
-  {argv} = require('yargs');
+  {argv} = require('yargs'),
+  browserSync = require('browser-sync').create();
 
 
 const uglifyBaseOptions = {
@@ -39,6 +40,32 @@ const uglifyBaseOptions = {
 };
 
 /* --------------------------------------------------------------------------
+   -- Serve
+   --------------------------------------------------------------------------*/
+
+function watch() {
+
+  // Watch resources
+  gulp.watch(['src/images*/**/*', 'src/data*/**/*'], appCopyResources);
+
+  // Watch html
+  gulp.watch('src/*.html', appHtml);
+}
+
+
+function serve(cb) {
+  // Launch browser
+  browserSync.init({
+    watch: true,
+    server: "./dist",
+    watchOptions: {
+      ignoreInitial: true
+    }
+  });
+  cb();
+}
+
+/* --------------------------------------------------------------------------
    -- Build the web (ZIP) artifact
    --------------------------------------------------------------------------*/
 
@@ -52,16 +79,25 @@ function appClean() {
     'dist/'
   ]);
 }
+function appCopyResources() {
 
-function appCopyRessources() {
+  log(colors.green('Copy resources files...'));
+  // Copy files to dist
+  return  gulp.src([
+        'src/images*/**/*',
+        'src/data*/**/*'
+      ])
+      .pipe(gulp.dest('dist'))
+      .pipe(browserSync.stream());;
+}
 
-  log(colors.green('Copy ressources files...'));
+function appCopyExternalResources() {
+
+  log(colors.green('Copy external resources files...'));
   return merge(
 
     // Copy files to dist
     gulp.src([
-      'src/images*/**/*',
-      'src/data*/**/*',
       'node_modules/katex/dist/*fonts/**',
       'node_modules/reveal.js-plugins/menu/menu.css',
       'node_modules/reveal.js-plugins/menu/font-awesome*/**/*'
@@ -114,7 +150,8 @@ function appHtml() {
 
       .pipe(sourcemaps.write('maps'))
 
-      .pipe(gulp.dest('dist'));
+      .pipe(gulp.dest('dist'))
+      .pipe(browserSync.stream());
   }
   else {
     return Promise.resolve();
@@ -145,7 +182,6 @@ function help() {
   log(colors.green(""));
   log(colors.green("NAME"));
   log(colors.green(""));
-  log(colors.green("  config --env <config_name>  Configure environment (create file `www/config.js`). "));
   log(colors.green("  clean                       Clean build directory"));
   log(colors.green("  build                       Build from sources (HTML, CSS and JS)"));
   log(colors.green(""));
@@ -159,11 +195,14 @@ function help() {
    -- Define public tasks
    --------------------------------------------------------------------------*/
 
-const appCompile = gulp.parallel(appCopyRessources, appHtml);
-const build = gulp.series(appClean, appCompile, appZip, buildSuccess);
+const prepare = gulp.parallel(appCopyResources, appCopyExternalResources);
+const compile = gulp.series(prepare, appHtml);
+const build = gulp.series(appClean, compile, appZip, buildSuccess);
 
 exports.help = help;
 exports.build = build;
-exports.default = appCompile;
-//exports.serve = serve;
+exports.compile = compile;
+exports.serve =  gulp.series(compile, serve, watch)
+
+exports.default = compile;
 

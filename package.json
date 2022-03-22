@@ -2,9 +2,10 @@
   "name": "presentations-monnaie-libre",
   "description": "Présentation de la monnaie libre G1",
   "author": "benoit.lavenier@e-is.pro",
-  "version": "10.1",
+  "version": "10.1.0",
   "scripts": {
     "clean": "gulp clean",
+    "compile": "gulp compile",
     "build": "gulp build",
     "start": "gulp serve"
   },
@@ -29,6 +30,7 @@
     "gulp-uglify-es": "^3.0.0",
     "gulp-useref": "^5.0.0",
     "gulp-zip": "^4.2.0",
+    "browser-sync": "^2.27.9",
     "lazypipe": "^1.0.2",
     "merge2": "^1.4.1",
     "yargs": "^7.1.2"
