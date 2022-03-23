@@ -129,7 +129,7 @@ function appCopyExternalResources() {
 }
 
 function appHtml() {
-  const enableUglify = true; //argv.release || argv.uglify || false;
+  const enableUglify = argv.release || argv.uglify || false;
   const pkg = parsePackage();
 
   log(colors.green('Processing HTML files...'));
