@@ -17,8 +17,10 @@ const gulp = require('gulp'),
   del = require('del'),
   colors = require('ansi-colors'),
   {argv} = require('yargs'),
-  browserSync = require('browser-sync').create();
-
+  browserSync = require('browser-sync').create(),
+  header = require('gulp-header'),
+  footer = require('gulp-footer')
+;const pkg = require("./package.json");
 
 const uglifyBaseOptions = {
   toplevel: true,
@@ -43,13 +45,19 @@ const uglifyBaseOptions = {
    -- Serve
    --------------------------------------------------------------------------*/
 
+const paths = {
+  resources: ['src/**/*.md', 'src/images*/**/*', 'src/data*/**/*'],
+  src_html: ['src/**/*.html'],
+  src_js: ['src/**/*.js']
+}
+
 function watch() {
 
   // Watch resources
-  gulp.watch(['src/images*/**/*', 'src/data*/**/*'], appCopyResources);
+  gulp.watch(paths.resources, appCopyResources);
 
-  // Watch html
-  gulp.watch('src/*.html', appHtml);
+  // Watch JS + html
+  gulp.watch([...paths.src_html, ...paths.src_js], appHtml);
 }
 
 
@@ -84,11 +92,12 @@ function appCopyResources() {
   log(colors.green('Copy resources files...'));
   // Copy files to dist
   return  gulp.src([
-        'src/images*/**/*',
-        'src/data*/**/*'
-      ])
-      .pipe(gulp.dest('dist'))
-      .pipe(browserSync.stream());;
+    'src/**/*.md',
+    'src/images*/**/*',
+    'src/data*/**/*'
+  ])
+  .pipe(gulp.dest('dist'))
+  .pipe(browserSync.stream());
 }
 
 function appCopyExternalResources() {
@@ -120,42 +129,65 @@ function appCopyExternalResources() {
 }
 
 function appHtml() {
-  const enableUglify = true; // argv.release || argv.uglify || false;
-  const version = parsePackage().version;
+  const enableUglify = true; //argv.release || argv.uglify || false;
+  const pkg = parsePackage();
 
-  if (enableUglify) {
+  log(colors.green('Processing HTML files...'));
 
-    log(colors.green('Minify JS and CSS files...'));
+  const htmlPaths = [...paths.src_html, '!src/layout/*.*', '!src/about.html'];
+  const htmlFilter = filter(htmlPaths, {restore: true});
 
-    const indexFilter = filter('**/index.html', {restore: true});
+  const layoutFilter = filter(paths.src_html
+    .concat('!src/le-sou.html'), {restore: true});
+  const compatLayoutFilter = filter('src/le-sou.html', {restore: true});
 
-    // Process index.html
-    return gulp.src('src/*.html')
-      .pipe(useref())  // Concatenate with gulp-useref
-      .pipe(useref({}, lazypipe().pipe(sourcemaps.init, { loadMaps: true })))  // Concatenate with gulp-useref
-
-      // Process JS
-      .pipe(gulpif('vendor.js', uglify())) // Minify javascript files
-
-      // Process CSS
-      .pipe(gulpif('*.css', csso())) // Minify any CSS sources
-      //.pipe(gulpif('*.css', minifyCss())) // Minify any CSS sources
-
-      // Add version to file path
-      .pipe(indexFilter)
-      .pipe(replace(/"(js\/[a-zA-Z0-9]+).js"/g, '"$1.js?v=' + version + '"'))
-      .pipe(replace(/"(css\/default).css"/g, '"$1.css" id="theme"'))
-      .pipe(replace(/"(css\/[a-zA-Z0-9]+).css"/g, '"$1.css?v=' + version + '"'))
-      .pipe(indexFilter.restore)
-
-      .pipe(sourcemaps.write('maps'))
-
-      .pipe(gulp.dest('dist'))
-      .pipe(browserSync.stream());
+  let uglifyDone = false;
+  const needUglify = (file) => {
+    const enable = !uglifyDone && enableUglify && file.path.endsWith('vendor.js');
+    if (enable) {
+      log(colors.green('Minify JS Files...'));
+      log(colors.grey('Minifying ' + colors.bold(file.path) + '... '));
+      file.path = file.path.replace('vendor.js', 'vendor.min.js');
+      uglifyDone = true;
+    }
+    return enable;
   }
-  else {
-    return Promise.resolve();
-  }
+
+  // Process index.html
+  return gulp.src(htmlPaths)
+
+    .pipe(layoutFilter)
+    .pipe(header(fs.readFileSync('src/layout/header.html', 'utf8'), {title: pkg.description}))
+    .pipe(footer(fs.readFileSync('src/layout/footer.html', 'utf8'), {version: pkg.version}))
+    .pipe(layoutFilter.restore)
+
+    .pipe(compatLayoutFilter)
+    .pipe(header(fs.readFileSync('src/layout/header-compat.html', 'utf8'), {title: pkg.description}))
+    .pipe(footer(fs.readFileSync('src/layout/footer.html', 'utf8'), {version: pkg.version}))
+    .pipe(compatLayoutFilter.restore)
+
+    // Concatenate JS and CSS files (using gulp-useref)
+    .pipe(useref())
+    .pipe(useref({}, lazypipe().pipe(sourcemaps.init, { loadMaps: true })))
+
+    // Process JS
+    .pipe(gulpif(needUglify, uglify(uglifyBaseOptions))) // Minify javascript files
+
+    // Process CSS
+    .pipe(gulpif('*.css', csso())) // Minify any CSS sources
+
+    // Add version to file path
+    .pipe(htmlFilter)
+    .pipe(replace(/"(lib\/vendor)\.js"/g, '"$1.min.js"'))
+    .pipe(replace(/"(lib\/[a-zA-Z0-9.]+)\.js"/g, '"$1.js?v=' + pkg.version + '"'))
+    .pipe(replace(/"(css\/default)\.css"/g, '"$1.css" id="theme"'))
+    .pipe(replace(/"(css\/[a-zA-Z0-9]+)\.css"/g, '"$1.css?v=' + pkg.version + '"'))
+    .pipe(htmlFilter.restore)
+
+    .pipe(sourcemaps.write('maps'))
+
+    .pipe(gulp.dest('dist'))
+    .pipe(browserSync.stream());
 }
 
 
@@ -200,6 +232,7 @@ const compile = gulp.series(prepare, appHtml);
 const build = gulp.series(appClean, compile, appZip, buildSuccess);
 
 exports.help = help;
+exports.clean = appClean;
 exports.build = build;
 exports.compile = compile;
 exports.serve =  gulp.series(compile, serve, watch)

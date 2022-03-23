@@ -223,7 +223,7 @@
   }
 
   function showChalkboard() {
-    RevealChalkboard.resetAll();
+    //RevealChalkboard.resetAll();
     RevealChalkboard.toggleChalkboard();
     return false;
   }
@@ -233,11 +233,7 @@
   }
 
   function writeToSlide() {
-    console.log(RevealChalkboard);
-  }
-
-  function createChartData() {
-    return
+    RevealChalkboard.toggleNotesCanvas();
   }
 
   App = {

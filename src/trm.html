@@ -1,144 +1,24 @@
-<!doctype html>
-<html lang="fr">
 
-<head>
-    <meta charset="utf-8">
-
-    <title>Présentation Monnaie Libre - Fondements théoriques</title>
-
-    <meta name="description" content="Présentation TRM">
-    <meta name="author" content="Benoit Lavenier <benoit.lavenier@e-is.pro>">
-
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-
-    <!-- build:css css/default.css -->
-    <link rel="stylesheet" href="../node_modules/reveal.js/dist/theme/fonts/source-sans-pro/source-sans-pro.css">
-    <link rel="stylesheet" href="css/default.css" id="theme">
-    <!-- endbuild -->
-
-    <!-- build:css css/vendor.css -->
-    <link rel="stylesheet" href="../node_modules/reveal.js/dist/reveal.css">
-    <link rel="stylesheet" href="../node_modules/reveal.js/plugin/highlight/zenburn.css">
-    <link rel="stylesheet" href="../node_modules/katex/dist/katex.min.css">
-    <link rel="stylesheet" href="../node_modules/reveal.js-plugins/chalkboard/style.css">
-    <link rel="stylesheet" href="../node_modules/reveal.js-plugins/customcontrols/style.css">
-    <link rel="stylesheet" href="../node_modules/reveal.js-plugins/menu/font-awesome/css/fontawesome.css">
-    <link rel="stylesheet" href="../node_modules/reveal.js-plugins/menu/menu.css">
-    <!-- endbuild -->
-    <!-- build:css css/app.css -->
-    <link rel="stylesheet" href="css/app.css">
-    <!-- endbuild -->
-
-    <!-- build:js lib/vendor.js -->
-    <script src="../node_modules/jquery/dist/jquery.js"></script>
-    <script src="../node_modules/katex/dist/katex.min.js"></script>
-    <script src="../node_modules/reveal.js/dist/reveal.js"></script>
-    <script src="../node_modules/reveal.js/plugin/markdown/markdown.js"></script>
-    <script src="../node_modules/reveal.js/plugin/highlight/highlight.js"></script>
-    <script src="../node_modules/reveal.js/plugin/math/math.js"></script>
-    <script src="../node_modules/reveal.js/plugin/notes/notes.js"></script>
-    <script src="../node_modules/reveal.js-plugins/menu/menu.js"></script>
-    <script src="../node_modules/chart.js/dist/chart.min.js"></script>
-    <script src="../node_modules/reveal.js-plugins/chart/plugin.js"></script>
-    <script src="../node_modules/reveal.js-plugins/chalkboard/plugin.js"></script>
-    <script src="../node_modules/reveal.js-plugins/customcontrols/plugin.js"></script>
-    <script src="js/jquery.comments.js"></script>
-    <!-- endbuild -->
-
-    <!-- build:js lib/app.js -->
-    <script src="js/app-colors.js"></script>
-    <script src="js/app-trm-charts.js"></script>
-    <script src="js/app.js"></script>
-    <!-- endbuild -->
-
-</head>
-
-<body>
-
-<div id="hidden" style="display:none;">
-    <div id="header">
-        <div id="header-left"></div>
-        <div id="header-right"></div>
-        <div id="footer-left"></div>
-        <div id="footer-right"></div>
+    <!-- header / footer (all slides) -->
+    <div id="hidden" style="display:none;">
+        <div id="header">
+            <div id="header-left"></div>
+            <div id="header-right"></div>
+            <div id="footer-left"></div>
+            <div id="footer-right"></div>
+        </div>
     </div>
-</div>
 
-<div class="reveal">
-    <!-- Any section element inside of this container is displayed as a slide -->
-    <div class="slides">
-        <section data-markdown data-separator-vertical="---">
-            <script type="text/template">
-                ![Logo G1](images/logo_G1-150px.png)
-                # Monnaie Libre
-                ## Fondements théoriques
+    <div class="reveal">
+        <!-- Any section element inside of this container is displayed as a slide -->
+        <div class="slides">
+            <section data-markdown data-separator-vertical="---">
+                <script type="text/template">
+                    ![Logo G1](images/logo_G1-150px.png)
+                    # Monnaie Libre
+                    ## Fondements théoriques
 
-                <br/>
-
-                [<i class="fab fa-twitter"></i> BenoitLavenier](https://www.twitter.com/BenoitLavenier)
-                |
-                [<i class="fab fa-github"></i> blavenie](https://www.github.com/blavenie)
-
-                [<i class="fab fa-facebook"></i> Monnaie Libre](https://www.facebook.com/groups/362467693907498)
-                |
-                [<i class="fa fa-globe"></i> monnaie-libre.fr](https://www.monnaie-libre.fr)
-            </script>
-        </section>
-
-        <!-- Money ? -->
-        <section data-src="money.html">
-        </section>
-
-        <!-- TRM intro -->
-        <section data-src="trm-00-intro.html">
-        </section>
-
-
-        <!-- TRM charts - simple cases -->
-        <section data-src="trm-01-chart-simple.html">
-        </section>
-
-        <!-- TRM charts - with exchanges -->
-        <section data-src="trm-02-chart-exchanges.html">
-        </section>
-
-        <!-- TRM charts - generation -->
-        <section data-src="trm-03-chart-generation.html">
-        </section>
-
-        <!-- TRM charts - c rate -->
-        <section data-src="trm-04-chart-growth.html">
-        </section>
-
-        <!-- TRM end -->
-        <section data-src="trm-05-end.html">
-        </section>
-
-        <!-- Links -->
-        <section data-markdown>
-            # Liens
-
-            ## Théorie Relative de la Monnaie :
-            https://trm.creationmonetaire.info/
-
-            ## Exercices pour comprendre la TRM :
-            https://rml.creationmonetaire.info/modules
-        </section>
-
-        <section>
-            <section data-markdown>
-                <script type="text/template" data-separator="---" >
-                    ## **Merci** de votre attention
-
-                    <small><br/><br/>et surtout, n'oubliez pas :<br/><br/></small>
-
-                    ---
-
-                    # Vous êtes **Libre !** *
-                    <small>* de choisir <strong>votre</strong> monnaie.</small>
+                    <br/>
 
                     [<i class="fab fa-twitter"></i> BenoitLavenier](https://www.twitter.com/BenoitLavenier)
                     |
@@ -147,16 +27,71 @@
                     [<i class="fab fa-facebook"></i> Monnaie Libre](https://www.facebook.com/groups/362467693907498)
                     |
                     [<i class="fa fa-globe"></i> monnaie-libre.fr](https://www.monnaie-libre.fr)
+                </script>
+            </section>
 
-            </script>
-        </section>
-        </section>
+            <!-- Money ? -->
+            <section data-src="money.html">
+            </section>
+
+            <!-- TRM intro -->
+            <section data-src="trm-00-intro.html">
+            </section>
+
+
+            <!-- TRM charts - simple cases -->
+            <section data-src="trm-01-chart-simple.html">
+            </section>
+
+            <!-- TRM charts - with exchanges -->
+            <section data-src="trm-02-chart-exchanges.html">
+            </section>
+
+            <!-- TRM charts - generation -->
+            <section data-src="trm-03-chart-generation.html">
+            </section>
+
+            <!-- TRM charts - c rate -->
+            <section data-src="trm-04-chart-growth.html">
+            </section>
+
+            <!-- TRM end -->
+            <section data-src="trm-05-end.html">
+            </section>
+
+            <!-- Links -->
+            <section data-markdown>
+                # Liens
+
+                ## Théorie Relative de la Monnaie :
+                https://trm.creationmonetaire.info/
+
+                ## Exercices pour comprendre la TRM :
+                https://rml.creationmonetaire.info/modules
+            </section>
+
+            <section>
+                <section data-markdown>
+                    <script type="text/template" data-separator="---" >
+                        ## **Merci** de votre attention
+
+                        <small><br/><br/>et surtout, n'oubliez pas :<br/><br/></small>
+
+                        ---
+
+                        # Vous êtes **Libre !** *
+                        <small>* de choisir <strong>votre</strong> monnaie.</small>
+
+                        [<i class="fab fa-twitter"></i> BenoitLavenier](https://www.twitter.com/BenoitLavenier)
+                        |
+                        [<i class="fab fa-github"></i> blavenie](https://www.github.com/blavenie)
+
+                        [<i class="fab fa-facebook"></i> Monnaie Libre](https://www.facebook.com/groups/362467693907498)
+                        |
+                        [<i class="fa fa-globe"></i> monnaie-libre.fr](https://www.monnaie-libre.fr)
+
+                </script>
+            </section>
+            </section>
+        </div>
     </div>
-</div>
-
-<script>
-    App.initialize();
-</script>
-
-</body>
-</html>

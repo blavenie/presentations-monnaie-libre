@@ -30,7 +30,7 @@ npm install
 npm run build
 ```
 
-ou bien la lancer dans une navigateur :
+ou bien la lancer dans un navigateur :
 
 ```bash
 npm run start
