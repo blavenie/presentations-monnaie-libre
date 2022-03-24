@@ -9,7 +9,6 @@ const gulp = require('gulp'),
   lazypipe = require('lazypipe'),
   gulpif = require('gulp-if'),
   zip = require('gulp-zip'),
-  minifyCss = require('gulp-clean-css'),
   merge = require('merge2'),
   csso = require('gulp-csso'),
   replace = require('gulp-replace'),
@@ -48,8 +47,10 @@ const uglifyBaseOptions = {
 const paths = {
   resources: ['src/**/*.md', 'src/images*/**/*', 'src/data*/**/*'],
   src_html: ['src/**/*.html'],
-  src_js: ['src/**/*.js']
-}
+  src_css: ['src/css/*.css'],
+  src_js: ['src/**/*.js'],
+  src_layout: ['src/layout/*.html']
+};
 
 function watch() {
 
@@ -57,7 +58,7 @@ function watch() {
   gulp.watch(paths.resources, appCopyResources);
 
   // Watch JS + html
-  gulp.watch([...paths.src_html, ...paths.src_js], appHtml);
+  gulp.watch([...paths.src_html, ...paths.src_js, ...paths.src_css, ...paths.src_layout], appHtml);
 }
 
 
@@ -134,24 +135,12 @@ function appHtml() {
 
   log(colors.green('Processing HTML files...'));
 
-  const htmlPaths = [...paths.src_html, '!src/layout/*.*', '!src/about.html'];
+  const htmlPaths = [...paths.src_html, '!src/layout/**/*.*'];
   const htmlFilter = filter(htmlPaths, {restore: true});
 
-  const layoutFilter = filter(paths.src_html
-    .concat('!src/le-sou.html'), {restore: true});
+  const layoutFilter = filter([...paths.src_html, '!src/le-sou.html', '!src/slides/**/*.html', '!src/about.html'], {restore: true});
   const compatLayoutFilter = filter('src/le-sou.html', {restore: true});
-
-  let uglifyDone = false;
-  const needUglify = (file) => {
-    const enable = !uglifyDone && enableUglify && file.path.endsWith('vendor.js');
-    if (enable) {
-      log(colors.green('Minify JS Files...'));
-      log(colors.grey('Minifying ' + colors.bold(file.path) + '... '));
-      file.path = file.path.replace('vendor.js', 'vendor.min.js');
-      uglifyDone = true;
-    }
-    return enable;
-  }
+  const minifiedFiles = [];
 
   // Process index.html
   return gulp.src(htmlPaths)
@@ -167,18 +156,27 @@ function appHtml() {
     .pipe(compatLayoutFilter.restore)
 
     // Concatenate JS and CSS files (using gulp-useref)
-    .pipe(useref())
     .pipe(useref({}, lazypipe().pipe(sourcemaps.init, { loadMaps: true })))
 
-    // Process JS
-    .pipe(gulpif(needUglify, uglify(uglifyBaseOptions))) // Minify javascript files
+      // Minify JS files
+    .pipe(gulpif((file) => {
+      if (!enableUglify || !file.path.endsWith('.js') || file.path.endsWith('.min.js')) return false; // Skip
+      if (minifiedFiles.includes(file.path)) return false; // Skip: already exists
+
+      minifiedFiles.push(file.path);
+      log(colors.grey('Minifying ' + colors.bold(file.path) + '... '));
+
+      file.path = file.path.replace('.js', '.min.js');
+      return true;
+    }, uglify(uglifyBaseOptions)))
 
     // Process CSS
     .pipe(gulpif('*.css', csso())) // Minify any CSS sources
 
-    // Add version to file path
     .pipe(htmlFilter)
-    .pipe(replace(/"(lib\/vendor)\.js"/g, '"$1.min.js"'))
+      // Use minified JS files
+    .pipe(gulpif(enableUglify,replace(/"(lib\/[a-zA-Z0-9.]+)\.js"/g, '"$1.min.js"')))
+      // Add version to JS files (to force the browser to refresh, after a new version)
     .pipe(replace(/"(lib\/[a-zA-Z0-9.]+)\.js"/g, '"$1.js?v=' + pkg.version + '"'))
     .pipe(replace(/"(css\/default)\.css"/g, '"$1.css" id="theme"'))
     .pipe(replace(/"(css\/[a-zA-Z0-9]+)\.css"/g, '"$1.css?v=' + pkg.version + '"'))
