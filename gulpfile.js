@@ -25,7 +25,7 @@ const uglifyBaseOptions = {
   toplevel: true,
   warnings: true,
   mangle: {
-    reserved: ['App']
+    reserved: ['App', 'AppTrmCharts']
   },
   compress: {
     global_defs: {
@@ -175,7 +175,9 @@ function appHtml() {
 
     .pipe(htmlFilter)
       // Use minified JS files
-    .pipe(gulpif(enableUglify,replace(/"(lib\/[a-zA-Z0-9.]+)\.js"/g, '"$1.min.js"')))
+    // FIXME when app.js is minified, error in the trm chart
+    //  .pipe(gulpif(enableUglify,replace(/"(lib\/[a-zA-Z0-9.]+)\.js"/g, '"$1.min.js"')))
+    .pipe(gulpif(enableUglify,replace(/"(lib\/vendor)\.js"/g, '"$1.min.js"')))
       // Add version to JS files (to force the browser to refresh, after a new version)
     .pipe(replace(/"(lib\/[a-zA-Z0-9.]+)\.js"/g, '"$1.js?v=' + pkg.version + '"'))
     .pipe(replace(/"(css\/default)\.css"/g, '"$1.css" id="theme"'))
