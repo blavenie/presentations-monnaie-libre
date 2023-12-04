@@ -60,25 +60,30 @@
   }
 
   function initChartCanvas(canvas) {
+    console.debug('[initChartCanvas]');
     const type = $(canvas).attr(DATA_TRM_CHART_ATTR);
 
     // Read options, from HTML comments
     let opts = { type };
-    $(canvas).comments().each((i,c) => {
-      const comment = $(c).html().trim();
-      if (comment.startsWith('{')) {
-        try {
-          const commentObj = JSON.parse(comment);
-          opts = {
-            ...opts,
-            ...commentObj
-          };
-        }
-        catch(err) {
-          console.error("[app-trm-charts] Invalid JSON options (will be ignored): \n" + comment, err);
-        }
-      }
-    })
+    $(canvas).contents()
+        .filter(function(){
+          return this.nodeType == 8;
+        })
+        .each((i,c) => {
+          const comment = c.nodeValue.trim();
+          if (comment.startsWith('{')) {
+            try {
+              const commentObj = JSON.parse(comment);
+              opts = {
+                ...opts,
+                ...commentObj
+              };
+            }
+            catch(err) {
+              console.error("[app-trm-charts] Invalid JSON options (will be ignored): \n" + comment, err);
+            }
+          }
+        });
 
     let data = AppTrmCharts.createData(opts);
     if (data) {
@@ -450,15 +455,19 @@
   }
 
   function makeExchanges(wallets, yearIndex, opts) {
-
     const exchanges = opts && opts.exchanges || [];
-    if (exchanges.length > 0 && exchanges.includes(yearIndex) && wallets.length > 1) {
-      const toWallet = wallets[0];
-      const fromWallet = wallets[wallets.length - 1];
-      console.debug('[app-charts] Make an exchange from \'' + fromWallet.label + '\' to \'' + toWallet.label + '\'');
-      const amount = fromWallet.balance / 2;
-      toWallet.balance += amount;
-      fromWallet.balance -= amount;
+
+    if (exchanges) {
+      console.debug('[trm-charts] makeExchanges', opts);
+
+      if (exchanges.includes(yearIndex) && wallets.length > 1) {
+        const toWallet = wallets[0];
+        const fromWallet = wallets[wallets.length - 1];
+        console.debug('[app-charts] Make an exchange from \'' + fromWallet.label + '\' to \'' + toWallet.label + '\'');
+        const amount = fromWallet.balance / 2;
+        toWallet.balance += amount;
+        fromWallet.balance -= amount;
+      }
     }
   }
 
