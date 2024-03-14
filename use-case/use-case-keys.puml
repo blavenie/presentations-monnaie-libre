@@ -1,9 +1,9 @@
 @startuml
 hide empty members
-database Duniter
+
 actor Alice
 
-Alice --> Duniter: vault <address>
+Alice --> App: create wallet
 
 
 
