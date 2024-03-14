@@ -1,0 +1,31 @@
+@startuml
+hide empty members
+database Duniter
+actor Alice
+
+
+Alice --> Duniter: identity create <address>
+
+Duniter --> Duniter: idtyCreated
+
+actor Eve
+
+Eve --> Duniter: identity confirm <pseudo>
+
+Duniter --> Duniter: idtyConfirmed
+
+actor Bob
+Bob --> Duniter: identity cert <pseudo|address>
+
+actor Marcel
+Marcel --> Duniter: identity cert <pseudo|address>
+
+actor Sophie
+Sophie --> Duniter: identity cert <pseudo|address>
+
+actor AnyMember
+AnyMember --> Duniter: [identity request-distance-for <pseudo|address>, identity cert <pseudo|address>]
+
+Duniter --> Duniter: idtyValidated
+
+@enduml

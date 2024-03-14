@@ -1,0 +1,46 @@
+@startuml
+hide empty members
+database "Duniter Blockchain" as Duniter
+actor Alice
+
+Alice --> Duniter: smith invite Adam
+
+
+Duniter --> Duniter: status Invited
+
+actor Adam
+Adam --> Duniter: smith accept
+
+Duniter --> Duniter: status Pending
+
+actor Eve
+
+Eve --> Duniter: smith cert Adam
+
+actor Bob
+Bob --> Duniter: smith cert Adam
+
+Duniter --> Duniter: event SmithMembershipAdded
+
+Duniter --> Duniter: status Smith
+
+database "Adam's node" as LocalNode
+Adam --> LocalNode: smith rotate-keys <keys> (generate new keys)
+
+LocalNode --> LocalNode: create new keys (on keystore file system)
+
+Adam --> Duniter: smith set-session-keys <keys>  (extrinsic authorityMembers.setSessionKeys)
+
+Duniter --> Duniter: expiresOn = 3 semaines (smithInactivityMaxDuration)
+
+Adam --> Duniter: smith go-online
+
+Duniter --> Duniter: expiresOn=null
+
+Adam --> Duniter: smith
+
+Alice -> Duniter: go-offline (reason: offlineToLong, OfflineTooLong, Blacklisted)
+
+Duniter --> Duniter: expiresOn = 3 semaines (smithInactivityMaxDuration)
+
+@enduml

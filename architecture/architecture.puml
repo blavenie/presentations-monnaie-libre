@@ -1,0 +1,31 @@
+@startuml
+hide empty members
+interface Node {
+}
+
+class SmithNode {
+    Noeud forgeron
+    ..
+}
+Node <|-- SmithNode
+
+
+class MirrorNode {
+    Noeud mirroir
+    ..
+}
+Node <|-- MirrorNode
+
+
+class PruningArchiveNode {
+    Noeud archive
+    ..
+}
+Node <|-- PruningArchiveNode
+
+class Indexer {
+}
+
+Indexer .left.> PruningArchiveNode : "Index data"
+
+@enduml
